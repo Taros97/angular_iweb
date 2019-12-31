@@ -12,13 +12,15 @@ import { RegisterComponent } from './_components/register/register.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { AboutComponent } from './_components/about/about.component';
+import { NgMetro4Module } from 'ng-metro4';
 
 @NgModule({
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgMetro4Module,
   ],
   declarations: [
     AppComponent,

@@ -1,18 +1,42 @@
-<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
-  <div class="navbar-nav">
-      <a class="nav-item nav-link" routerLink="/">Home</a>
-      <a class="nav-item nav-link" (click)="logout()">Logout</a>
-  </div>
+<nav class="navigation-bar app-bar bg-dark fg-white" data-role="appbar" data-expand-point="md">
+  <a href="home" class="d-block brand fg-white no-hover">
+    <span class="border bd-white border-radius p-2">Home</span>
+  </a>
+  <ul class="app-bar-menu">
+    <li><a href="">Habitaciones</a></li>
+    <li><a href="">Salas</a></li>
+    <li><a href="">Instalaciones</a></li>
+    <li><a href="">Reservar</a></li>
+    <li><a href="">Sobre nosotros</a></li>
+    <!--<li>
+      <a href="#" class="dropdown-toggle">More</a>
+      <ul class="d-menu" data-role="dropdown">
+        <li><a href="">Dropdown link 1</a></li>
+        <li><a href="">Dropdown link 2</a></li>
+      </ul>
+    </li>-->
+  </ul>
+  <ul class="app-bar-menu ml-auto">
+    <li>
+      <a *ngIf="currentUser" (click)="logout()">LogOut</a>
+      <a *ngIf="!currentUser" routerLink="/login">Login</a>
+    </li>
+  </ul>
 </nav>
 
-<!-- main app container -->
-<div class="jumbotron">
-  <div class="container">
-      <div class="row">
-          <div class="col-sm-6 offset-sm-3">
-              <alert></alert>
-              <router-outlet></router-outlet>
-          </div>
-      </div>
+<!--<nav class="navbar navbar-expand navbar-dark bg-dark" *ngIf="currentUser">
+  <div class="navbar-nav">
+      <a class="nav-item nav-link" routerLink="/">Home</a>
   </div>
+  <div>
+    <ul class="navbar-nav">
+      <li class="navbar-item"><a class="nav-link" (click)="logout()">Logout</a></li>
+    </ul>
+  </div>
+</nav>-->
+
+<!-- main app container -->
+<div class="ui container-fluid">
+  <alert></alert>
+  <router-outlet></router-outlet>
 </div>
