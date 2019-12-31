@@ -20,9 +20,19 @@ con la API cuando esté operativa.
 * **Fuentes:**
 1- https://jasonwatmore.com/post/2019/06/10/angular-8-user-registration-and-login-example-tutorial
 
-## Sesión 2 (31-12-2019):
+## Sesión 2 (31-12-2019 hasta ...):
 ### Planificación:
 * [ ] Home
 * [ ] About
 
 ### Realización: 
+* **Título:** Estructura de la parte Home
+* **Duración:** 3 horas + ...
+* **Realizado por:** Néstor y Enrique
+* **Descripción:**
+Día 31-12-2019:
+Se ha realizado el navbar completo (falta las redirecciones de los nuevos componentes) y la maquetación de la página home.
+* **Finalización:**
+* **Recordatorios:**
+* **Fuentes:**
+1 - https://metroui.org.ua/v2/navbar.html
