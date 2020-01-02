@@ -1,7 +1,7 @@
 # angular_iweb
 Si un usuario no está autorizado, debe de devolver 401 (err.status = 401)
 
-## Sesión 1 (30-12-2019 hasta):
+## Sesión 1 (30-12-2019):
 ### Frontend 
 * **Título:** Inicio sesión y registrar un usuario con falso backend.
 * **Duración:** 2 tandas de 2 horas cada una aproximadamente. (2 horas + 2 horas = 4 horas) 
@@ -20,7 +20,7 @@ con la API cuando esté operativa.
 * **Fuentes:**
 1- https://jasonwatmore.com/post/2019/06/10/angular-8-user-registration-and-login-example-tutorial
 
-## Sesión 2 (31-12-2019 Néstor):
+## Sesión 2 (31-12-2019):
 ### Planificación:
 * [ ] Home
 
