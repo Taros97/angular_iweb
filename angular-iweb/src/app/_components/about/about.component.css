@@ -2,50 +2,35 @@
     width: 55%;
     height: 100%;
     float:left;
-    background: red;
 }
 
 .derecha{
+    padding: 10px;
     width: 40%;
     height: 100%;
     margin-left: 5%;
+    margin-right: 5%;
     float: right;
-    background: blue;
 }
 
 .todo{
     display: flex;
-    background: green;
-    margin: 3% 3% 3% 3%;
     height: 800px;
-    width: 94%;
-}
-
-.imagen{
-    margin: 3% 3% 3% 3%;
-    width: 94%; 
-    height: 34%; 
-    object-fit: contain;
-    background-image: url("assets/img/about_imagen.jpg");
-}
-
-.separacion{
     width: 100%;
-    height: 2%;
+    background-image: url("assets/img/about_imagen.jpg");
 }
 
 .tabla{
     padding: 20px;
     align-items: center;
     height: 45%;
-    background: white;
     width: 50%;
     margin: 0 auto;
 }
 
 .titulo {
     padding: 10px;
-    color: #000;
+    color:rgba(255, 255, 255, 0.85);
     text-align: center;
     font-size: 24px;
     font-family: Courier New;
@@ -54,8 +39,92 @@
 
 .texto{
     padding: 10px;
-    color: #000;
+    color:rgba(255, 255, 255, 0.85);
     text-align: justify;
     font-size: 18px;
     font-family: Courier New;
+}
+
+.formulario{
+    border-color: black;
+    float:left;
+    width: 100%;
+}
+
+
+.tratamiento{
+    margin-top: 3%;
+    margin-left: 3%;
+    float:left;
+    width: 20%;
+    height: 1%;
+}
+
+.tratamientoLabel{
+    margin-top: 3%;
+    margin-left: 3%;
+    float:left;
+    padding-top: 5px;
+}
+
+.tema{
+    margin-top: 3%;
+    margin-right: 3%;
+    float:left;
+    width: 60%;
+}
+
+.temaLabel{
+    margin-top: 3%;
+    margin-right: 3%;
+    float:left;
+    padding-top: 5px;
+}
+
+.columna{
+    align-items: center;
+    float:left;
+    width: 50%;
+}
+
+.nombre{
+    float:left;
+    margin-left: 3%;
+    width: 50%;
+}
+
+.nombreLabel{
+    margin-left: 3%;
+    float:left;
+    padding-top: 5px;
+}
+
+.telefono{
+    float:left;
+    margin-right: 3%;
+    width: 50%;
+}
+
+.telefonoLabel{
+    float:left;
+    margin-right: 3%;
+    padding-top: 5px;
+}
+
+.mensaje{
+    margin-left: 3%;
+    margin-right: 3%;
+    height: 94%;
+    width: 94%;
+}
+
+.mensajeLabel{
+    margin-top: 2%;
+    margin-left: 40%;
+}
+
+.boton{
+    margin-top: 2%;
+    margin-left: 35%;
+    margin-bottom: 3%;
 }

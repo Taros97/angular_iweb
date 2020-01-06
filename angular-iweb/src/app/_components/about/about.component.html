@@ -1,7 +1,5 @@
 <div class="todo">
     <div class="sobreNosotros">
-        <div class="imagen"></div>
-        <div class="separacion border-top border-bottom"></div>
         <div class="tabla">
                 <div class="titulo">
                     <p>Información sobre nosotros</p>
@@ -12,7 +10,46 @@
         </div>
     </div>
     <div class="derecha">
+        <div class="titulo">
+            <p>Contacta con nosotros</p>
+        </div>
+        <div class="texto">
+            <p>Nos puedes contactar por si necesitas realizarnos alguna queja o quieres decirnos lo que hemos hecho bien. <br>
+                También puedes contactar para algún puesto de trabajo. <br>
+                ¡TODO LO TENDREMOS EN CUENTA!. <br>
+            </p>
+            <form [formGroup]="formContactaConNosotros" (ngSubmit)="onSubmit()">
+                <div class="formulario border">
+                    <div class="columna">
+                        <label class="tratamientoLabel" for="tratamiento">Tratamiento: </label>
+                        <select class="tratamiento form-control" name="tratamiento" formControlName="tratamiento">
+                            <option>Sr.</option>
+                            <option>Sra.</option>
+                        </select>
+                        <br>
+                        <br>
+                        <label class="nombreLabel" for="nombre">Nombre: </label>
+                        <input class="nombre form-control" name="nombre" formControlName="nombre" placeholder="Pepe">
+                    </div>
+                    <div class="columna">
+                        <label class="temaLabel" for="tema">Tema: </label>
+                        <select class="tema form-control" name="tema" formControlName="tema">
+                            <option>Atención al cliente</option>
+                            <option>Reserva de habitación</option>
+                            <option>Reserva de sala</option>
+                        </select>
+                        <br>
+                        <br>
+                        <label class="telefonoLabel" for="telefono">Teléfono: </label>
+                        <input class="telefono form-control" name="telefono" formControlName="telefono" type="number" placeholder="123456789">
+                    </div>
+                    <label class="mensajeLabel" for="mensaje">Mensaje: </label>
+                    <textarea class="mensaje form-control" name="mensaje" formControlName="mensaje" type="text" placeholder="Añade el mensaje."></textarea>
 
+                    <button class="btn btn-info boton">Enviar formulario</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
