@@ -1,4 +1,5 @@
 .sobreNosotros{
+    margin-top:2%;
     width: 55%;
     height: 100%;
     float:left;
@@ -7,10 +8,12 @@
 .derecha{
     padding: 10px;
     width: 40%;
-    height: 100%;
+    height: 63%;
+    margin-top:2%;
     margin-left: 5%;
     margin-right: 5%;
     float: right;
+    background-color: rgba(0,0,0, 0.5);
 }
 
 .todo{
@@ -21,6 +24,7 @@
 }
 
 .tabla{
+    background-color: rgba(0,0,0, 0.5);
     padding: 20px;
     align-items: center;
     height: 45%;
