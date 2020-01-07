@@ -52,3 +52,23 @@ La sesión 3 termina con la maquetacion de la pagina home y el estilo definitivo
 * **Recordatorios:**
 Añadir Boostrap si es necesario mas adelante
 * **Fuentes:**
+
+## Sesión 4 (06-01-2020):
+### Planificación:
+* [X] About
+
+### Realización: 
+* **Título:** Página About
+* **Duración:** 3 horas y media
+* **Realizado por:** Enrique
+* **Descripción:**
+Día 06-01-2020:
+Realización de la página about.
+* **Finalización:**
+La sesión 4 se ha realizado la finalización de about, a falta de unos retoques.
+* **Recordatorios:**
+
+* **Fuentes:**
+- Formulario angular:
+ https://angular.io/api/forms/FormGroup
+ https://angular.io/guide/reactive-forms
