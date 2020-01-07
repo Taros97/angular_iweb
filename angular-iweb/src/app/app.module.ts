@@ -15,6 +15,7 @@ import { AboutComponent } from './_components/about/about.component';
 import { NgMetro4Module } from 'ng-metro4';
 import { FooterComponent } from './_components';
 import { ScrollToTopComponent } from './_components/scroll-to-top/scroll-to-top.component';
+import { ProfileComponent } from './_components/profile/profile.component';
 
 @NgModule({
   imports: [
@@ -32,7 +33,8 @@ import { ScrollToTopComponent } from './_components/scroll-to-top/scroll-to-top.
     RegisterComponent,
     AboutComponent,
     FooterComponent,
-    ScrollToTopComponent
+    ScrollToTopComponent,
+    ProfileComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
