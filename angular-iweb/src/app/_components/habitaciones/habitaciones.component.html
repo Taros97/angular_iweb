@@ -1,5 +1,5 @@
 <div class="todo">
-    <div class="filtros border">
+    <div class="filtros form-group border">
         <div class="input-group grupo">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">
@@ -7,9 +7,46 @@
                 </span>
             </div>
             <div class="buscador">
-                <input type="text" class="form-control" placeholder="Buscador..." aria-describedby="basic-addon1">
+                <input matInput type="text" class="form-control" placeholder="Buscador..." aria-describedby="basic-addon1">
             </div>
-            
+        </div>
+        <div class="filtrarBusqueda">
+            Filtrar tu búsqueda
+        </div>
+        <div class="exterior">
+            <div class="tipo">
+                <select class="form-control browser-default custom-select">
+                    <option value="" selected>Elige un tipo...</option>
+                    <option>Solo alojamiento</option>
+                    <option>Alojamiento y desayuno</option>
+                    <option>Media pensión</option>
+                    <option>Pensión completa</option>
+                </select>
+            </div>
+            <div class="fila">
+                <div class="columna-izq">
+                    <select class="form-control browser-default custom-select">
+                        <option value="" selected>Elige una vista...</option>
+                        <option>Mar</option>
+                        <option>Piscina</option>
+                        <option>Parque</option>
+                    </select>
+                </div>
+                <div class="columna-der">
+                    <input class="form-control" type="number" placeholder="plazas">
+                </div>
+            </div>
+            <div class="barra">
+                <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ng5-slider>
+            </div>
+           <div class="wifi">
+                WiFi
+            </div> 
         </div>
     </div>
+    <div class="tabla">
+        Tabla de habitaciones
+    </div>
 </div>
+
+

@@ -17,6 +17,8 @@ import { HabitacionesComponent } from './_components/habitaciones/habitaciones.c
 import { FooterComponent } from './_components';
 import { ScrollToTopComponent } from './_components/scroll-to-top/scroll-to-top.component';
 import { ProfileComponent } from './_components/profile/profile.component';
+import { Ng5SliderModule } from 'ng5-slider';
+import { HabitacionComponent } from './_components/habitacion/habitacion.component';
 
 @NgModule({
   imports: [
@@ -25,6 +27,7 @@ import { ProfileComponent } from './_components/profile/profile.component';
     ReactiveFormsModule,
     HttpClientModule,
     NgMetro4Module,
+    Ng5SliderModule
   ],
   declarations: [
     AppComponent,
@@ -36,7 +39,8 @@ import { ProfileComponent } from './_components/profile/profile.component';
     HabitacionesComponent,
     FooterComponent,
     ScrollToTopComponent,
-    ProfileComponent
+    ProfileComponent,
+    HabitacionComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
