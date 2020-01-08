@@ -14,6 +14,9 @@ import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { AboutComponent } from './_components/about/about.component';
 import { NgMetro4Module } from 'ng-metro4';
 import { HabitacionesComponent } from './_components/habitaciones/habitaciones.component';
+import { FooterComponent } from './_components';
+import { ScrollToTopComponent } from './_components/scroll-to-top/scroll-to-top.component';
+import { ProfileComponent } from './_components/profile/profile.component';
 
 @NgModule({
   imports: [
@@ -31,6 +34,9 @@ import { HabitacionesComponent } from './_components/habitaciones/habitaciones.c
     RegisterComponent,
     AboutComponent,
     HabitacionesComponent
+    FooterComponent,
+    ScrollToTopComponent,
+    ProfileComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -1,0 +1,60 @@
+.profile{
+  background-image: url("assets/img/profile_image.jpg");
+  height: 2000px;
+  display: flex;
+}
+
+.profileCenter{
+  margin-top: 5%;
+  width: 70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  margin-bottom: 15%;
+  height: 60%;
+  border: 3px solid green;
+  background-color:rgba(0, 0, 0, 0.5);
+}
+
+.profile-info{
+  height: 20%;
+  margin-top: 5%;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 5%;
+  background-color:rgba(255, 255, 255, 0.1);
+  border: 3px solid red;
+}
+
+.profile-bookings{
+  height: 50%;
+  width: 90%;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 5%;
+  border: 3px solid red;
+}
+
+.username-info{
+  margin: 1%;
+  float: left;
+  height: 90%;
+  width: 58%;
+  border: 3px solid blue;
+}
+
+.more-info{
+  margin: 1%;
+  float: right;
+  height: 90%;
+  width: 38%;
+  border: 3px solid green;
+}
+
+h3{
+  color:white;
+}
+
+h2{
+  color:white;
+}
