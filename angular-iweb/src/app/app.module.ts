@@ -33,7 +33,7 @@ import { ProfileComponent } from './_components/profile/profile.component';
     LoginComponent,
     RegisterComponent,
     AboutComponent,
-    HabitacionesComponent
+    HabitacionesComponent,
     FooterComponent,
     ScrollToTopComponent,
     ProfileComponent
