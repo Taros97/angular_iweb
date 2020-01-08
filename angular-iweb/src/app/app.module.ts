@@ -13,6 +13,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor, ErrorInterceptor } from './_helpers';
 import { AboutComponent } from './_components/about/about.component';
 import { NgMetro4Module } from 'ng-metro4';
+import { HabitacionesComponent } from './_components/habitaciones/habitaciones.component';
 import { FooterComponent } from './_components';
 import { ScrollToTopComponent } from './_components/scroll-to-top/scroll-to-top.component';
 import { ProfileComponent } from './_components/profile/profile.component';
@@ -32,6 +33,7 @@ import { ProfileComponent } from './_components/profile/profile.component';
     LoginComponent,
     RegisterComponent,
     AboutComponent,
+    HabitacionesComponent
     FooterComponent,
     ScrollToTopComponent,
     ProfileComponent
