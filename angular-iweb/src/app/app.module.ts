@@ -17,6 +17,8 @@ import { HabitacionesComponent } from './_components/habitaciones/habitaciones.c
 import { FooterComponent } from './_components';
 import { ScrollToTopComponent } from './_components/scroll-to-top/scroll-to-top.component';
 import { ProfileComponent } from './_components/profile/profile.component';
+import { ReservaClienteComponent } from './_components/reserva-cliente/reserva-cliente.component';
+import { AdminPanelComponent } from './_components/admin-panel/admin-panel.component';
 
 @NgModule({
   imports: [
@@ -36,7 +38,9 @@ import { ProfileComponent } from './_components/profile/profile.component';
     HabitacionesComponent,
     FooterComponent,
     ScrollToTopComponent,
-    ProfileComponent
+    ProfileComponent,
+    ReservaClienteComponent,
+    AdminPanelComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
