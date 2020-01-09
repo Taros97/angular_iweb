@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 
-import { HomeComponent, LoginComponent, RegisterComponent, AboutComponent, HabitacionesComponent , ProfileComponent} from './_components';
-
+import { HomeComponent, LoginComponent, RegisterComponent, AboutComponent, HabitacionesComponent , ProfileComponent, } from './_components';
+import { ReservaClienteComponent, AdminPanelComponent} from './_components';
 import { AuthGuard } from './_helpers';
 
 const routes: Routes = [
@@ -13,6 +13,8 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'habitaciones', component: HabitacionesComponent },
   { path: 'perfil', component: ProfileComponent, canActivate:[AuthGuard]},
+  { path: 'reserva', component: ReservaClienteComponent, canActivate:[AuthGuard]},
+  { path: 'admin', component: AdminPanelComponent, canActivate:[AuthGuard]},
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
 ];
