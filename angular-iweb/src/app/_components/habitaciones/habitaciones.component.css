@@ -2,14 +2,15 @@
     width: 100%;
     height: 700px;
     position: relative;
-    background-color: black;
+    background-color: white;
 }
 
 .filtros{
     top: 2%;
     bottom: 2%;
     left: 2%;
-    background-color: red;
+    right: 5%;
+    background-color: rgba(0,0,0, 0.1);
     width: 20%;
     height: 96%;
     position: absolute;
@@ -22,4 +23,59 @@
 
 .buscador{
     width: 80%;
+}
+
+.filtrarBusqueda{
+    margin-top: 10%;
+    margin-left: 4%;
+    border-bottom: 1px solid black;
+    width: 90%;
+}
+
+.tipo{
+    margin-top:10%;
+}
+
+.fila{
+    width: 100%;
+    height: 5%;
+    margin-top:10%;
+}
+
+.columna-izq{
+    height: 100%;
+    width: 45%;
+    float:left;
+    margin-right: 10%;
+}
+
+.columna-der{
+    height: 100%;
+    width: 45%;
+    float:left;
+}
+
+.exterior{
+    margin-left: 4%;
+    margin-right: 4%;
+    height: 80%;
+    width: 90%;
+}
+
+.barra{
+    margin-top:15%;
+}
+
+.wifi{
+    margin-top:10%;
+}
+
+.tabla{
+    float: right;
+    top: 2%;
+    right: 5%;
+    width: 70%;
+    height: 96%;
+    color:rgba(255, 255, 255, 0.85);
+    background-color: black;
 }
