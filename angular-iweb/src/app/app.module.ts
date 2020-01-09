@@ -22,6 +22,8 @@ import { HabitacionComponent } from './_components/habitacion/habitacion.compone
 import { ReservaClienteComponent } from './_components/reserva-cliente/reserva-cliente.component';
 import { AdminPanelComponent } from './_components/admin-panel/admin-panel.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { CommonModule } from '@angular/common';
+import { NgbdSortableHeader } from './_directives/sortable.directive';
 
 @NgModule({
   imports: [
@@ -31,7 +33,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     HttpClientModule,
     NgMetro4Module,
     Ng5SliderModule,
-    NgbModule
+    NgbModule,
+    CommonModule
   ],
   declarations: [
     AppComponent,
@@ -46,7 +49,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ProfileComponent,
     HabitacionComponent,
     ReservaClienteComponent,
-    AdminPanelComponent
+    AdminPanelComponent,
+    NgbdSortableHeader
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
