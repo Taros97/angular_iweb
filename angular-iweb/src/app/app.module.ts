@@ -21,6 +21,7 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { HabitacionComponent } from './_components/habitacion/habitacion.component';
 import { ReservaClienteComponent } from './_components/reserva-cliente/reserva-cliente.component';
 import { AdminPanelComponent } from './_components/admin-panel/admin-panel.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   imports: [
@@ -29,7 +30,8 @@ import { AdminPanelComponent } from './_components/admin-panel/admin-panel.compo
     ReactiveFormsModule,
     HttpClientModule,
     NgMetro4Module,
-    Ng5SliderModule
+    Ng5SliderModule,
+    NgbModule
   ],
   declarations: [
     AppComponent,
@@ -42,7 +44,7 @@ import { AdminPanelComponent } from './_components/admin-panel/admin-panel.compo
     FooterComponent,
     ScrollToTopComponent,
     ProfileComponent,
-    HabitacionComponent
+    HabitacionComponent,
     ReservaClienteComponent,
     AdminPanelComponent
   ],
