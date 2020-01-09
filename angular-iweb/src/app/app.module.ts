@@ -19,6 +19,8 @@ import { ScrollToTopComponent } from './_components/scroll-to-top/scroll-to-top.
 import { ProfileComponent } from './_components/profile/profile.component';
 import { Ng5SliderModule } from 'ng5-slider';
 import { HabitacionComponent } from './_components/habitacion/habitacion.component';
+import { ReservaClienteComponent } from './_components/reserva-cliente/reserva-cliente.component';
+import { AdminPanelComponent } from './_components/admin-panel/admin-panel.component';
 
 @NgModule({
   imports: [
@@ -41,6 +43,8 @@ import { HabitacionComponent } from './_components/habitacion/habitacion.compone
     ScrollToTopComponent,
     ProfileComponent,
     HabitacionComponent
+    ReservaClienteComponent,
+    AdminPanelComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
