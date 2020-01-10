@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { fakeBackendProvider } from './_helpers';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -24,6 +24,11 @@ import { AdminPanelComponent } from './_components/admin-panel/admin-panel.compo
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { NgbdSortableHeader } from './_directives/sortable.directive';
+
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   imports: [
@@ -55,6 +60,7 @@ import { NgbdSortableHeader } from './_directives/sortable.directive';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'es'},
     fakeBackendProvider // Esto es mientras no tengamos la api
   ],
   bootstrap: [AppComponent]
