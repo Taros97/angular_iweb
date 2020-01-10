@@ -8,7 +8,7 @@ import { UserService, AuthenticationService } from '@/_services';
 export class HomeComponent implements OnInit {
     currentUser: User;
     users = [];
-
+    images = [944, 1011, 984].map((n) => `https://picsum.photos/id/${n}/900/500`);
     constructor(
         private authenticationService: AuthenticationService,
         private userService: UserService
