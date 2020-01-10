@@ -1,5 +1,29 @@
 <div class="todo">
-    <div class="informacion border">
+    <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-title>Habitación número {{habitacion.codigo}}</mat-card-title>
+        </mat-card-header>
+        <div class="galeria">
+            <ngb-carousel *ngIf="images" [pauseOnHover]="pauseOnHover">
+                <ng-template *ngFor="let image of images"  ngbSlide>
+                  <div class="picsum-img-wrapper">
+                    <img [src]="image" alt="Random first slide">
+                  </div>
+                </ng-template>
+            </ngb-carousel>
+        </div>
+        <mat-card-content>
+            <div class="detalles">
+                Detalles
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>LIKE</button>
+          <button mat-button>SHARE</button>
+        </mat-card-actions>
+      </mat-card>
+      
+    <!--<div class="informacion border">
         <div class="galeria">
             Galeria de imágenes
         </div>
@@ -8,5 +32,5 @@
         </div>
         <div class="fila">
         </div>
-    </div>
+    </div>-->
 </div>

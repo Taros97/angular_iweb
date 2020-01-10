@@ -28,6 +28,10 @@ import { NgbdSortableHeader } from './_directives/sortable.directive';
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSelectModule} from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatInputModule, MatCardModule } from '@angular/material';
+
 
 registerLocaleData(localeEs, 'es');
 
@@ -41,7 +45,11 @@ registerLocaleData(localeEs, 'es');
     Ng5SliderModule,
     NgbModule,
     CommonModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatCardModule
   ],
   declarations: [
     AppComponent,

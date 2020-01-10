@@ -1,15 +1,59 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren } from '@angular/core';
+import { Habitacion } from '@/_models';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
+import { HabitacionService } from '@/_services/habitacion.service';
+import { NgbCarouselConfig, NgbSlideEvent, NgbCarousel, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
+import { DecimalPipe } from '@angular/common';
 
 @Component({
   selector: 'app-habitacion',
   templateUrl: './habitacion.component.html',
-  styleUrls: ['./habitacion.component.css']
+  styleUrls: ['./habitacion.component.css'],
+  providers: [HabitacionService, DecimalPipe, NgbCarouselConfig]
 })
 export class HabitacionComponent implements OnInit {
+  habitacion : Habitacion
+  images = [700, 533, 807, 124].map((n) => `https://picsum.photos/id/${n}/900/500`);
 
-  constructor() { }
+  paused = false;
+  unpauseOnArrow = false;
+  pauseOnIndicator = false;
+  pauseOnHover = true;
+
+  @ViewChildren('carousel') carousel: NgbCarousel;
+
+
+  constructor(private route: ActivatedRoute,
+    private router: Router,
+    private service: HabitacionService,
+    config: NgbCarouselConfig) {
+      config.interval = 3000;
+     }
 
   ngOnInit() {
+    var id;
+    this.route.params.subscribe(params => {
+      id = params['id']; 
+   });
+    this.habitacion = this.service.getHabitacion(parseInt(id));
   }
 
+  togglePaused() {
+    if (this.paused) {
+      this.carousel.cycle();
+    } else {
+      this.carousel.pause();
+    }
+    this.paused = !this.paused;
+  }
+
+  onSlide(slideEvent: NgbSlideEvent) {
+    if (this.unpauseOnArrow && slideEvent.paused &&
+      (slideEvent.source === NgbSlideEventSource.ARROW_LEFT || slideEvent.source === NgbSlideEventSource.ARROW_RIGHT)) {
+      this.togglePaused();
+    }
+    if (this.pauseOnIndicator && !slideEvent.paused && slideEvent.source === NgbSlideEventSource.INDICATOR) {
+      this.togglePaused();
+    }
+  }
 }

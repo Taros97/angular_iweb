@@ -20,6 +20,10 @@ interface State {
   sortColumn: string;
   sortDirection: SortDirection;
   filterPlazas: number;
+  filterVista: string;
+  filterPrecio: number;
+  filterWifi: boolean;
+  filterPuntuacion: number;
 }
 
 function compare(v1, v2) {
@@ -46,6 +50,42 @@ function matchesPlazas(habitacion: Habitacion, plazas: number, pipe: PipeTransfo
   return habitacion.plazas >= plazas;
 }
 
+function matchesVistas(habitacion: Habitacion, vista: string, pipe: PipeTransform){
+  return habitacion.vistas.toLowerCase().includes(vista.toLowerCase());
+}
+
+function matchesPrecio(habitacion: Habitacion, precio: number, pipe: PipeTransform){
+  return habitacion.precio >= precio[0] && habitacion.precio <= precio[1];
+}
+
+function matchesWifi(habitacion: Habitacion, wifi: boolean, pipe: PipeTransform){
+  if(wifi){
+    return habitacion.wifi == wifi;
+  }
+  return true;
+}
+
+function matchesPuntuacion(habitacion: Habitacion, puntuacion: number, pipe: PipeTransform){
+  if(puntuacion){
+    return puntuacion <= habitacion.puntuacion;
+  }
+  return true;
+}
+
+function getHabitacion(id: number): Habitacion {
+  var i = 0, terminado = false;
+  while(!terminado){
+    if(this.habitaciones$[i]){
+      terminado = true;
+    }else if(!this.habitaciones$[i] && this.habitaciones$[i].id == id){
+      return this.habitaciones$[i];
+    }else{
+      i++;
+    }
+    return null;
+  }
+}
+
 @Injectable({providedIn: 'root'})
 export class HabitacionService { 
   private _loading$ = new BehaviorSubject<boolean>(true);
@@ -55,11 +95,15 @@ export class HabitacionService {
 
   private _state: State = {
     page: 1,
-    pageSize: 4,
+    pageSize: 8,
     searchTerm: '',
     sortColumn: '',
     sortDirection: '',
-    filterPlazas: 0
+    filterPlazas: null,
+    filterVista: '',
+    filterPrecio: 0,
+    filterWifi: false,
+    filterPuntuacion: 0
   };
 
   constructor(private pipe: DecimalPipe) {
@@ -77,6 +121,15 @@ export class HabitacionService {
     this._search$.next();
   }
 
+  getHabitacion(id: number){
+    for(let habitacion of this.habitaciones){
+      if(habitacion.codigo == id){
+        return habitacion;
+      }
+    }
+  }
+
+  get habitaciones() { return HABITACIONES; }
   get habitaciones$() { return this._habitaciones$.asObservable(); }
   get total$() { return this._total$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
@@ -84,6 +137,10 @@ export class HabitacionService {
   get pageSize() { return this._state.pageSize; }
   get searchTerm() { return this._state.searchTerm; }
   get filterPlazas() { return this._state.filterPlazas; }
+  get filterVista() { return this._state.filterVista; }
+  get filterPrecio() { return this._state.filterPrecio; } 
+  get filterWifi() { return this._state.filterWifi; }
+  get filterPuntuacion() { return this._state.filterPuntuacion; }
 
   set page(page: number) { this._set({page}); }
   set pageSize(pageSize: number) { this._set({pageSize}); }
@@ -91,15 +148,21 @@ export class HabitacionService {
   set sortColumn(sortColumn: string) { this._set({sortColumn}); }
   set sortDirection(sortDirection: SortDirection) { this._set({sortDirection}); }
   set filterPlazas(filterPlazas: number) { this._set({filterPlazas}); }
+  set filterVista(filterVista: string) { this._set({filterVista}); }
+  set filterPrecio(filterPrecio: number) { this._set({filterPrecio}); } 
+  set filterWifi(filterWifi: boolean) { this._set({filterWifi}); }
+  set filterPuntuacion(filterPuntuacion: number) { this._set({filterPuntuacion}); }
 
   private _set(patch: Partial<State>) {
     Object.assign(this._state, patch);
     this._search$.next();
   }
 
+  
+
   private _search(): Observable<SearchResult> {
-    //console.log(this)
-    const {sortColumn, sortDirection, pageSize, page, searchTerm, filterPlazas} = this._state;
+    
+    const {sortColumn, sortDirection, pageSize, page, searchTerm, filterPlazas, filterVista, filterPrecio, filterWifi, filterPuntuacion} = this._state;
     // 1. sort
     let habitaciones = sort(HABITACIONES, sortColumn, sortDirection);
     
@@ -107,7 +170,10 @@ export class HabitacionService {
     // 2. filter
     habitaciones = habitaciones.filter(habitacion => matches(habitacion, searchTerm, this.pipe));
     habitaciones = habitaciones.filter(habitacion => matchesPlazas(habitacion, filterPlazas, this.pipe));
-    
+    habitaciones = habitaciones.filter(habitacion => matchesVistas(habitacion, filterVista, this.pipe));
+    habitaciones = habitaciones.filter(habitacion => matchesPrecio(habitacion, filterPrecio, this.pipe));
+    habitaciones = habitaciones.filter(habitacion => matchesWifi(habitacion, filterWifi, this.pipe));
+    habitaciones = habitaciones.filter(habitacion => matchesPuntuacion(habitacion, filterPuntuacion, this.pipe));
     const total = habitaciones.length;
 
     // 3. paginate
