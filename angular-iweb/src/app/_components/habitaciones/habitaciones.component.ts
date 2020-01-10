@@ -8,6 +8,26 @@ import { NgbdSortableHeader, SortEvent } from '@/_directives/sortable.directive'
 import { DecimalPipe } from '@angular/common';
 
 
+function precioMaximo(habitaciones: Habitacion[]): number{
+  var max = 0;
+  for(let habitacion of habitaciones){
+    if(habitacion.precio > max){
+      max = habitacion.precio;
+    }
+  }
+  return max;
+}
+
+function ObtenerVistas(habitaciones: Habitacion[]){
+  var vistas: string[] = [];
+  for(let habitacion of habitaciones){
+    if(!vistas.includes(habitacion.vistas)){
+      vistas.push(habitacion.vistas);
+    }
+  }
+  return vistas;
+}
+
 @Component({
   selector: 'app-habitaciones',
   templateUrl: './habitaciones.component.html',
@@ -15,28 +35,20 @@ import { DecimalPipe } from '@angular/common';
   providers: [HabitacionService, DecimalPipe]
 })
 export class HabitacionesComponent implements OnInit {
-
-  minValue: number = 0;
-  maxValue: number = 500;
-  options: Options = {
-    floor: this.minValue,
-    ceil: this.maxValue,
-    translate: (value: number, label: LabelType): string => {
-      switch (label) {
-        case LabelType.Low:
-          return '<b>Min price:</b> ' + value + '€';
-        case LabelType.High:
-          return '<b>Max price:</b> ' + value + '€';
-        default:
-          return value + '€';
-      }
-    }
-  };
-
-
-
+  optionsSelect: Array<any>;
+  habitaciones: Habitacion[] = HABITACIONES;
+  vistas: string[];
   habitaciones$: Observable<Habitacion[]>;
   total$: Observable<number>;
+
+  ngOnInit() {
+    this.optionsSelect = [
+      { value: '1', label: 'Option 1' },
+      { value: '2', label: 'Option 2' },
+      { value: '3', label: 'Option 3' },
+      ];
+    this.vistas = ObtenerVistas(this.habitaciones);
+  }
   
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
@@ -57,7 +69,24 @@ export class HabitacionesComponent implements OnInit {
     this.service.sortDirection = direction;
   }
 
-  ngOnInit() {
-  }
+  minValue: number = 0;
+  maxValue: number = precioMaximo(this.habitaciones);
+  options: Options = {
+    floor: this.minValue,
+    ceil: this.maxValue,
+    translate: (value: number, label: LabelType): string => {
+      switch (label) {
+        case LabelType.Low:
+          return '<b>Min price:</b> ' + value + '€';
+        case LabelType.High:
+          return '<b>Max price:</b> ' + value + '€';
+        default:
+          return value + '€';
+      }
+    }
+  };
+
+
+  
 
 }
