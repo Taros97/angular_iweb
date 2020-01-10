@@ -27,6 +27,7 @@ import { NgbdSortableHeader } from './_directives/sortable.directive';
 
 import localeEs from '@angular/common/locales/es';
 import { registerLocaleData } from '@angular/common';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 registerLocaleData(localeEs, 'es');
 
@@ -39,7 +40,8 @@ registerLocaleData(localeEs, 'es');
     NgMetro4Module,
     Ng5SliderModule,
     NgbModule,
-    CommonModule
+    CommonModule,
+    BrowserAnimationsModule
   ],
   declarations: [
     AppComponent,
