@@ -1,33 +1,92 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { Options, LabelType } from 'ng5-slider';
+import { HABITACIONES } from '@/_mockups/mock-habitaciones';
+import { Habitacion } from '@/_models';
+import { HabitacionService } from '@/_services/habitacion.service';
+import { Observable } from 'rxjs';
+import { NgbdSortableHeader, SortEvent } from '@/_directives/sortable.directive';
+import { DecimalPipe } from '@angular/common';
+
+
+function precioMaximo(habitaciones: Habitacion[]): number{
+  var max = 0;
+  for(let habitacion of habitaciones){
+    if(habitacion.precio > max){
+      max = habitacion.precio;
+    }
+  }
+  return max;
+}
+
+function ObtenerVistas(habitaciones: Habitacion[]){
+  var vistas: string[] = [];
+  for(let habitacion of habitaciones){
+    if(!vistas.includes(habitacion.vistas)){
+      vistas.push(habitacion.vistas);
+    }
+  }
+  return vistas;
+}
 
 @Component({
   selector: 'app-habitaciones',
   templateUrl: './habitaciones.component.html',
-  styleUrls: ['./habitaciones.component.css']
+  styleUrls: ['./habitaciones.component.css'],
+  providers: [HabitacionService, DecimalPipe]
 })
 export class HabitacionesComponent implements OnInit {
+  optionsSelect: Array<any>;
+  habitaciones: Habitacion[] = HABITACIONES;
+  vistas: string[];
+  habitaciones$: Observable<Habitacion[]>;
+  total$: Observable<number>;
 
-  constructor() { }
+  ngOnInit() {
+    this.optionsSelect = [
+      { value: '1', label: 'Option 1' },
+      { value: '2', label: 'Option 2' },
+      { value: '3', label: 'Option 3' },
+      ];
+    this.vistas = ObtenerVistas(this.habitaciones);
+  }
+  
+  @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
-  minValue: number = 100;
-  maxValue: number = 400;
+  constructor(public service: HabitacionService) {
+    this.habitaciones$ = service.habitaciones$;
+    this.total$ = service.total$;
+  }
+
+  onSort({column, direction}: SortEvent) {
+    // resetting other headers
+    this.headers.forEach(header => {
+      if (header.sortable !== column) {
+        header.direction = '';
+      }
+    });
+
+    this.service.sortColumn = column;
+    this.service.sortDirection = direction;
+  }
+
+  minValue: number = 0;
+  maxValue: number = precioMaximo(this.habitaciones);
   options: Options = {
-    floor: 0,
-    ceil: 500,
+    floor: this.minValue,
+    ceil: this.maxValue,
     translate: (value: number, label: LabelType): string => {
       switch (label) {
         case LabelType.Low:
-          return '<b>Min price:</b> $' + value;
+          return '<b>Min price:</b> ' + value + '€';
         case LabelType.High:
-          return '<b>Max price:</b> $' + value;
+          return '<b>Max price:</b> ' + value + '€';
         default:
-          return '$' + value;
+          return value + '€';
       }
     }
   };
 
-  ngOnInit() {
-  }
+
+  
 
 }
