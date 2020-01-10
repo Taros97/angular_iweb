@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 
 import { fakeBackendProvider } from './_helpers';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +22,10 @@ import { HabitacionComponent } from './_components/habitacion/habitacion.compone
 import { ReservaClienteComponent } from './_components/reserva-cliente/reserva-cliente.component';
 import { AdminPanelComponent } from './_components/admin-panel/admin-panel.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import localeEs from '@angular/common/locales/es';
+import { registerLocaleData } from '@angular/common';
+
+registerLocaleData(localeEs, 'es');
 
 @NgModule({
   imports: [
@@ -51,6 +55,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    { provide: LOCALE_ID, useValue: 'es'},
     fakeBackendProvider // Esto es mientras no tengamos la api
   ],
   bootstrap: [AppComponent]
