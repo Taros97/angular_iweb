@@ -1,7 +1,7 @@
 import {Habitacion} from '@/_models';
 
 export const HABITACIONES: Habitacion[] =[
-  {codigo: 1, descripcion: 'habitacion 1', vistas: 'Mar', plazas: 3, superficie: 25, precio: 200, categoria: 'Doble', wifi: false, puntuacion: 5},
+  {codigo: 1, descripcion: 'Esta habitación cuenta con un espacio reducido para 3 personas aunque es el gusto para pasar la noche y tener algo de tranquilidad. Tiene unas preciosas vistas al mar donde podrás leer por las noches y relajarte escuchando la marea, ya que se encuentra muy próximo a la playa y mientras tienes el sonido de fondo puedes leerte un libro.', vistas: 'Mar', plazas: 3, superficie: 25, precio: 200, categoria: 'Doble', wifi: false, puntuacion: 5},
   {codigo: 2, descripcion: 'habitacion 2', vistas: 'Parque', plazas: 1, superficie: 15, precio: 80, categoria: 'Individual', wifi: false, puntuacion: 2},
   {codigo: 3, descripcion: 'habitacion 3', vistas: 'Piscina', plazas: 5, superficie: 50, precio: 350, categoria: 'Familia', wifi: true, puntuacion: 10},
   {codigo: 4, descripcion: 'habitacion 4', vistas: 'Parque', plazas: 3, superficie: 25, precio: 200, categoria: 'Doble', wifi: false, puntuacion: 3},
