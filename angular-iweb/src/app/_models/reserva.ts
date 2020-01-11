@@ -3,4 +3,5 @@ export class Reserva {
   fechaInicio: string;
   fechaFin: string;
   descripcion: string;
+  tipo: string;
 }

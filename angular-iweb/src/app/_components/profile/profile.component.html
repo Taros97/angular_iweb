@@ -1,48 +1,146 @@
 <section>
     <div class="profile">
       <div class="profileCenter">
+        
+        <!-- Datos modificables del perfil de Usuario-->
         <div class="profile-info">
-          <div class="username-info">
-            <div><span>Email: {{user.email}}</span></div>
-            <div><span>Email: {{user.email}}</span></div>
-            <div><span>Email: {{user.email}}</span></div>
-            <div><span>Email: {{user.email}}</span></div>
-            <div><span>Email: {{user.email}}</span></div>
-          </div>
-          <div class="more-info">
-            <h2>Mas info pero no se que info</h2>
-          </div>
+          <h2>Datos de Usuario</h2>
+          <form #formName = "ngForm">
+            <fieldset [disabled]="!edit">
+
+              <div class="form-row">
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" >Nombre</span>
+                    </div>
+                    <input type="input-group-text" class="form-control" placeholder="{{user.nombre}}" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" >Apellidos</span>
+                    </div>
+                    <input type="input-group-text" class="form-control" placeholder="{{user.apellidos}}" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" >DNI</span>
+                    </div>
+                    <input type="input-group-text" class="form-control" placeholder="{{user.dni}}" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" >Email &nbsp; <i class="fas fa-at"></i></span>
+                    </div>
+                    <input type="input-group-text" class="form-control" placeholder="{{user.email}}" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" >Teléfono &nbsp; <i class="fas fa-mobile-alt"></i></span>
+                    </div>
+                    <input type="input-group-text" class="form-control" placeholder="{{user.telefono}}" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col col-md-3">
+                  <div class="input-group mb-3 ">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" >Nacionalidad</span>
+                    </div>
+                    <input type="input-group-text" class="form-control" placeholder="{{user.nacionalidad}}" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" >Dirección</span>
+                    </div>
+                    <input type="input-group-text" class="form-control" placeholder="{{user.direccion}}" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" >Contraseña</span>
+                    </div>
+                    <input type="password" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+              </div>
+
+            </fieldset>
+            <button class="btn btn-primary"  (click)="edit=!edit">Editar</button>
+            <button class="btn btn-primary"  (click)="edit=!edit">Aceptar</button>
+          </form>
         </div>
+
+        <!-- Tabla de Reservas del usuario-->
         <div class="profile-bookings">
-          <h2>Reservas</h2>
           <div class="bookings-center">
-            <table class="table table-hover">
-              <thead>
-              <tr>
-                  <th>Codigo</th>
-                  <th>Fecha Inicio</th>
-                  <th>Fecha Fin</th>
-                  <th>Descripcion</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                  <td>1</td>
-                  <td>02-12-2019</td>
-                  <td>05-12-2019</td>
-                  <td>Descripcion</td>
-              </tr>
-              <tr>
-                  <td>2</td>
-                  <td>02-12-2020</td>
-                  <td>06-12-2020</td>
-                  <td>Descripcion</td>
-              </tr>
-              </tbody>
-          </table>
+            <h2>Historial de Reservas</h2>
+            <form>
+              <div class="input-group grupo">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">
+                    <i class="fas fa-search"></i>
+                  </span>
+                </div>
+                <div class="buscador">
+                  <!--<input matInput type="text" class="form-control" placeholder="Buscador..." aria-describedby="basic-addon1">-->
+                  <input matInput class="form-control" type="text" placeholder="Buscador..." aria-describedby="basic-addon1"
+                    name="searchTerm" [(ngModel)]="service.searchTerm" />
+                  <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span>
+                </div>
+              </div>
+
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col" sortable="descripcion" (sort)="onSort($event)">Descripcion</th>
+                  <th scope="col" sortable="fechaInicio" (sort)="onSort($event)">Fecha de Inicio</th>
+                  <th scope="col" sortable="fechaFin" (sort)="onSort($event)">Fecha de Fin</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let reserva of reservas$ | async">
+                  <th scope="row">{{ reserva.codigo }}</th>
+                  <td>
+                    <ngb-highlight [result]="reserva.descripcion" [term]="service.searchTerm" [autoClose]="'outside'" popoverTitle="Descripcion" ngbPopover="{{reserva.descripcion}}"></ngb-highlight>
+                  </td>
+                  <td><ngb-highlight [result]="reserva.fechaInicio" [term]="service.searchTerm"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="reserva.fechaFin" [term]="service.searchTerm"></ngb-highlight></td>
+                </tr>
+                </tbody>
+              </table>
+            
+              <div class="d-flex justify-content-between p-2">
+                <ngb-pagination
+                  [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+                </ngb-pagination>
+            
+                <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+                  <option [ngValue]="2">2 items per page</option>
+                  <option [ngValue]="4">4 items per page</option>
+                  <option [ngValue]="6">6 items per page</option>
+                </select>
+              </div>
+            </form>
           </div>
         </div>
-        <div></div>
       </div>
     </div>
 </section>
