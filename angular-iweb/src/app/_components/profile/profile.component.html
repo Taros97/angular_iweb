@@ -1,6 +1,8 @@
 <section>
     <div class="profile">
       <div class="profileCenter">
+
+        <!-- Datos modificables del perfil de Usuario-->
         <div class="profile-info">
           <form #formName = "ngForm">
             <fieldset [disabled]="!edit">
@@ -84,36 +86,12 @@
           </form>
         </div>
 
+        <!-- Tabla de Reservas del usuario-->
         <div class="profile-bookings">
-          <h2>Reservas</h2>
           <div class="bookings-center">
-            <table class="table table-hover">
-              <thead>
-              <tr>
-                  <th>Codigo</th>
-                  <th>Fecha Inicio</th>
-                  <th>Fecha Fin</th>
-                  <th>Descripcion</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr>
-                  <td>1</td>
-                  <td>02-12-2019</td>
-                  <td>05-12-2019</td>
-                  <td>Descripcion</td>
-              </tr>
-              <tr>
-                  <td>2</td>
-                  <td>02-12-2020</td>
-                  <td>06-12-2020</td>
-                  <td>Descripcion</td>
-              </tr>
-              </tbody>
-          </table>
+
           </div>
         </div>
-        <div></div>
       </div>
     </div>
 </section>
