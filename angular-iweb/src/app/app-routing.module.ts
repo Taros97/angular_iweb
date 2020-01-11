@@ -13,7 +13,7 @@ const routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'habitaciones', component: HabitacionesComponent },
   { path: 'perfil', component: ProfileComponent, canActivate:[AuthGuard]},
-  { path: 'habitacion', component: HabitacionComponent },
+  { path: 'habitaciones/:id', component: HabitacionComponent },
   { path: 'reserva', component: ReservaClienteComponent, canActivate:[AuthGuard]},
   { path: 'admin', component: AdminPanelComponent, canActivate:[AuthGuard]},
   // otherwise redirect to home

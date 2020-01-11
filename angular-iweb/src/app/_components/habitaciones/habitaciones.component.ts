@@ -19,13 +19,23 @@ function precioMaximo(habitaciones: Habitacion[]): number{
 }
 
 function ObtenerVistas(habitaciones: Habitacion[]){
-  var vistas: string[] = [];
+  var aux: string[] = [];
   for(let habitacion of habitaciones){
-    if(!vistas.includes(habitacion.vistas)){
-      vistas.push(habitacion.vistas);
+    if(!aux.includes(habitacion.vistas)){
+      aux.push(habitacion.vistas);
     }
   }
+  var vistas: Vista[] = [];
+  vistas.push({value: '', viewValue: 'Todas'})
+  for(let vista of aux){
+    vistas.push({value: vista, viewValue: vista});
+  }
   return vistas;
+}
+
+export interface Vista {
+  value: string;
+  viewValue: string;
 }
 
 @Component({
@@ -35,18 +45,12 @@ function ObtenerVistas(habitaciones: Habitacion[]){
   providers: [HabitacionService, DecimalPipe]
 })
 export class HabitacionesComponent implements OnInit {
-  optionsSelect: Array<any>;
   habitaciones: Habitacion[] = HABITACIONES;
-  vistas: string[];
   habitaciones$: Observable<Habitacion[]>;
   total$: Observable<number>;
+  vistas: Vista[];
 
   ngOnInit() {
-    this.optionsSelect = [
-      { value: '1', label: 'Option 1' },
-      { value: '2', label: 'Option 2' },
-      { value: '3', label: 'Option 3' },
-      ];
     this.vistas = ObtenerVistas(this.habitaciones);
   }
   
