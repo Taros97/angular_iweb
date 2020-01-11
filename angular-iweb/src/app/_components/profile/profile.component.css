@@ -1,5 +1,5 @@
 .profile{
-  background-image: url("assets/img/profile_image.jpg");
+  /*background-image: url("assets/img/profile_image.jpg");*/
   height: 2000px;
   display: flex;
 }
@@ -11,7 +11,8 @@
   margin-right: 15%;
   margin-bottom: 15%;
   height: 60%;
-  background-color:rgba(0, 0, 0, 0.5);
+  /*background-color:rgba(0, 0, 0, 0.5);*/
+  border: 3px solid blue;
 }
 
 .profile-info{
@@ -21,54 +22,20 @@
   margin-left: 5%;
   margin-right: 5%;
   margin-bottom: 5%;
-  background-color:rgba(255, 255, 255, 0.1);
+  /*background-color:rgba(255, 255, 255, 0.1);*/
 }
 
-thead{
-  background-color:rgba(128, 128, 128, 0.8);
-}
-
-tbody{
-  background-color:rgba(128, 128, 128, 0.7);
-}
-tr{color: white}
 .profile-bookings{
   height: 50%;
   width: 90%;
   margin-left: 5%;
   margin-right: 5%;
   margin-bottom: 5%;
+  border: 3px solid red;
 }
-
-.bookings-center{
-  margin: 1%;
-  float: left;
-  height: 90%;
-  width: 98%;
+.nowrap {
+  white-space: nowrap;
 }
-
-.username-info{
-  margin: 1%;
-  float: left;
-  height: 90%;
-  width: 58%;
-}
-
-.more-info{
-  margin: 1%;
-  float: right;
-  height: 90%;
-  width: 38%;
-}
-
-h3{
-  color:white;
-}
-
-h2{
-  color:white;
-}
-
-span{
-  color: white;
+button{
+  margin-right: 5px;
 }

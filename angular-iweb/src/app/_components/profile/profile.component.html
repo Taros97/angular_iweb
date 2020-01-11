@@ -2,17 +2,88 @@
     <div class="profile">
       <div class="profileCenter">
         <div class="profile-info">
-          <div class="username-info">
-            <div><span>Email: {{user.email}}</span></div>
-            <div><span>Email: {{user.email}}</span></div>
-            <div><span>Email: {{user.email}}</span></div>
-            <div><span>Email: {{user.email}}</span></div>
-            <div><span>Email: {{user.email}}</span></div>
-          </div>
-          <div class="more-info">
-            <h2>Mas info pero no se que info</h2>
-          </div>
+          <form #formName = "ngForm">
+            <fieldset [disabled]="!edit">
+
+              <div class="form-row">
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" >Nombre</span>
+                    </div>
+                    <input type="input-group-text" class="form-control" placeholder="{{user.nombre}}" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" >Apellidos</span>
+                    </div>
+                    <input type="input-group-text" class="form-control" placeholder="{{user.apellidos}}" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" >DNI</span>
+                    </div>
+                    <input type="input-group-text" class="form-control" placeholder="{{user.dni}}" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" >Email &nbsp; <i class="fas fa-at"></i></span>
+                    </div>
+                    <input type="input-group-text" class="form-control" placeholder="{{user.email}}" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" >Teléfono &nbsp; <i class="fas fa-mobile-alt"></i></span>
+                    </div>
+                    <input type="input-group-text" class="form-control" placeholder="{{user.telefono}}" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col col-md-3">
+                  <div class="input-group mb-3 ">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" >Nacionalidad</span>
+                    </div>
+                    <input type="input-group-text" class="form-control" placeholder="{{user.nacionalidad}}" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" >Dirección</span>
+                    </div>
+                    <input type="input-group-text" class="form-control" placeholder="{{user.direccion}}" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="col">
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1" >Contraseña</span>
+                    </div>
+                    <input type="password" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
+                  </div>
+                </div>
+              </div>
+
+            </fieldset>
+            <button class="btn btn-primary"  (click)="edit=!edit">Editar</button>
+            <button class="btn btn-primary"  (click)="edit=!edit">Aceptar</button>
+          </form>
         </div>
+
         <div class="profile-bookings">
           <h2>Reservas</h2>
           <div class="bookings-center">
