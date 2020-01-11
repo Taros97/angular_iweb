@@ -7,53 +7,50 @@
         </span>
       </div>
       <div class="buscador">
-        <!--<input matInput type="text" class="form-control" placeholder="Buscador..." aria-describedby="basic-addon1">-->
-        <input matInput class="form-control" type="text" placeholder="Buscador..." aria-describedby="basic-addon1"
+        <input matInput class="form-control" type="text" placeholder="Buscador descripcion o categoria" aria-describedby="basic-addon1"
           name="searchTerm" [(ngModel)]="service.searchTerm" />
-        <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span>
       </div>
     </div>
     <div class="filtrarBusqueda">
       Filtrar tu búsqueda
     </div>
     <div class="exterior">
-      <div class="tipo">
-        <select class="form-control browser-default custom-select">
-          <option value="" selected>Elige un tipo...</option>
-          <option>Solo alojamiento</option>
-          <option>Alojamiento y desayuno</option>
-          <option>Media pensión</option>
-          <option>Pensión completa</option>
-        </select>
+      <div class="vista">
+          <mat-form-field>
+            <mat-label>Vistas</mat-label>
+            <mat-select [(ngModel)]="service.filterVista">
+              <mat-option *ngFor="let vista of vistas" [value]="vista.value">
+                {{vista.viewValue}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
       </div>
-      <div class="fila">
-        <div class="columna-izq">
-          <!--<mdb-select [options]="optionsSelect" placeholder="Choose your option"></mdb-select>
-          <select *ngFor="let vista of vistas" class="form-control browser-default custom-select">
-            <option value="" selected>Elige una vista...</option>
-            <option value={{vista}}>
-              {{vista}}
-            </option>
-          </select>-->
-        </div>
-        <div class="columna-der">
-          <input matInput class="form-control" type="number" placeholder="plazas" name="filterPlazas" [(ngModel)]="service.filterPlazas">
-        </div>
+      <div class="plazas">
+        <mat-form-field>
+          <mat-label>Plazas</mat-label>
+          <input matInput class="form-control" placeholder="plazas" name="filterPlazas" [(ngModel)]="service.filterPlazas">
+        </mat-form-field>
       </div>
       <div class="barra">
-        <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"></ng5-slider>
+          <mat-label>Precio</mat-label>
+          <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options" [(ngModel)]="service.filterPrecio"></ng5-slider>
       </div>
       <div class="wifi">
-        <input type="checkbox" [ngModel]="false"> Wi-Fi
+        <mat-checkbox matInput type="checkbox" name="filterWifi" [(ngModel)]="service.filterWifi"> Wi-Fi</mat-checkbox>
       </div>
-      <div class="rating">
-        <ngb-rating [(rate)]="currentRate"></ngb-rating>
+      <div class="puntuacion">
+        <div>
+          <label>Puntuación:</label>
+        </div>
+        <div>
+          <ngb-rating [(rate)]="currentRate"name="filterPuntuacion" [(ngModel)]="service.filterPuntuacion" ></ngb-rating>
+        </div>
       </div>
     </div>
   </div>
   <div class="tabla">
     <form>
-      <table class="table table-striped">
+      <table class="table table-striped table-hover table-fixed">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -61,33 +58,26 @@
             <th scope="col">Vista</th>
             <th scope="col">Plazas</th>
             <th scope="col">Superficie</th>
-            <th scope="col">Precio</th>
+            <th scope="col" sortable="precio" (sort)="onSort($event)">Precio</th>
             <th scope="col" sortable="categoria" (sort)="onSort($event)">categoria</th>
             <th scope="col">WiFi</th>
+            <th scope="col" sortable="puntuacion" (sort)="onSort($event)">Puntuacion</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let habitacion of habitaciones$ | async">
-            <!--<th scope="row">{{ country.id }}</th>
-                <td>
-                  <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px">
-                  <ngb-highlight [result]="country.name" [term]="service.searchTerm"></ngb-highlight>
-                </td>
-                <td><ngb-highlight [result]="country.area | number" [term]="service.searchTerm"></ngb-highlight></td>
-                <td><ngb-highlight [result]="country.population | number" [term]="service.searchTerm"></ngb-highlight></td>-->
+          <tr *ngFor="let habitacion of habitaciones$ | async" routerLink="/habitaciones/{{habitacion.codigo}}">
             <th scope="row">{{ habitacion.codigo }}</th>
             <td>
-              <ngb-highlight [result]="habitacion.descripcion" [term]="service.searchTerm"></ngb-highlight>
+              <ngb-highlight ngbPopover="{{habitacion.descripcion}}" triggers="mouseenter:mouseleave"[result]="habitacion.descripcion" [term]="service.searchTerm"></ngb-highlight>
             </td>
             <td>{{ habitacion.vistas }}</td>
-            <ngb-highlight [result]="habitacion.plazas | number" [term]="filterPlazas"></ngb-highlight>
-            <td>{{ habitacion.superficie }}</td>
-            <td>{{ habitacion.precio }}</td>
-            <td>
-              <ngb-highlight [result]="habitacion.categoria" [term]="service.searchTerm"></ngb-highlight>
-            </td>
-            <td *ngIf="habitacion.wifi">Tiene</td>
-            <td *ngIf="!habitacion.wifi">No tiene</td>
+            <td><ngb-highlight [result]="habitacion.plazas" [term]="service.filterPlazas"></ngb-highlight></td>
+            <td>{{ habitacion.superficie }} m²</td>
+            <td>{{ habitacion.precio }} <i class="fas fa-euro-sign"></i></td>
+            <td><ngb-highlight [result]="habitacion.categoria" [term]="service.searchTerm"></ngb-highlight></td>
+            <td *ngIf="habitacion.wifi"><ngb-highlight [term]="service.filterWifi"></ngb-highlight><i class="fas fa-wifi"></i></td>
+            <td *ngIf="!habitacion.wifi"><ngb-highlight [term]="service.filterWifi"></ngb-highlight><img class="wifiout" src="assets/img/wifiout.svg"></td>
+            <td><ngb-highlight [term]="service.filterPuntuacion"></ngb-highlight><ngb-rating ngbPopover="{{habitacion.puntuacion}}" triggers="mouseenter:mouseleave" [(rate)]="habitacion.puntuacion" [readonly]="true"></ngb-rating></td>
           </tr>
         </tbody>
       </table>
@@ -97,56 +87,12 @@
         </ngb-pagination>
 
         <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
-          <option [ngValue]="2">2 items per page</option>
-          <option [ngValue]="4">4 items per page</option>
           <option [ngValue]="6">6 items per page</option>
+          <option [ngValue]="8">8 items per page</option>
+          <option [ngValue]="10">10 items per page</option>
+          <option [ngValue]="12">12 items per page</option>
         </select>
       </div>
-
     </form>
-    <!--<table class="table table-striped">
-            <thead>
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Descripcion</th>
-              <th scope="col">Vista</th>
-              <th scope="col">plazas</th>
-              <th scope="col">superficie</th>
-              <th scope="col">precio</th>
-              <th scope="col">categoria</th>
-              <th scope="col">WiFi</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let habitacion of habitaciones">
-              <th scope="row">{{ habitacion.codigo }}</th>
-              <td>
-                <img [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag" class="mr-2" style="width: 20px">
-                {{ country.name }}
-              </td>
-              <td>{{ country.area | number}}</td>
-              <td>{{ country.population | number }}</td>
-              <th scope="row">{{ habitacion.codigo }}</th>
-              <td>{{ habitacion.descripcion }}</td>
-              <td>{{ habitacion.vistas }}</td>
-              <td>{{ habitacion.plazas }}</td>
-              <td>{{ habitacion.superficie }}</td>
-              <td>{{ habitacion.precio }}</td>
-              <td>{{ habitacion.categoria }}</td>
-              <td>{{ habitacion.wifi }}</td>
-            </tr>
-            </tbody>
-          </table>
-
-          <div class="d-flex justify-content-between p-2">
-            <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
-            </ngb-pagination>
-
-            <select class="custom-select" style="width: auto" [(ngModel)]="pageSize">
-              <option [ngValue]="2">2 items per page</option>
-              <option [ngValue]="4">4 items per page</option>
-              <option [ngValue]="6">6 items per page</option>
-            </select>
-          </div>-->
   </div>
 </div>

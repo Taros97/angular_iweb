@@ -7,4 +7,5 @@ export class Habitacion {
   precio: number;
   categoria: string;
   wifi: boolean;
+  puntuacion: number;
 }
