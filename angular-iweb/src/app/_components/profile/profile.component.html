@@ -1,9 +1,10 @@
 <section>
     <div class="profile">
       <div class="profileCenter">
-
+        
         <!-- Datos modificables del perfil de Usuario-->
         <div class="profile-info">
+          <h2>Datos de Usuario</h2>
           <form #formName = "ngForm">
             <fieldset [disabled]="!edit">
 
@@ -89,7 +90,55 @@
         <!-- Tabla de Reservas del usuario-->
         <div class="profile-bookings">
           <div class="bookings-center">
+            <h2>Historial de Reservas</h2>
+            <form>
+              <div class="input-group grupo">
+                <div class="input-group-prepend">
+                  <span class="input-group-text" id="basic-addon1">
+                    <i class="fas fa-search"></i>
+                  </span>
+                </div>
+                <div class="buscador">
+                  <!--<input matInput type="text" class="form-control" placeholder="Buscador..." aria-describedby="basic-addon1">-->
+                  <input matInput class="form-control" type="text" placeholder="Buscador..." aria-describedby="basic-addon1"
+                    name="searchTerm" [(ngModel)]="service.searchTerm" />
+                  <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span>
+                </div>
+              </div>
 
+              <table class="table table-striped">
+                <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col" sortable="descripcion" (sort)="onSort($event)">Descripcion</th>
+                  <th scope="col" sortable="fechaInicio" (sort)="onSort($event)">Fecha de Inicio</th>
+                  <th scope="col" sortable="fechaFin" (sort)="onSort($event)">Fecha de Fin</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let reserva of reservas$ | async">
+                  <th scope="row">{{ reserva.codigo }}</th>
+                  <td>
+                    <ngb-highlight [result]="reserva.descripcion" [term]="service.searchTerm" [autoClose]="'outside'" popoverTitle="Descripcion" ngbPopover="{{reserva.descripcion}}"></ngb-highlight>
+                  </td>
+                  <td><ngb-highlight [result]="reserva.fechaInicio" [term]="service.searchTerm"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="reserva.fechaFin" [term]="service.searchTerm"></ngb-highlight></td>
+                </tr>
+                </tbody>
+              </table>
+            
+              <div class="d-flex justify-content-between p-2">
+                <ngb-pagination
+                  [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+                </ngb-pagination>
+            
+                <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+                  <option [ngValue]="2">2 items per page</option>
+                  <option [ngValue]="4">4 items per page</option>
+                  <option [ngValue]="6">6 items per page</option>
+                </select>
+              </div>
+            </form>
           </div>
         </div>
       </div>

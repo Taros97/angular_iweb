@@ -1,8 +1,8 @@
 import {Reserva} from '@/_models';
 
 export const RESERVAS: Reserva[] =[
-  {codigo: 1, fechaInicio: '01-02-2000', fechaFin: '01-02-2000', descripcion: 'pene'},
-  {codigo: 2, fechaInicio: '01-02-2000', fechaFin: '01-02-2000', descripcion: 'pene'},
-  {codigo: 3, fechaInicio: '01-02-2000', fechaFin: '01-02-2000', descripcion: 'pene'},
-  {codigo: 4, fechaInicio: '01-02-2000', fechaFin: '01-02-2000', descripcion: 'pene'}
+  {codigo: 1, fechaInicio: '05-02-2000', fechaFin: '01-02-2000', descripcion: 'abcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyz', tipo: 'Habitacion'},
+  {codigo: 2, fechaInicio: '04-02-2000', fechaFin: '02-02-2000', descripcion: 'pene', tipo: 'Sala'},
+  {codigo: 3, fechaInicio: '03-02-2000', fechaFin: '03-02-2000', descripcion: 'pene', tipo: 'Habitacion'},
+  {codigo: 4, fechaInicio: '02-02-2000', fechaFin: '04-02-2000', descripcion: 'pene', tipo: 'Sala'}
 ]

@@ -16,7 +16,7 @@ import { NgbdSortableHeader, SortEvent } from '@/_directives/sortable.directive'
 })
 export class ProfileComponent implements OnInit {
 
-  countries$: Observable<Reserva[]>;
+  reservas$: Observable<Reserva[]>;
   total$: Observable<number>;
 
   user = USUARIO;
@@ -26,7 +26,7 @@ export class ProfileComponent implements OnInit {
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
   constructor(public service: ProfileService) {
-    this.countries$ = service.reservas$;
+    this.reservas$ = service.reservas$;
     this.total$ = service.total$;
   }
 

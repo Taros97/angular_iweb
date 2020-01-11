@@ -6,6 +6,7 @@ import { SortDirection } from '@/_directives/sortable.directive';
 
 import { Reserva } from '@/_models';
 import { RESERVAS } from '@/_mockups';
+import { HttpClient } from '@angular/common/http';
 
 interface SearchResult {
   reservas: Reserva[];
@@ -46,10 +47,17 @@ function matches(reserva: Reserva, term: string, pipe: PipeTransform) {
 })
 export class ProfileService {
 
+  // API CUANDO ESTE RELLENAR URL
+  private apiURL = '';
+  private httpReserva: Reserva[];
+
+
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
   private _reservas$ = new BehaviorSubject<Reserva[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
+
+  
 
   private _state: State = {
     page: 1,
@@ -59,7 +67,24 @@ export class ProfileService {
     sortDirection: ''
   };
 
-  constructor(private pipe: DecimalPipe) {
+  constructor(private pipe: DecimalPipe, private http: HttpClient) {
+
+    // API CUANDO ESTE
+    /*
+    this.http.get<Reserva[]>(this.apiURL).subscribe(data =>{
+      this.httpReserva = data;
+      this._search$.pipe(
+        tap(() => this._loading$.next(true)),
+        debounceTime(200),
+        switchMap(() => this._search()),
+        delay(200),
+        tap(() => this._loading$.next(false))
+      ).subscribe(result => {
+        this._reservas$.next(result.reservas);
+        this._total$.next(result.total);
+      });
+    });
+    */
     this._search$.pipe(
       tap(() => this._loading$.next(true)),
       debounceTime(200),
@@ -93,14 +118,15 @@ export class ProfileService {
 
   private _search(): Observable<SearchResult> {
     const {sortColumn, sortDirection, pageSize, page, searchTerm} = this._state;
-
     // 1. sort
+
+    // API CUANDO ESTE
+    // let reservas = sort(httpReserva, sortColumn, sortDirection);
+    // Sustituir la siguiente por esta
     let reservas = sort(RESERVAS, sortColumn, sortDirection);
-
     // 2. filter
-    reservas = reservas.filter(country => matches(country, searchTerm, this.pipe));
+    reservas = reservas.filter(reserva => matches(reserva, searchTerm, this.pipe));
     const total = reservas.length;
-
     // 3. paginate
     reservas = reservas.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
     return of({reservas, total});
