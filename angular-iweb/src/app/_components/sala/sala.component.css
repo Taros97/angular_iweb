@@ -1,0 +1,66 @@
+.todo{
+    width: 100%;
+    height: 711px;
+    position: relative;
+}
+
+.informacion{
+    position: absolute;
+    margin: 5%;
+}
+
+.galeria{
+    margin: 2%;
+    width: 40%;
+    height: 40%;
+    float:left;
+}
+
+.detalles{
+    float: left;
+    margin:2%;
+    width: 50%;
+    height: 40%;
+}
+
+.descripcion{
+    float:left;
+    width: 80%;
+    height: 100%;
+    margin-top: 4%;
+}
+
+.imagen{
+    height: 22px;
+    width: 22px;
+  }
+
+table{
+    width: 80%;
+}
+
+.atras{
+    margin-left: 10%;
+}
+
+.subrayado{
+    text-decoration-line: underline;
+}
+
+.sepIcon{
+    margin-right: 0.5%;
+}
+
+.colVista{
+    float: left;
+    height: 10%;
+    width: 10%;
+}
+
+.fila{
+    margin-top: 3%;
+    float: left;
+    width: 94%;
+    height: 1%;
+}
+  

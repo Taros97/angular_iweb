@@ -3,7 +3,7 @@ import { Habitacion } from '@/_models';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { HabitacionService } from '@/_services/habitacion.service';
 import { NgbCarouselConfig, NgbSlideEvent, NgbCarousel, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
-import { DecimalPipe } from '@angular/common';
+import { DecimalPipe, Location } from '@angular/common';
 
 @Component({
   selector: 'app-habitacion',
@@ -26,7 +26,8 @@ export class HabitacionComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private router: Router,
     private service: HabitacionService,
-    config: NgbCarouselConfig) {
+    config: NgbCarouselConfig,
+    private locate: Location) {
       config.interval = 3000;
      }
 
@@ -59,5 +60,9 @@ export class HabitacionComponent implements OnInit {
     if (this.pauseOnIndicator && !slideEvent.paused && slideEvent.source === NgbSlideEventSource.INDICATOR) {
       this.togglePaused();
     }
+  }
+
+  goBack(){
+    this.locate.back();
   }
 }

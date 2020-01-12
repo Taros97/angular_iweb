@@ -1,1 +1,120 @@
-<p>salas works!</p>
+<div class="todo">
+    <div class="filtros form-group border">
+        <div class="input-group grupo">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1">
+                    <i class="fas fa-search"></i>
+                </span>
+            </div>
+            <div class="buscador">
+                <input matInput class="form-control" type="text" placeholder="Buscador para la descripcion"
+                    aria-describedby="basic-addon1" name="searchTerm" [(ngModel)]="service.searchTerm" />
+            </div>
+        </div>
+        <div class="filtrarBusqueda">
+            Filtrar tu búsqueda
+        </div>
+        <div class="exterior">
+            <div class="mesasFiltro">
+                <mat-form-field>
+                    <mat-label>Mesas</mat-label>
+                    <input matInput class="form-control" placeholder="mesas" name="filterMesas"
+                        [(ngModel)]="service.filterMesas">
+                </mat-form-field>
+            </div>
+            <div class="asientosFiltro">
+                <mat-form-field>
+                    <mat-label>Asientos</mat-label>
+                    <input matInput class="form-control" placeholder="asientos" name="filterAsientos"
+                        [(ngModel)]="service.filterAsientos">
+                </mat-form-field>
+            </div>
+            <div class="barra">
+                <mat-label>Precio</mat-label>
+                <ng5-slider [(value)]="minValue" [(highValue)]="maxValue" [options]="options"
+                    [(ngModel)]="service.filterPrecio"></ng5-slider>
+            </div>
+            <div class="puntuacion">
+                <div>
+                    <label>Puntuación:</label>
+                </div>
+                <div>
+                    <ngb-rating [(rate)]="currentRate" name="filterPuntuacion" [(ngModel)]="service.filterPuntuacion">
+                    </ngb-rating>
+                </div>
+            </div>
+            <div class="proyectorFiltro">
+                <mat-checkbox matInput type="checkbox" name="filterProyector" [(ngModel)]="service.filterProyector"> Proyector
+                </mat-checkbox>
+            </div>
+            <div class="microfonoFiltro">
+                <mat-checkbox matInput type="checkbox" name="filterMicrofono" [(ngModel)]="service.filterMicrofono"> Micrófono
+                </mat-checkbox>
+            </div>
+            <div>
+                <mat-checkbox matInput type="checkbox" name="filterPizarra" [(ngModel)]="service.filterPizarra"> Pizarra
+                </mat-checkbox>
+            </div>
+        </div>
+    </div>
+    <div class="tabla">
+        <form>
+            <table class="table table-striped table-hover table-fixed">
+                <thead>
+                    <tr>
+                        <th class="codigo" scope="col">#</th>
+                        <th scope="col" sortable="descripcion" (sort)="onSort($event)">Descripcion</th>
+                        <th class="proyector" scope="col">Proyector</th>
+                        <th class="microfono" scope="col">Microfono</th>
+                        <th class="precio" scope="col" sortable="precio" (sort)="onSort($event)">Precio</th>
+                        <th class="pizarra" scope="col">Pizarra</th>
+                        <th class="mesas" scope="col">Mesas</th>
+                        <th class="asientos" scope="col">Asientos</th>
+                        <th class="puntuacionCol" scope="col" sortable="puntuacion" (sort)="onSort($event)">Puntuacion
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let sala of salas$ | async" routerLink="/salas/{{sala.codigo}}">
+                        <th class="codigo" scope="row">{{ sala.codigo }}</th>
+                        <td class="descripcion">
+                            <ngb-highlight [result]="sala.descripcion" [term]="service.searchTerm"></ngb-highlight>
+                        </td>
+                        <td class="proyector" *ngIf="sala.proyector"><img class="imagen"
+                                src="assets/img/icons/proyectoron.svg"></td>
+                        <td class="proyector" *ngIf="!sala.proyector"><img class="imagen"
+                                src="assets/img/icons/proyectoroff.png"></td>
+                        <td class="microfono" *ngIf="sala.microfono"><img class="imagen"
+                                src="assets/img/icons/microfonoon.svg"></td>
+                        <td class="microfono" *ngIf="!sala.microfono"><img class="imagen"
+                                src="assets/img/icons/microfonooff.png"></td>
+                        <td class="precio">{{ sala.precio }} <i class="fas fa-euro-sign"></i></td>
+                        <td class="pizarra" *ngIf="sala.pizarra"><img class="imagen"
+                                src="assets/img/icons/pizarraon.png"></td>
+                        <td class="pizarra" *ngIf="!sala.pizarra"><img class="imagen"
+                                src="assets/img/icons/pizarraoff.png"></td>
+                        <td class="mesas">{{ sala.mesas }}</td>
+                        <td class="asientos">{{ sala.asientos }}</td>
+                        <td>
+                            <ngb-highlight [term]="service.filterPuntuacion"></ngb-highlight>
+                            <ngb-rating ngbPopover="{{sala.puntuacion}}" triggers="mouseenter:mouseleave"
+                                [(rate)]="sala.puntuacion" [readonly]="true"></ngb-rating>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="d-flex justify-content-between p-2">
+                <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+                </ngb-pagination>
+
+                <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+                    <option [ngValue]="6">6 items per page</option>
+                    <option [ngValue]="8">8 items per page</option>
+                    <option [ngValue]="10">10 items per page</option>
+                    <option [ngValue]="12">12 items per page</option>
+                </select>
+            </div>
+        </form>
+    </div>
+</div>

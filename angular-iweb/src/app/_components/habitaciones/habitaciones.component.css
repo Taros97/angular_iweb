@@ -15,6 +15,10 @@
     position: absolute;
 }
 
+.tablaCodigo{
+  width: 4%;
+}
+
 .grupo{
     left: 4%;
     top: 2%;
@@ -86,7 +90,16 @@ th{
   max-width: 50px;
 }
 
-td{
+.tablaVista, .tablaPlazas, .tablaPrecio, .tablaCategoria{
+  width: 7%;
+}
+
+.tablaWifi{
+  width: 7%;
+  text-align: center;
+}
+
+.tablaDescripcion{
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;

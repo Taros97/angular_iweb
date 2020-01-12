@@ -49,7 +49,7 @@
                   <tr>
                     <th>{{ habitacion.precio }} <i class="fas fa-euro-sign"></i></th> 
                     <th *ngIf="habitacion.wifi"><i class="fas fa-wifi"></i></th>
-                    <th *ngIf="!habitacion.wifi"><img class="wifiout" src="assets/img/wifiout.svg"></th>
+                    <th *ngIf="!habitacion.wifi"><img class="wifiout" src="assets/img/icons/wifiout.svg"></th>
                     <th>{{ habitacion.categoria }}</th>
                   </tr>
                 </tbody>
@@ -60,6 +60,7 @@
               </div>
               <div class="fila">
                 <button type="button" class="btn btn-primary">Reservar</button>
+                <button type="button" class="atras btn btn-secondary" (click)="goBack()">Volver atrás</button>
               </div>
             </div>
             
