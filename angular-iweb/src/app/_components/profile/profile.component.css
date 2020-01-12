@@ -64,9 +64,7 @@ th[sortable].desc:before {
   -ms-transform: rotate(180deg);
 }
 
-th{
-  max-width: 50px;
-}
+
 td{
   overflow: hidden;
 }

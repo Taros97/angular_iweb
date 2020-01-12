@@ -21,7 +21,7 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { HabitacionComponent } from './_components/habitacion/habitacion.component';
 import { ReservaClienteComponent } from './_components/reserva-cliente/reserva-cliente.component';
 import { AdminPanelComponent } from './_components/admin-panel/admin-panel.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { NgbdSortableHeader } from './_directives/sortable.directive';
 
@@ -31,6 +31,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatInputModule, MatCardModule } from '@angular/material';
+import { AdminSalasComponent } from './_components/admin-panel/admin-salas/admin-salas.component';
+import { AdminHabitacionesComponent } from './_components/admin-panel/admin-habitaciones/admin-habitaciones.component';
+import { MatSidenavModule } from '@angular/material/sidenav'; 
 import { SalasComponent } from './_components/salas/salas.component';
 import { SalaComponent } from './_components/sala/sala.component';
 import { RecepcionistaReservaComponent } from './_components/recepcionista-reserva/recepcionista-reserva.component';
@@ -52,7 +55,8 @@ registerLocaleData(localeEs, 'es');
     MatSelectModule,
     MatCheckboxModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
+    MatSidenavModule
   ],
   declarations: [
     AppComponent,
@@ -69,6 +73,8 @@ registerLocaleData(localeEs, 'es');
     ReservaClienteComponent,
     AdminPanelComponent,
     NgbdSortableHeader,
+    AdminSalasComponent,
+    AdminHabitacionesComponent,
     SalasComponent,
     SalaComponent,
     RecepcionistaReservaComponent

@@ -1,7 +1,7 @@
 export class Reserva {
   codigo: number;
-  fechaInicio: string;
-  fechaFin: string;
+  fechaInicio: Date;
+  fechaFin: Date;
   descripcion: string;
   tipo: string;
 }
