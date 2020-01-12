@@ -1,18 +1,18 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
-import { Habitacion } from '@/_models';
+import { Sala } from '@/_models';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { HabitacionService } from '@/_services/habitacion.service';
+import { SalaService } from '@/_services';
 import { NgbCarouselConfig, NgbSlideEvent, NgbCarousel, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { DecimalPipe, Location } from '@angular/common';
 
 @Component({
-  selector: 'app-habitacion',
-  templateUrl: './habitacion.component.html',
-  styleUrls: ['./habitacion.component.css'],
-  providers: [HabitacionService, DecimalPipe, NgbCarouselConfig]
+  selector: 'app-sala',
+  templateUrl: './sala.component.html',
+  styleUrls: ['./sala.component.css'],
+  providers: [SalaService, DecimalPipe, NgbCarouselConfig]
 })
-export class HabitacionComponent implements OnInit {
-  habitacion : Habitacion
+export class SalaComponent implements OnInit {
+  sala : Sala
   images = [700, 533, 807, 124].map((n) => `https://picsum.photos/id/${n}/900/500`);
 
   paused = false;
@@ -25,7 +25,7 @@ export class HabitacionComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
     private router: Router,
-    private service: HabitacionService,
+    private service: SalaService,
     config: NgbCarouselConfig,
     private locate: Location) {
       config.interval = 3000;
@@ -36,7 +36,7 @@ export class HabitacionComponent implements OnInit {
     this.route.params.subscribe(params => {
       id = params['id']; 
    });
-    this.habitacion = this.service.getHabitacion(parseInt(id));
+    this.sala = this.service.getSala(parseInt(id));
   }
 
   arrayOne(n: number): any[] {

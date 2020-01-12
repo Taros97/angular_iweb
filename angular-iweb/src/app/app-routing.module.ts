@@ -7,6 +7,7 @@ import { ReservaClienteComponent} from './_components';
 
 import { AdminPanelComponent, AdminSalasComponent, AdminHabitacionesComponent} from './_components';
 import { AuthGuard } from './_helpers';
+import { SalasComponent, SalaComponent } from './_components';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -17,7 +18,6 @@ const routes: Routes = [
   { path: 'perfil', component: ProfileComponent, canActivate:[AuthGuard]},
   { path: 'habitaciones/:id', component: HabitacionComponent },
   { path: 'reserva', component: ReservaClienteComponent, canActivate:[AuthGuard]},
-  
   { path: 'admin', component: AdminPanelComponent, canActivate:[AuthGuard],
   children: [
       { path: '', redirectTo: 'salas', pathMatch: 'full' },
@@ -25,6 +25,8 @@ const routes: Routes = [
       { path: 'habitaciones', component: AdminHabitacionesComponent },
 
   ]},
+  { path: 'salas', component: SalasComponent },
+  { path: 'salas/:id', component: SalaComponent },
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
 ];
