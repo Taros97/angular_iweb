@@ -1,5 +1,4 @@
-import {User} from '@/_models';
-
+import {User, Role} from '@/_models';
 export const USUARIO: User = {
   email: 'email@servicio.com',
   nombre: 'Pepe',
@@ -9,6 +8,7 @@ export const USUARIO: User = {
   password: '123456',
   dni: '123456789Z',
   nacionalidad: 'Atlantico',
+  role: Role.User,
   token: ''
 }
 

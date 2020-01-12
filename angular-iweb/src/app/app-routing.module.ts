@@ -8,9 +8,10 @@ import { ReservaClienteComponent} from './_components';
 import { AdminPanelComponent, AdminSalasComponent, AdminHabitacionesComponent} from './_components';
 import { AuthGuard } from './_helpers';
 import { SalasComponent, SalaComponent } from './_components';
+import { Role } from '@/_models'
 
 const routes: Routes = [
-  { path: '', component: HomeComponent, canActivate: [AuthGuard] },
+  { path: '', component: HomeComponent},
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'about', component: AboutComponent },
@@ -18,7 +19,7 @@ const routes: Routes = [
   { path: 'perfil', component: ProfileComponent, canActivate:[AuthGuard]},
   { path: 'habitaciones/:id', component: HabitacionComponent },
   { path: 'reserva', component: ReservaClienteComponent, canActivate:[AuthGuard]},
-  { path: 'admin', component: AdminPanelComponent, canActivate:[AuthGuard],
+  { path: 'admin', component: AdminPanelComponent, canActivate:[AuthGuard], data:{ roles:[Role.Admin]},
   children: [
       { path: '', redirectTo: 'salas', pathMatch: 'full' },
       { path: 'salas', component:  AdminSalasComponent },
