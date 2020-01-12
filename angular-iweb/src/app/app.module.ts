@@ -33,6 +33,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatInputModule, MatCardModule } from '@angular/material';
 import { SalasComponent } from './_components/salas/salas.component';
 import { SalaComponent } from './_components/sala/sala.component';
+import { RecepcionistaReservaComponent } from './_components/recepcionista-reserva/recepcionista-reserva.component';
 
 
 registerLocaleData(localeEs, 'es');
@@ -69,7 +70,8 @@ registerLocaleData(localeEs, 'es');
     AdminPanelComponent,
     NgbdSortableHeader,
     SalasComponent,
-    SalaComponent
+    SalaComponent,
+    RecepcionistaReservaComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
