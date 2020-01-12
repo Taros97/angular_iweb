@@ -38,6 +38,10 @@ export class HabitacionComponent implements OnInit {
     this.habitacion = this.service.getHabitacion(parseInt(id));
   }
 
+  arrayOne(n: number): any[] {
+    return Array(n);
+  }
+
   togglePaused() {
     if (this.paused) {
       this.carousel.cycle();

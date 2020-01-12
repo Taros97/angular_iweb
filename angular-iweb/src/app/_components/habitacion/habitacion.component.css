@@ -1,20 +1,15 @@
 .todo{
     width: 100%;
-    height: 1000px;
+    height: 711px;
     position: relative;
-    background-color: gray;
 }
 
 .informacion{
     position: absolute;
     margin: 5%;
-    width: 90%;
-    height: 80%;
-    background-color: red;
 }
 
 .galeria{
-    background-color: green;
     margin: 2%;
     width: 40%;
     height: 40%;
@@ -24,21 +19,43 @@
 .detalles{
     float: left;
     margin:2%;
-    background-color: blue;
     width: 50%;
     height: 40%;
 }
 
-.fila{
-    float: left;
-    margin: 2%;
-    background-color: greenyellow;
-    width: 94%;
-    height: 5%;
+.descripcion{
+    width: 100%;
+    height: 100%;
+    margin-top: 4%;
 }
 
-.example-card {
-    width: 90%;
-    height: 80%;
-  }
+.wifiout{
+    height: 22px;
+    width: 22px;
+}
+
+table{
+    width: 80%;
+}
+
+.subrayado{
+    text-decoration-line: underline;
+}
+
+.sepIcon{
+    margin-right: 0.5%;
+}
+
+.colVista{
+    float: left;
+    height: 10%;
+    width: 10%;
+}
+
+.fila{
+    margin-top: 3%;
+    float: left;
+    width: 94%;
+    height: 1%;
+}
   

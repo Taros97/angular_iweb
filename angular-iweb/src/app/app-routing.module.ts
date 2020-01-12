@@ -5,6 +5,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent, LoginComponent, RegisterComponent, AboutComponent, HabitacionesComponent , ProfileComponent, HabitacionComponent} from './_components';
 import { ReservaClienteComponent, AdminPanelComponent} from './_components';
 import { AuthGuard } from './_helpers';
+import { SalasComponent, SalaComponent } from './_components';
 
 const routes: Routes = [
   { path: '', component: HomeComponent, canActivate: [AuthGuard] },
@@ -16,6 +17,8 @@ const routes: Routes = [
   { path: 'habitaciones/:id', component: HabitacionComponent },
   { path: 'reserva', component: ReservaClienteComponent, canActivate:[AuthGuard]},
   { path: 'admin', component: AdminPanelComponent, canActivate:[AuthGuard]},
+  { path: 'salas', component: SalasComponent },
+  { path: 'salas/:id', component: SalaComponent },
   // otherwise redirect to home
   { path: '**', redirectTo: '' }
 ];

@@ -68,7 +68,7 @@
           <tr *ngFor="let habitacion of habitaciones$ | async" routerLink="/habitaciones/{{habitacion.codigo}}">
             <th scope="row">{{ habitacion.codigo }}</th>
             <td>
-              <ngb-highlight ngbPopover="{{habitacion.descripcion}}" triggers="mouseenter:mouseleave"[result]="habitacion.descripcion" [term]="service.searchTerm"></ngb-highlight>
+              <ngb-highlight [result]="habitacion.descripcion" [term]="service.searchTerm"></ngb-highlight>
             </td>
             <td>{{ habitacion.vistas }}</td>
             <td><ngb-highlight [result]="habitacion.plazas" [term]="service.filterPlazas"></ngb-highlight></td>

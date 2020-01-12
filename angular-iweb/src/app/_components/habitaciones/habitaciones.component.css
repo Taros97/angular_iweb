@@ -82,8 +82,14 @@
   margin-top: 3%;
 }
 
+th{
+  max-width: 50px;
+}
+
 td{
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 table{
