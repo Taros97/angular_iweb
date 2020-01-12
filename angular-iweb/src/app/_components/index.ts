@@ -10,4 +10,5 @@ export * from './habitaciones/habitaciones.component';
 export * from './habitacion/habitacion.component';
 export * from './reserva-cliente/reserva-cliente.component';
 export * from './admin-panel/admin-panel.component';
-
+export * from './salas/salas.component';
+export * from './sala/sala.component';

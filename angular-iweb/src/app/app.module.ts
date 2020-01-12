@@ -31,6 +31,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatInputModule, MatCardModule } from '@angular/material';
+import { SalasComponent } from './_components/salas/salas.component';
+import { SalaComponent } from './_components/sala/sala.component';
 
 
 registerLocaleData(localeEs, 'es');
@@ -66,6 +68,8 @@ registerLocaleData(localeEs, 'es');
     ReservaClienteComponent,
     AdminPanelComponent,
     NgbdSortableHeader,
+    SalasComponent,
+    SalaComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

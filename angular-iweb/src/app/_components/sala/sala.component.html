@@ -1,0 +1,75 @@
+<div class="todo">
+    <mat-card>
+        <mat-card-header>
+          <h1><strong>Sala número {{sala.codigo}}</strong></h1>
+        </mat-card-header>
+        <div class="galeria">
+            <ngb-carousel *ngIf="images" [pauseOnHover]="pauseOnHover">
+                <ng-template *ngFor="let image of images"  ngbSlide>
+                  <div class="picsum-img-wrapper">
+                    <img [src]="image" alt="Random first slide">
+                  </div>
+                </ng-template>
+            </ngb-carousel>
+        </div>
+        <mat-card-content>
+            <div class="detalles">
+              <div class="descripcion card card-body">
+                <p class="card-text">{{sala.descripcion}}</p>
+              </div>
+              <table class="table table-borderless">
+                <thead>
+                  <tr>
+                    <th class="w-25" scope="col"><label>Proyector</label></th>
+                    <th class="w-25" scope="col"><label>Microfono</label></th>
+                    <th class="w-25" scope="col"><label>Superficie</label></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th class="proyector" *ngIf="sala.proyector"><img class="imagen"
+                      src="assets/img/icons/proyectoron.svg"></th>
+                    <th class="proyector" *ngIf="!sala.proyector"><img class="imagen"
+                      src="assets/img/icons/proyectoroff.png"></th>
+                    <th class="microfono" *ngIf="sala.microfono"><img class="imagen"
+                      src="assets/img/icons/microfonoon.svg"></th>
+                    <th class="microfono" *ngIf="!sala.microfono"><img class="imagen"
+                      src="assets/img/icons/microfonooff.png"></th>
+                    <th>{{ sala.superficie }} m²</th>
+                  </tr>
+                </tbody>
+              </table>
+              <table class="table table-borderless">
+                <thead>
+                  <tr>
+                    <th class="w-25" scope="col"><label>Precio</label></th>
+                    <th class="w-25" scope="col"><label>Pizarra</label></th>
+                    <th class="w-25" scope="col"><label>Mesas</label></th>
+                    <th class="w-25" scope="col"><label>Asientos</label></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>{{ sala.precio }} <i class="fas fa-euro-sign"></i></th> 
+                    <th class="pizarra" *ngIf="sala.pizarra"><img class="imagen"
+                      src="assets/img/icons/pizarraon.png"></th>
+                    <th class="pizarra" *ngIf="!sala.pizarra"><img class="imagen"
+                      src="assets/img/icons/pizarraoff.png"></th>
+                    <th>{{ sala.mesas }}</th>
+                    <th>{{ sala.asientos }}</th>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="puntuacion">
+                <h5>Nuestros clientes han puntuado esta sala, fíjate en el resultado</h5>
+                <ngb-rating ngbPopover="{{sala.puntuacion}}" triggers="mouseenter:mouseleave" [(rate)]="sala.puntuacion" [readonly]="true"></ngb-rating>
+              </div>
+              <div class="fila">
+                <button type="button" class="btn btn-primary">Reservar</button>
+                <button type="button" class="atras btn btn-secondary" (click)="goBack()">Volver atrás</button>
+              </div>
+            </div>
+            
+        </mat-card-content>
+      </mat-card>
+</div>
