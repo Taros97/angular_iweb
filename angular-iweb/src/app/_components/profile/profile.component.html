@@ -91,21 +91,38 @@
         <div class="profile-bookings">
           <div class="bookings-center">
             <h2>Historial de Reservas</h2>
+            <br>
             <form>
-              <div class="input-group grupo">
-                <div class="input-group-prepend">
-                  <span class="input-group-text" id="basic-addon1">
-                    <i class="fas fa-search"></i>
-                  </span>
+              <div class="form-row">
+                <div class="col ">
+                  <div class="input-group grupo">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">
+                        <i class="fas fa-search"></i>
+                      </span>
+                    </div>
+                    <div class="buscador">
+                      <!--<input matInput type="text" class="form-control" placeholder="Buscador..." aria-describedby="basic-addon1">-->
+                      <input matInput class="form-control" type="text" placeholder="Buscador..." aria-describedby="basic-addon1"
+                        name="searchTerm" [(ngModel)]="service.searchTerm" />
+                    </div>
+                  </div>
                 </div>
-                <div class="buscador">
-                  <!--<input matInput type="text" class="form-control" placeholder="Buscador..." aria-describedby="basic-addon1">-->
-                  <input matInput class="form-control" type="text" placeholder="Buscador..." aria-describedby="basic-addon1"
-                    name="searchTerm" [(ngModel)]="service.searchTerm" />
-                  <span class="ml-3" *ngIf="service.loading$ | async">Loading...</span>
+                <div class="col col-md-3">
+                  <form class="form-inline">
+                    <div class="form-group">
+                      <div class="input-group">
+                        <input class="form-control" placeholder="yyyy-mm-dd"
+                               name="dp" [(ngModel)]="service.filterDate" ngbDatepicker #d="ngbDatepicker">
+                        <div class="input-group-append">
+                          <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="fa fa-calendar" aria-hidden="false"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
                 </div>
               </div>
-
               <table class="table table-striped">
                 <thead>
                 <tr>
@@ -121,8 +138,8 @@
                   <td>
                     <ngb-highlight [result]="reserva.descripcion" [term]="service.searchTerm" [autoClose]="'outside'" popoverTitle="Descripcion" ngbPopover="{{reserva.descripcion}}"></ngb-highlight>
                   </td>
-                  <td><ngb-highlight [result]="reserva.fechaInicio" [term]="service.searchTerm"></ngb-highlight></td>
-                  <td><ngb-highlight [result]="reserva.fechaFin" [term]="service.searchTerm"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="reserva.fechaInicio | date:'dd-MM-yyyy'"></ngb-highlight></td>
+                  <td><ngb-highlight [result]="reserva.fechaFin | date:'dd-MM-yyyy'"></ngb-highlight></td>
                 </tr>
                 </tbody>
               </table>

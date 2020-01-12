@@ -21,7 +21,7 @@ import { Ng5SliderModule } from 'ng5-slider';
 import { HabitacionComponent } from './_components/habitacion/habitacion.component';
 import { ReservaClienteComponent } from './_components/reserva-cliente/reserva-cliente.component';
 import { AdminPanelComponent } from './_components/admin-panel/admin-panel.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
 import { CommonModule } from '@angular/common';
 import { NgbdSortableHeader } from './_directives/sortable.directive';
 
@@ -49,7 +49,7 @@ registerLocaleData(localeEs, 'es');
     MatSelectModule,
     MatCheckboxModule,
     MatInputModule,
-    MatCardModule
+    MatCardModule,
   ],
   declarations: [
     AppComponent,
@@ -65,7 +65,7 @@ registerLocaleData(localeEs, 'es');
     HabitacionComponent,
     ReservaClienteComponent,
     AdminPanelComponent,
-    NgbdSortableHeader
+    NgbdSortableHeader,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
