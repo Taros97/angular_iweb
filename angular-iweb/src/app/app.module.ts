@@ -35,6 +35,9 @@ import { AdminSalasComponent } from './_components/admin-panel/admin-salas/admin
 import { AdminHabitacionesComponent } from './_components/admin-panel/admin-habitaciones/admin-habitaciones.component';
 import { MatSidenavModule } from '@angular/material/sidenav'; 
 import { SalasComponent } from './_components/salas/salas.component';
+import { SalaComponent } from './_components/sala/sala.component';
+import { RecepcionistaReservaComponent } from './_components/recepcionista-reserva/recepcionista-reserva.component';
+
 
 registerLocaleData(localeEs, 'es');
 
@@ -73,6 +76,8 @@ registerLocaleData(localeEs, 'es');
     AdminSalasComponent,
     AdminHabitacionesComponent,
     SalasComponent,
+    SalaComponent,
+    RecepcionistaReservaComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
