@@ -6,6 +6,7 @@ import { HabitacionService } from '@/_services/habitacion.service';
 import { Observable } from 'rxjs';
 import { NgbdSortableHeader, SortEvent } from '@/_directives/sortable.directive';
 import { DecimalPipe } from '@angular/common';
+import { NgbDateStruct, NgbCalendar } from '@ng-bootstrap/ng-bootstrap';
 
 
 function precioMaximo(habitaciones: Habitacion[]): number{
@@ -50,13 +51,15 @@ export class HabitacionesComponent implements OnInit {
   total$: Observable<number>;
   vistas: Vista[];
 
+  model: NgbDateStruct;
+
   ngOnInit() {
     this.vistas = ObtenerVistas(this.habitaciones);
   }
   
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
-  constructor(public service: HabitacionService) {
+  constructor(public service: HabitacionService, private calendar: NgbCalendar) {
     this.habitaciones$ = service.habitaciones$;
     this.total$ = service.total$;
   }
