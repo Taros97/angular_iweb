@@ -73,7 +73,6 @@ registerLocaleData(localeEs, 'es');
     AdminSalasComponent,
     AdminHabitacionesComponent,
     SalasComponent,
-    SalaComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
