@@ -31,7 +31,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatInputModule, MatCardModule } from '@angular/material';
-
+import { AdminSalasComponent } from './_components/admin-panel/admin-salas/admin-salas.component';
+import { AdminHabitacionesComponent } from './_components/admin-panel/admin-habitaciones/admin-habitaciones.component';
+import {MatSidenavModule} from '@angular/material/sidenav'; 
 
 registerLocaleData(localeEs, 'es');
 
@@ -50,6 +52,7 @@ registerLocaleData(localeEs, 'es');
     MatCheckboxModule,
     MatInputModule,
     MatCardModule,
+    MatSidenavModule
   ],
   declarations: [
     AppComponent,
@@ -66,6 +69,8 @@ registerLocaleData(localeEs, 'es');
     ReservaClienteComponent,
     AdminPanelComponent,
     NgbdSortableHeader,
+    AdminSalasComponent,
+    AdminHabitacionesComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
