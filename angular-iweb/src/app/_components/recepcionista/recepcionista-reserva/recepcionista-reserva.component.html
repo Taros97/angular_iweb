@@ -1,0 +1,69 @@
+<div class="todo">
+  <h1 class="titulo">Realizar reserva</h1>
+  <form [formGroup]="reservaRecepcionista" (ngSubmit)="onSubmit()">
+    <div class="colunma">
+      <div>
+        <mat-checkbox matInput class="habitacionCheckBox" (click)="habitaciones()" [(ngModel)]="disabledSala"
+          [disabled]="disabledHabitacion" formControlName="habitacion" type="checkbox">
+          <mat-label>Habitación</mat-label>
+        </mat-checkbox>
+        <mat-checkbox matInput class="salaCheckBox" (click)="salas()" [(ngModel)]="disabledHabitacion"
+          [disabled]="disabledSala" formControlName="sala" type="checkbox">
+          <mat-label>Sala</mat-label >
+        </mat-checkbox>
+        <mat-checkbox matInput class="bloqueadoCheckBox" formControlName="bloquear" type="checkbox">
+          <mat-label>Bloquear</mat-label >
+        </mat-checkbox>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Lista de {{tipo}}</mat-label>
+          <mat-select formControlName="reserva" [ngClass]="{ 'is-invalid': submitted && f.reserva.errors }">
+            <mat-option *ngFor="let item of lista" [value]="item.value">
+              {{item.viewValue}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-error *ngIf="submitted && errorHandling('reserva', 'required')">
+          Debes seleccionar una habitación o una sala
+        </mat-error>
+      </div>
+      <div>
+        <mat-label>Entrada: </mat-label>
+        <mat-form-field>
+          <input matInput formControlName="fechaInicio" [matDatepicker]="picker" placeholder="Fecha de entrada" [ngClass]="{ 'is-invalid': submitted && f.fechaInicio.errors }">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-error *ngIf="submitted && errorHandling('fechaInicio', 'required')">
+          Debes seleccionar una fecha inicio
+        </mat-error>
+        <mat-label>Salida: </mat-label>
+        <mat-form-field>
+          <input matInput formControlName="fechaFinal" [matDatepicker]="pickerTo" placeholder="Fecha de salida">
+          <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
+          <mat-datepicker #pickerTo></mat-datepicker>
+        </mat-form-field>
+        <mat-error *ngIf="submitted && errorHandling('fechaFinal', 'required')">
+          Debes seleccionar una fecha final
+        </mat-error>
+        <mat-error *ngIf="submitted && errorHandling('fechaFinal', 'mustMatch')">
+          Fecha final antes que fecha inicio
+        </mat-error>
+      </div>
+      <div>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input matInput class="form-control" formControlName="email" placeholder="Email">
+          <mat-error *ngIf="submitted && errorHandling('email', 'required')">
+            Debes poner un correo electrónico
+          </mat-error>
+          <mat-error *ngIf="submitted && errorHandling('email', 'email')">
+            Debes poner bien el formato
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <button type="submit" class="boton btn btn-primary">Reservar</button>
+    </div>
+  </form>
+</div>

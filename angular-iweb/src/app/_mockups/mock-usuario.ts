@@ -12,4 +12,17 @@ export const USUARIO: User = {
   token: ''
 }
 
+export const USUARIO2: User = {
+  email: 'email@gmail.com',
+  nombre: 'Pepe',
+  apellidos: 'Paco',
+  telefono: '000000000',
+  direccion: 'Calle Falsa 123',
+  password: '123456',
+  dni: '123456789Z',
+  nacionalidad: 'Atlantico',
+  role: Role.User,
+  token: ''
+}
+
 
