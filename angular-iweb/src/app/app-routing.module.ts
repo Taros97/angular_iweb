@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 
-import { HomeComponent, LoginComponent, RegisterComponent, AboutComponent, HabitacionesComponent , ProfileComponent, HabitacionComponent} from './_components';
+import { HomeComponent, LoginComponent, RegisterComponent, AboutComponent, HabitacionesComponent , ProfileComponent, HabitacionComponent, AdminHabitacionDetallesComponent} from './_components';
 import { ReservaClienteComponent} from './_components';
 
 import { AdminPanelComponent, AdminSalasComponent, AdminHabitacionesComponent} from './_components';
@@ -10,6 +10,7 @@ import { AuthGuard } from './_helpers';
 import { SalasComponent, SalaComponent } from './_components';
 import { Role } from '@/_models'
 import { RecepcionistaReservaComponent } from './_components/recepcionista-reserva/recepcionista-reserva.component';
+import { AdminSalaDetallesComponent } from './_components/admin-panel/admin-sala-detalles/admin-sala-detalles.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -21,11 +22,14 @@ const routes: Routes = [
   { path: 'habitaciones/:id', component: HabitacionComponent },
   { path: 'reserva', component: ReservaClienteComponent, canActivate:[AuthGuard]},
   { path: 'recepcionista', component: RecepcionistaReservaComponent, canActivate:[AuthGuard], data:{ roles:[Role.Recepcionista]}},
-  { path: 'admin', component: AdminPanelComponent, canActivate:[AuthGuard], data:{ roles:[Role.Admin]},
+  //{ path: 'admin', component: AdminPanelComponent, canActivate:[AuthGuard], data:{ roles:[Role.Admin]},
+  { path: 'admin', component: AdminPanelComponent,
   children: [
       { path: '', redirectTo: 'salas', pathMatch: 'full' },
       { path: 'salas', component:  AdminSalasComponent },
+      { path: 'salas/:id', component: AdminSalaDetallesComponent  },
       { path: 'habitaciones', component: AdminHabitacionesComponent },
+      { path: 'habitaciones/:id', component: AdminHabitacionDetallesComponent },
 
   ]},
   { path: 'salas', component: SalasComponent },
