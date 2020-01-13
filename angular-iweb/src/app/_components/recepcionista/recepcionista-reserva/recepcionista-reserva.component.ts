@@ -20,6 +20,7 @@ export class RecepcionistaReservaComponent implements OnInit {
   disabledSala = false;
   tipo: String = '(Selecciona habitación o sala)'
   lista: lista[];
+  regimenes: lista[];
   reservaRecepcionista: FormGroup; 
   submitted = false;
 
@@ -40,7 +41,8 @@ export class RecepcionistaReservaComponent implements OnInit {
       fechaInicio: ['', Validators.required],
       fechaFinal: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      bloquear: ['']
+      bloquear: [''],
+      regimen: ['', Validators.required]
     }, {
       validator: MustMatch('fechaInicio', 'fechaFinal')
   });
@@ -69,10 +71,14 @@ export class RecepcionistaReservaComponent implements OnInit {
   habitaciones() {
     if(!this.disabledHabitacion){
       this.lista = [];
+      this.regimenes = [];
       this.tipo = 'habitaciones';
       // Habría que hacer la llamada al servicio y del servicio a la API...
       for(var habitacion of this.serviceHabitacion.habitaciones){
         this.lista.push({value: habitacion.codigo, viewValue: habitacion.codigo.toString()});
+      }
+      for(var regimen of this.serviceHabitacion.regimenes){
+        this.regimenes.push({value: regimen.value, viewValue: regimen.viewValue});
       }
     }
   }
@@ -80,10 +86,14 @@ export class RecepcionistaReservaComponent implements OnInit {
   salas() {
     if(!this.disabledSala){
       this.lista = [];
+      this.regimenes = [];
       this.tipo = 'salas';
       // Habría que hacer la llamada al servicio y del servicio a la API...
       for(var sala of this.serviceSala.salas){
         this.lista.push({value: sala.codigo, viewValue: sala.codigo.toString()});
+      }
+      for(var regimen of this.serviceSala.regimenes){
+        this.regimenes.push({value: regimen.value, viewValue: regimen.viewValue});
       }
     }
   }

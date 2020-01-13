@@ -129,6 +129,10 @@ export class HabitacionService {
     }
   }
 
+  get regimenes() { return [{value: 0, viewValue: 'Solo Alojamiento'},
+                            {value: 1, viewValue: 'Alojamiento y Desayuno'},
+                            {value: 2, viewValue: 'Media Pensión'},
+                            {value: 3, viewValue: 'Pensión Completa'}]}
   get habitaciones() { return HABITACIONES; }
   get habitaciones$() { return this._habitaciones$.asObservable(); }
   get total$() { return this._total$.asObservable(); }

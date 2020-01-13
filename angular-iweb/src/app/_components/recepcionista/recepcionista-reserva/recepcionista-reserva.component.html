@@ -23,34 +23,51 @@
               {{item.viewValue}}
             </mat-option>
           </mat-select>
+          <mat-error *ngIf="submitted && errorHandling('reserva', 'required')">
+            Debes seleccionar una habitación o una sala
+          </mat-error>
         </mat-form-field>
-        <mat-error *ngIf="submitted && errorHandling('reserva', 'required')">
-          Debes seleccionar una habitación o una sala
-        </mat-error>
       </div>
+      <br>
+      <div>
+        <mat-form-field>
+          <mat-label>Régimen</mat-label>
+          <mat-select formControlName="regimen" [ngClass]="{ 'is-invalid': submitted && f.reserva.errors }">
+            <mat-option *ngFor="let item of regimenes" [value]="item.value">
+              {{item.viewValue}}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="submitted && errorHandling('regimen', 'required')">
+            Debes seleccionar una habitación o una sala
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <br>
       <div>
         <mat-label>Entrada: </mat-label>
         <mat-form-field>
           <input matInput formControlName="fechaInicio" [matDatepicker]="picker" placeholder="Fecha de entrada" [ngClass]="{ 'is-invalid': submitted && f.fechaInicio.errors }">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="submitted && errorHandling('fechaInicio', 'required')">
+            Debes seleccionar una fecha inicio
+          </mat-error>
         </mat-form-field>
-        <mat-error *ngIf="submitted && errorHandling('fechaInicio', 'required')">
-          Debes seleccionar una fecha inicio
-        </mat-error>
+        <br>
         <mat-label>Salida: </mat-label>
         <mat-form-field>
           <input matInput formControlName="fechaFinal" [matDatepicker]="pickerTo" placeholder="Fecha de salida">
           <mat-datepicker-toggle matSuffix [for]="pickerTo"></mat-datepicker-toggle>
           <mat-datepicker #pickerTo></mat-datepicker>
+          <mat-error *ngIf="submitted && errorHandling('fechaFinal', 'required')">
+            Debes seleccionar una fecha final
+          </mat-error>
+          <mat-error *ngIf="submitted && errorHandling('fechaFinal', 'mustMatch')">
+            Fecha final antes que fecha inicio
+          </mat-error>
         </mat-form-field>
-        <mat-error *ngIf="submitted && errorHandling('fechaFinal', 'required')">
-          Debes seleccionar una fecha final
-        </mat-error>
-        <mat-error *ngIf="submitted && errorHandling('fechaFinal', 'mustMatch')">
-          Fecha final antes que fecha inicio
-        </mat-error>
       </div>
+      <br>
       <div>
         <mat-form-field>
           <mat-label>Email</mat-label>
