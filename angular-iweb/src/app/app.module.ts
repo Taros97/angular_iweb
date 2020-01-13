@@ -37,6 +37,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { SalasComponent } from './_components/salas/salas.component';
 import { SalaComponent } from './_components/sala/sala.component';
 import { RecepcionistaReservaComponent } from './_components/recepcionista-reserva/recepcionista-reserva.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 
 
 registerLocaleData(localeEs, 'es');
@@ -56,7 +58,9 @@ registerLocaleData(localeEs, 'es');
     MatCheckboxModule,
     MatInputModule,
     MatCardModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   declarations: [
     AppComponent,
