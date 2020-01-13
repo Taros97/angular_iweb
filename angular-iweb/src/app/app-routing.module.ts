@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 
-import { HomeComponent, LoginComponent, RegisterComponent, AboutComponent, HabitacionesComponent , ProfileComponent, HabitacionComponent} from './_components';
+import { HomeComponent, LoginComponent, RegisterComponent, AboutComponent, HabitacionesComponent , ProfileComponent, HabitacionComponent, AdminHabitacionDetallesComponent} from './_components';
 import { ReservaClienteComponent} from './_components';
 
 import { AdminPanelComponent, AdminSalasComponent, AdminHabitacionesComponent} from './_components';
@@ -12,6 +12,8 @@ import { Role } from '@/_models'
 import { RecepcionistaReservaComponent } from './_components/recepcionista/recepcionista-reserva/recepcionista-reserva.component';
 import { ListaReservasComponent } from './_components/recepcionista/lista-reservas/lista-reservas.component';
 import { RecepcionistaPanelComponent } from './_components/recepcionista/recepcionista-panel/recepcionista-panel.component';
+import { RecepcionistaReservaComponent } from './_components/recepcionista-reserva/recepcionista-reserva.component';
+import { AdminSalaDetallesComponent } from './_components/admin-panel/admin-sala-detalles/admin-sala-detalles.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -32,7 +34,9 @@ const routes: Routes = [
   children: [
       { path: '', redirectTo: 'salas', pathMatch: 'full' },
       { path: 'salas', component:  AdminSalasComponent },
+      { path: 'salas/:id', component: AdminSalaDetallesComponent  },
       { path: 'habitaciones', component: AdminHabitacionesComponent },
+      { path: 'habitaciones/:id', component: AdminHabitacionDetallesComponent },
 
   ]},
   { path: 'salas', component: SalasComponent },
