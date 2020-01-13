@@ -1,0 +1,37 @@
+.todo{
+    height: 100%;
+    width: 100%;
+}
+
+.colunma{
+    height: 90%;
+    width: 15%;
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-bottom: 5%;
+}
+
+.colunma2{
+    float:left;
+    height: 90%;
+    width: 20%;
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-bottom: 5%;
+}
+
+.habitacionCheckBox{
+    margin-right: 15%;
+}
+
+.salaCheckBox{
+    left: 5%;
+}
+
+.titulo{
+    margin-left: 2%;
+}
+
+.boton{
+    margin-top: 10%;
+}

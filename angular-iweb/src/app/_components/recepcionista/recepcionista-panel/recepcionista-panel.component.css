@@ -1,0 +1,17 @@
+.example-sidenav{
+    width: 200px;
+    padding: 10px;
+    background-color:rgba(29, 29, 29, 0.99);
+}
+
+button{
+    margin-bottom: 10px;
+}
+
+.contenido{
+    margin: 50px
+}
+
+h3{
+    color: white;
+}

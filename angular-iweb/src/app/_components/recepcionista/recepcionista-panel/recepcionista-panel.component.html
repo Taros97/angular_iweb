@@ -1,0 +1,14 @@
+<section>
+    <mat-sidenav-container class="example-container">
+        <mat-sidenav #sidenav mode="side" opened class="example-sidenav">
+            <h3>Panel de recepcionista</h3>
+            <span><button class="btn-block btn-info btn-lg" [routerLink]="['lista']">Lista de reservas</button></span>
+            <span><button class="btn-block btn-info btn-lg" [routerLink]="['reservar']">Reservar</button></span>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            <div class="contenido">
+                <router-outlet></router-outlet>
+            </div>
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</section>

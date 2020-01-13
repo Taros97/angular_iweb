@@ -55,7 +55,6 @@ export class LoginComponent implements OnInit {
             .pipe(first())
             .subscribe(
                 data => {
-                    console.log(data)
                     if(data.role === Role.Admin){
                         this.router.navigate(['admin']);
                     } else if(data.role === Role.Recepcionista) {

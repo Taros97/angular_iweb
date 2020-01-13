@@ -4,5 +4,6 @@ export * from './user.service';
 export * from './profile.service';
 export * from './sala.service';
 export * from './habitacion.service';
-export * from './admin/admin-salas.service'
-export * from './admin/admin-habitaciones.service'
+export * from './recepcionista/recep-reserva.service';
+export * from './admin/admin-salas.service';
+export * from './admin/admin-habitaciones.service';

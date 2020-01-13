@@ -22,7 +22,7 @@ import { HabitacionComponent } from './_components/habitacion/habitacion.compone
 import { ReservaClienteComponent } from './_components/reserva-cliente/reserva-cliente.component';
 import { AdminPanelComponent } from './_components/admin-panel/admin-panel.component';
 import { NgbModule, NgbDatepicker } from '@ng-bootstrap/ng-bootstrap';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DecimalPipe } from '@angular/common';
 import { NgbdSortableHeader } from './_directives/sortable.directive';
 
 import localeEs from '@angular/common/locales/es';
@@ -36,9 +36,11 @@ import { AdminHabitacionesComponent } from './_components/admin-panel/admin-habi
 import { MatSidenavModule } from '@angular/material/sidenav'; 
 import { SalasComponent } from './_components/salas/salas.component';
 import { SalaComponent } from './_components/sala/sala.component';
-import { RecepcionistaReservaComponent } from './_components/recepcionista-reserva/recepcionista-reserva.component';
+import { RecepcionistaReservaComponent } from './_components/recepcionista/recepcionista-reserva/recepcionista-reserva.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
+import { ListaReservasComponent } from './_components/recepcionista/lista-reservas/lista-reservas.component';
+import { RecepcionistaPanelComponent } from './_components/recepcionista/recepcionista-panel/recepcionista-panel.component';
 import { AdminSalaDetallesComponent } from './_components/admin-panel/admin-sala-detalles/admin-sala-detalles.component';
 import { AdminHabitacionDetallesComponent } from './_components/admin-panel/admin-habitacion-detalles/admin-habitacion-detalles.component';
 
@@ -84,6 +86,8 @@ registerLocaleData(localeEs, 'es');
     SalasComponent,
     SalaComponent,
     RecepcionistaReservaComponent,
+    ListaReservasComponent,
+    RecepcionistaPanelComponent
     AdminSalaDetallesComponent,
     AdminHabitacionDetallesComponent
   ],
@@ -91,6 +95,7 @@ registerLocaleData(localeEs, 'es');
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: LOCALE_ID, useValue: 'es'},
+    DecimalPipe,
     fakeBackendProvider // Esto es mientras no tengamos la api
   ],
   bootstrap: [AppComponent]

@@ -9,6 +9,9 @@ import { AdminPanelComponent, AdminSalasComponent, AdminHabitacionesComponent} f
 import { AuthGuard } from './_helpers';
 import { SalasComponent, SalaComponent } from './_components';
 import { Role } from '@/_models'
+import { RecepcionistaReservaComponent } from './_components/recepcionista/recepcionista-reserva/recepcionista-reserva.component';
+import { ListaReservasComponent } from './_components/recepcionista/lista-reservas/lista-reservas.component';
+import { RecepcionistaPanelComponent } from './_components/recepcionista/recepcionista-panel/recepcionista-panel.component';
 import { RecepcionistaReservaComponent } from './_components/recepcionista-reserva/recepcionista-reserva.component';
 import { AdminSalaDetallesComponent } from './_components/admin-panel/admin-sala-detalles/admin-sala-detalles.component';
 
@@ -21,9 +24,13 @@ const routes: Routes = [
   { path: 'perfil', component: ProfileComponent, canActivate:[AuthGuard]},
   { path: 'habitaciones/:id', component: HabitacionComponent },
   { path: 'reserva', component: ReservaClienteComponent, canActivate:[AuthGuard]},
-  { path: 'recepcionista', component: RecepcionistaReservaComponent, canActivate:[AuthGuard], data:{ roles:[Role.Recepcionista]}},
-  //{ path: 'admin', component: AdminPanelComponent, canActivate:[AuthGuard], data:{ roles:[Role.Admin]},
-  { path: 'admin', component: AdminPanelComponent,
+  { path: 'recepcionista', component: RecepcionistaPanelComponent, canActivate:[AuthGuard], data:{ roles:[Role.Recepcionista]},
+  children: [
+    { path: '', redirectTo: 'lista', pathMatch: 'full' },
+    { path: 'lista', component:  ListaReservasComponent },
+    { path: 'reservar', component: RecepcionistaReservaComponent },
+  ]},  
+  { path: 'admin', component: AdminPanelComponent, canActivate:[AuthGuard], data:{ roles:[Role.Admin]},
   children: [
       { path: '', redirectTo: 'salas', pathMatch: 'full' },
       { path: 'salas', component:  AdminSalasComponent },
