@@ -24,7 +24,7 @@ function ObtenerVistas(habitaciones: Habitacion[]){
   return vistas;
 }
 
-export interface Vista {
+interface Vista {
   value: string;
   viewValue: string;
 }

@@ -87,9 +87,9 @@ registerLocaleData(localeEs, 'es');
     SalaComponent,
     RecepcionistaReservaComponent,
     ListaReservasComponent,
-    RecepcionistaPanelComponent
+    RecepcionistaPanelComponent,
     AdminSalaDetallesComponent,
-    AdminHabitacionDetallesComponent
+    AdminHabitacionDetallesComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

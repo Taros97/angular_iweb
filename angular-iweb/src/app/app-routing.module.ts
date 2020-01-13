@@ -12,7 +12,6 @@ import { Role } from '@/_models'
 import { RecepcionistaReservaComponent } from './_components/recepcionista/recepcionista-reserva/recepcionista-reserva.component';
 import { ListaReservasComponent } from './_components/recepcionista/lista-reservas/lista-reservas.component';
 import { RecepcionistaPanelComponent } from './_components/recepcionista/recepcionista-panel/recepcionista-panel.component';
-import { RecepcionistaReservaComponent } from './_components/recepcionista-reserva/recepcionista-reserva.component';
 import { AdminSalaDetallesComponent } from './_components/admin-panel/admin-sala-detalles/admin-sala-detalles.component';
 
 const routes: Routes = [
