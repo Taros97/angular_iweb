@@ -58,7 +58,9 @@ export class LoginComponent implements OnInit {
                     console.log(data)
                     if(data.role === Role.Admin){
                         this.router.navigate(['admin']);
-                    } else {
+                    } else if(data.role === Role.Recepcionista) {
+                        this.router.navigate(['recepcionista']);
+                    }else{
                         this.router.navigate([this.returnUrl]);
                     }
                 },
