@@ -15,7 +15,15 @@
       </ul>
     </li>-->
   </ul>
+  
   <ul class="app-bar-menu ml-auto">
+    <li>
+      <a *ngIf="currentUser && currentUser.role == admin" routerLink="/admin">Panel de Administrador</a>
+      <a *ngIf="currentUser && currentUser.role == recepcionista" routerLink="/recepcionista">Panel de Recepcionista</a>
+    </li>
+    <li>
+      <a *ngIf="currentUser" routerLink="/perfil">Mi Perfil</a>
+    </li>
     <li>
       <a *ngIf="currentUser" (click)="logout()">Cerrar Sesión</a>
       <a *ngIf="!currentUser" routerLink="/login">Iniciar Sesión</a>
