@@ -41,6 +41,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, MatRippleModule } from '@angular/material/core';
 import { ListaReservasComponent } from './_components/recepcionista/lista-reservas/lista-reservas.component';
 import { RecepcionistaPanelComponent } from './_components/recepcionista/recepcionista-panel/recepcionista-panel.component';
+import { AdminSalaDetallesComponent } from './_components/admin-panel/admin-sala-detalles/admin-sala-detalles.component';
+import { AdminHabitacionDetallesComponent } from './_components/admin-panel/admin-habitacion-detalles/admin-habitacion-detalles.component';
 
 
 registerLocaleData(localeEs, 'es');
@@ -85,7 +87,9 @@ registerLocaleData(localeEs, 'es');
     SalaComponent,
     RecepcionistaReservaComponent,
     ListaReservasComponent,
-    RecepcionistaPanelComponent
+    RecepcionistaPanelComponent,
+    AdminSalaDetallesComponent,
+    AdminHabitacionDetallesComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
