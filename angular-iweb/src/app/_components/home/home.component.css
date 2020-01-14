@@ -1,6 +1,6 @@
 
 .titulo{
-  height: 800px;
+  height: 850px;
   background-image: url("assets/img/home_image.jpg");
 }
 
@@ -52,4 +52,8 @@
   color:rgba(255, 255, 255, 0.85);
   font-size: 48px;
   outline:none;
+}
+
+h1{
+  color: white;
 }
