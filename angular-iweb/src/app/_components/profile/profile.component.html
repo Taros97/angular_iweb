@@ -1,163 +1,209 @@
 <section>
-    <div class="profile">
-      <div class="profileCenter">
-        
-        <!-- Datos modificables del perfil de Usuario-->
-        <div class="profile-info">
-          <h2>Datos de Usuario</h2>
-          <form #formName = "ngForm">
-            <fieldset [disabled]="!edit">
+  <div class="profile">
+    <div class="profileCenter">
 
-              <div class="form-row">
-                <div class="col">
-                  <div class="input-group mb-3">
+      <!-- Datos modificables del perfil de Usuario-->
+      <div class="profile-info">
+        <h2>Datos de Usuario</h2>
+        <form [formGroup]="profileForm" #formName="ngForm">
+          <fieldset [disabled]="!edit">
+
+            <div class="form-row">
+
+              <div class="col">
+                <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <span class="input-group-text" id="basic-addon1" >Nombre</span>
+                      <span class="input-group-text" id="basic-addon1">Nombre</span>
                     </div>
-                    <input type="input-group-text" class="form-control" placeholder="{{user.nombre}}" aria-label="Username" aria-describedby="basic-addon1">
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="basic-addon1" >Apellidos</span>
+                    <input type="input-group-text" formControlName="nombre" class="form-control form-group" 
+                      [ngClass]="{ 'is-invalid': submitted && f.nombre.errors }" aria-describedby="basic-addon1">
+                    <div *ngIf="submitted && f.nombre.errors" class="invalid-feedback">
+                      <div *ngIf="f.nombre.errors.required">Nombre requerido</div>
                     </div>
-                    <input type="input-group-text" class="form-control" placeholder="{{user.apellidos}}" aria-label="Username" aria-describedby="basic-addon1">
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="basic-addon1" >DNI</span>
-                    </div>
-                    <input type="input-group-text" class="form-control" placeholder="{{user.dni}}" aria-label="Username" aria-describedby="basic-addon1">
-                  </div>
                 </div>
               </div>
-              <div class="form-row">
-                <div class="col">
-                  <div class="input-group mb-3">
+              
+
+              <div class="col">
+                <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <span class="input-group-text" id="basic-addon1" >Email &nbsp; <i class="fas fa-at"></i></span>
+                      <span class="input-group-text" id="basic-addon1">Apellidos</span>
                     </div>
-                    <input type="input-group-text" class="form-control" placeholder="{{user.email}}" aria-label="Username" aria-describedby="basic-addon1">
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="basic-addon1" >Teléfono &nbsp; <i class="fas fa-mobile-alt"></i></span>
+                    <input type="input-group-text" formControlName="apellidos" class="form-control form-group" 
+                      [ngClass]="{ 'is-invalid': submitted && f.apellidos.errors }" aria-describedby="basic-addon1">
+                    <div *ngIf="submitted && f.apellidos.errors" class="invalid-feedback">
+                      <div *ngIf="f.apellidos.errors.required">Apellidos requerida</div>
                     </div>
-                    <input type="input-group-text" class="form-control" placeholder="{{user.telefono}}" aria-label="Username" aria-describedby="basic-addon1">
-                  </div>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col col-md-3">
-                  <div class="input-group mb-3 ">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="basic-addon1" >Nacionalidad</span>
-                    </div>
-                    <input type="input-group-text" class="form-control" placeholder="{{user.nacionalidad}}" aria-label="Username" aria-describedby="basic-addon1">
-                  </div>
-                </div>
-                <div class="col">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="basic-addon1" >Dirección</span>
-                    </div>
-                    <input type="input-group-text" class="form-control" placeholder="{{user.direccion}}" aria-label="Username" aria-describedby="basic-addon1">
-                  </div>
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="col">
-                  <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="basic-addon1" >Contraseña</span>
-                    </div>
-                    <input type="password" class="form-control" aria-label="Username" aria-describedby="basic-addon1">
-                  </div>
                 </div>
               </div>
 
-            </fieldset>
-            <button class="btn btn-primary"  (click)="edit=!edit">Editar</button>
-            <button class="btn btn-primary"  (click)="edit=!edit">Aceptar</button>
-          </form>
-        </div>
 
-        <!-- Tabla de Reservas del usuario-->
-        <div class="profile-bookings">
-          <div class="bookings-center">
-            <h2>Historial de Reservas</h2>
-            <br>
-            <form>
-              <div class="form-row">
-                <div class="col ">
-                  <div class="input-group grupo">
+              <div class="col">
+                <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <span class="input-group-text" id="basic-addon1">
-                        <i class="fas fa-search"></i>
-                      </span>
+                      <span class="input-group-text" id="basic-addon1">DNI</span>
                     </div>
-                    <div class="buscador">
-                      <!--<input matInput type="text" class="form-control" placeholder="Buscador..." aria-describedby="basic-addon1">-->
-                      <input matInput class="form-control" type="text" placeholder="Buscador..." aria-describedby="basic-addon1"
-                        name="searchTerm" [(ngModel)]="service.searchTerm" />
+                    <input type="input-group-text" formControlName="dni" class="form-control form-group" 
+                      [ngClass]="{ 'is-invalid': submitted && f.dni.errors }" aria-describedby="basic-addon1">
+                    <div *ngIf="submitted && f.dni.errors" class="invalid-feedback">
+                      <div *ngIf="f.dni.errors.required">DNI Requerido</div>
                     </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+
+              <div class="col">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">Email &nbsp; <i class="fas fa-at"></i></span>
+                    </div>
+                    <input type="input-group-text" formControlName="email" class="form-control form-group" 
+                      [ngClass]="{ 'is-invalid': submitted && f.email.errors }" aria-describedby="basic-addon1">
+                    <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                      <div *ngIf="f.email.errors.required">Email Requerido</div>
+                    </div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">Teléfono &nbsp; <i class="fas fa-at"></i></span>
+                    </div>
+                    <input type="input-group-text" formControlName="telefono" class="form-control form-group" 
+                      [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }" aria-describedby="basic-addon1">
+                    <div *ngIf="submitted && f.telefono.errors" class="invalid-feedback">
+                      <div *ngIf="f.telefono.errors.required">Telefono Requerido</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+
+              <div class="col col-md-3">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">Nacionalidad</span>
+                    </div>
+                    <input type="input-group-text" formControlName="nacionalidad" class="form-control form-group" 
+                      [ngClass]="{ 'is-invalid': submitted && f.nacionalidad.errors }" aria-describedby="basic-addon1">
+                    <div *ngIf="submitted && f.nacionalidad.errors" class="invalid-feedback">
+                      <div *ngIf="f.nacionalidad.errors.required">Nacionalidad Requerido</div>
+                    </div>
+                </div>
+              </div>
+
+
+              <div class="col">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">Dirección</span>
+                    </div>
+                    <input type="input-group-text" formControlName="direccion" class="form-control form-group" 
+                      [ngClass]="{ 'is-invalid': submitted && f.direccion.errors }" aria-describedby="basic-addon1">
+                    <div *ngIf="submitted && f.direccion.errors" class="invalid-feedback">
+                      <div *ngIf="f.direccion.errors.required">Dirección Requerido</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="col">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="basic-addon1">Contraseña</span>
+                    </div>
+                    <input type="password" formControlName="password" class="form-control form-group" 
+                      [ngClass]="{ 'is-invalid': submitted && f.password.errors }" aria-describedby="basic-addon1">
+                    <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                      <div *ngIf="f.password.errors.required">Contraseña Requerido</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+
+          </fieldset>
+          <button class="btn btn-primary" (click)="edit=!edit">Editar</button>
+          <button class="btn btn-primary" (click)="onSubmit()">Aceptar</button>
+        </form>
+      </div>
+
+      <!-- Tabla de Reservas del usuario-->
+      <div class="profile-bookings">
+        <div class="bookings-center">
+          <h2>Historial de Reservas</h2>
+          <br>
+          <form>
+            <div class="form-row">
+              <div class="col ">
+                <div class="input-group grupo">
+                  <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addon1">
+                      <i class="fas fa-search"></i>
+                    </span>
+                  </div>
+                  <div class="buscador">
+                    <!--<input matInput type="text" class="form-control" placeholder="Buscador..." aria-describedby="basic-addon1">-->
+                    <input matInput class="form-control" type="text" placeholder="Buscador..."
+                      aria-describedby="basic-addon1" name="searchTerm" [(ngModel)]="service.searchTerm" />
                   </div>
                 </div>
-                <div class="col col-md-3">
-                  <form class="form-inline">
-                    <div class="form-group">
-                      <div class="input-group">
-                        <input class="form-control" placeholder="yyyy-mm-dd"
-                               name="dp" [(ngModel)]="service.filterDate" ngbDatepicker #d="ngbDatepicker">
-                        <div class="input-group-append">
-                          <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i class="fa fa-calendar" aria-hidden="false"></i>
-                          </button>
-                        </div>
+              </div>
+              <div class="col col-md-3">
+                <form class="form-inline">
+                  <div class="form-group">
+                    <div class="input-group">
+                      <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="service.filterDate"
+                        ngbDatepicker #d="ngbDatepicker">
+                      <div class="input-group-append">
+                        <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button"><i
+                            class="fa fa-calendar" aria-hidden="false"></i>
+                        </button>
                       </div>
                     </div>
-                  </form>
-                </div>
+                  </div>
+                </form>
               </div>
-              <table class="table table-striped">
-                <thead>
+            </div>
+            <table class="table table-striped">
+              <thead>
                 <tr>
                   <th scope="col">#</th>
                   <th scope="col" sortable="descripcion" (sort)="onSort($event)">Descripcion</th>
                   <th scope="col" sortable="fechaInicio" (sort)="onSort($event)">Fecha de Inicio</th>
                   <th scope="col" sortable="fechaFin" (sort)="onSort($event)">Fecha de Fin</th>
                 </tr>
-                </thead>
-                <tbody>
+              </thead>
+              <tbody>
                 <tr *ngFor="let reserva of reservas$ | async">
                   <th scope="row">{{ reserva.codigo }}</th>
                   <td>
-                    <ngb-highlight [result]="reserva.descripcion" [term]="service.searchTerm" [autoClose]="'outside'" popoverTitle="Descripcion" ngbPopover="{{reserva.descripcion}}"></ngb-highlight>
+                    <ngb-highlight [result]="reserva.descripcion" [term]="service.searchTerm" [autoClose]="'outside'"
+                      popoverTitle="Descripcion" ngbPopover="{{reserva.descripcion}}"></ngb-highlight>
                   </td>
-                  <td><ngb-highlight [result]="reserva.fechaInicio | date:'dd-MM-yyyy'"></ngb-highlight></td>
-                  <td><ngb-highlight [result]="reserva.fechaFin | date:'dd-MM-yyyy'"></ngb-highlight></td>
+                  <td>
+                    <ngb-highlight [result]="reserva.fechaInicio | date:'dd-MM-yyyy'"></ngb-highlight>
+                  </td>
+                  <td>
+                    <ngb-highlight [result]="reserva.fechaFin | date:'dd-MM-yyyy'"></ngb-highlight>
+                  </td>
                 </tr>
-                </tbody>
-              </table>
-            
-              <div class="d-flex justify-content-between p-2">
-                <ngb-pagination
-                  [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
-                </ngb-pagination>
-            
-                <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
-                  <option [ngValue]="2">2 items per page</option>
-                  <option [ngValue]="4">4 items per page</option>
-                  <option [ngValue]="6">6 items per page</option>
-                </select>
-              </div>
-            </form>
-          </div>
+              </tbody>
+            </table>
+
+            <div class="d-flex justify-content-between p-2">
+              <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+              </ngb-pagination>
+
+              <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+                <option [ngValue]="2">2 items per page</option>
+                <option [ngValue]="4">4 items per page</option>
+                <option [ngValue]="6">6 items per page</option>
+              </select>
+            </div>
+          </form>
         </div>
       </div>
     </div>
+  </div>
 </section>
