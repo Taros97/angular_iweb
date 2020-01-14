@@ -146,6 +146,9 @@ export class SalaService {
     }
   }
 
+  get regimenes() { return [{value: 0, viewValue: 'Solo sala'},
+                            {value: 1, viewValue: 'Cátering'},
+                            {value: 2, viewValue: 'Asistentes'}]}
   get salas() { return SALAS; }
   get salas$() { return this._salas$.asObservable(); }
   get total$() { return this._total$.asObservable(); }

@@ -7,3 +7,4 @@ export * from './habitacion.service';
 export * from './recepcionista/recep-reserva.service';
 export * from './admin/admin-salas.service';
 export * from './admin/admin-habitaciones.service';
+export * from './reserva-cliente.service'
