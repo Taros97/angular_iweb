@@ -78,11 +78,9 @@ export class ReservaClienteComponent implements OnInit {
 
   cambiarSeleccion(id: number) {
     if (this.reservaForm.get('tipo').value === 'habitacion') {
-      console.log('habitacion')
       this.seleccion = 'Habitación ' + id;
       this.precioFinal = (HABITACIONES[id].precio * this.temporada) + HABITACIONES[id].precio;
     } else {
-      console.log('sala')
       this.seleccion = 'Sala ' + id;
       this.precioFinal = (SALAS[id].precio * this.temporada) + SALAS[id].precio;
     }
