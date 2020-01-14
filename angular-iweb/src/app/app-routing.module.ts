@@ -36,6 +36,8 @@ const routes: Routes = [
       { path: 'salas/:id', component: AdminSalaDetallesComponent  },
       { path: 'habitaciones', component: AdminHabitacionesComponent },
       { path: 'habitaciones/:id', component: AdminHabitacionDetallesComponent },
+      { path: 'reservas', component: ListaReservasComponent },
+      { path: 'reservar', component: RecepcionistaReservaComponent },
 
   ]},
   { path: 'salas', component: SalasComponent },
