@@ -27,9 +27,6 @@
                   </div>
                   <input type="input-group-text" formControlName="apellidos" class="form-control form-group" 
                     [ngClass]="{ 'is-invalid': submitted && f.apellidos.errors }" aria-describedby="basic-addon1">
-                  <div *ngIf="submitted && f.apellidos.errors" class="invalid-feedback">
-                    <div *ngIf="f.apellidos.errors.required">Apellidos requerida</div>
-                  </div>
               </div>
             </div>
 
@@ -68,9 +65,6 @@
                   </div>
                   <input type="input-group-text" formControlName="telefono" class="form-control form-group" 
                     [ngClass]="{ 'is-invalid': submitted && f.telefono.errors }" aria-describedby="basic-addon1">
-                  <div *ngIf="submitted && f.telefono.errors" class="invalid-feedback">
-                    <div *ngIf="f.telefono.errors.required">Telefono Requerido</div>
-                  </div>
               </div>
             </div>
           </div>
@@ -83,9 +77,6 @@
                   </div>
                   <input type="input-group-text" formControlName="nacionalidad" class="form-control form-group" 
                     [ngClass]="{ 'is-invalid': submitted && f.nacionalidad.errors }" aria-describedby="basic-addon1">
-                  <div *ngIf="submitted && f.nacionalidad.errors" class="invalid-feedback">
-                    <div *ngIf="f.nacionalidad.errors.required">Nacionalidad Requerido</div>
-                  </div>
               </div>
             </div>
 
@@ -97,9 +88,6 @@
                   </div>
                   <input type="input-group-text" formControlName="direccion" class="form-control form-group" 
                     [ngClass]="{ 'is-invalid': submitted && f.direccion.errors }" aria-describedby="basic-addon1">
-                  <div *ngIf="submitted && f.direccion.errors" class="invalid-feedback">
-                    <div *ngIf="f.direccion.errors.required">Dirección Requerido</div>
-                  </div>
               </div>
             </div>
           </div>
@@ -113,6 +101,9 @@
                     [ngClass]="{ 'is-invalid': submitted && f.password.errors }" aria-describedby="basic-addon1">
                   <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
                     <div *ngIf="f.password.errors.required">Contraseña Requerido</div>
+                  </div>
+                  <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                    <div *ngIf="f.password.errors.minlength">Contraseña mínima de 6 dígitos</div>
                   </div>
               </div>
             </div>
