@@ -1,14 +1,93 @@
 <section>
-  <div class="profile">
-    <div class="profileCenter">
-      <div class="profile-info"></div>
-      <div class="profile-bookings">
-        <mat-form-field>
-          <input matInput [matDatepicker]="picker" [matDatepickerFilter]="dateFilter" placeholder="Choose a date">
-          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+  <div class="formulario">
+    <div class="Center">
+      <div class="reserva">
+        <form [formGroup]="reservaCliente" (ngSubmit)="onSubmit()">
+        <div id="formulario">
+
+          <mat-form-field class="tipo">
+            <mat-label>Selección</mat-label>
+            <mat-select formControlName="tipo" [(ngModel)]="service.tipo" [(value)]="selected"
+              [ngClass]="{ 'is-invalid': submitted && f.tipo.errors }">
+              <mat-option value="habitacion">Habitación</mat-option>
+              <mat-option value="sala">Sala</mat-option>
+            </mat-select>
+            <mat-error *ngIf="submitted && errorHandling('tipo', 'required')">
+              Debes seleccionar una habitación o una sala
+            </mat-error>
+          </mat-form-field>
+          <!--[matDatepickerFilter]="dateFilter"-->
+          <mat-form-field class="fechaInicio">
+            <input matInput [min]="minDate" [matDatepicker]="picker" ngDefaultControl formControlName="fechaInicio"
+              [ngClass]="{ 'is-invalid': submitted && f.fechaInicio.errors }" placeholder="Fecha inicio">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="submitted && errorHandling('fechaInicio', 'required')">
+              Debes seleccionar una fecha inicio
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [min]="minDate" [ngClass]="{ 'is-invalid': submitted && f.fechaFinal.errors }"
+              formControlName="fechaFinal" [matDatepicker]="picker2" placeholder="Fecha final">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+            <mat-error *ngIf="submitted && errorHandling('fechaFinal', 'required')">
+              Debes seleccionar una fecha final
+            </mat-error>
+            <mat-error *ngIf="submitted && errorHandling('fechaFinal', 'mustMatch')">
+              Fecha final antes que fecha inicio
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="item">
+            <input matInput formControlName="seleccion" [(ngModel)]="seleccion" readonly placeholder="Selección"
+              value="{{ seleccion }}">
+            <mat-error *ngIf="submitted && errorHandling('seleccion', 'mustSelector')">
+              Debes seleccionar una habitación o una sala
+            </mat-error>
+          </mat-form-field>
+          <button type="submit" class="boton btn btn-primary">Reservar</button>
+
+        </div>
+        <div id="tabla">
+          <table class=" table table-striped">
+            <thead>
+              <tr>
+                <th class="tablaIdentificador" scope="col" sortable="codigo" (sort)="onSort($event)">#</th>
+                <th class="tablaDescripcion" scope="col" sortable="descripcion" (sort)="onSort($event)">Descripcion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let lista of lista$ | async" (click)="cambiarSeleccion(lista.codigo)">
+                <th class="tablaIdentificador" scope="row">{{ lista.codigo }}</th>
+                <td class="tablaDescripcion">
+                  <ngb-highlight [result]="lista.descripcion"></ngb-highlight>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="d-flex justify-content-between p-2">
+            <ngb-pagination [collectionSize]="total$ | async" [(page)]="service.page" [pageSize]="service.pageSize">
+            </ngb-pagination>
+          </div>
+        </div>
+        <div class="pago">
+          <mat-form-field class="numeroTarjeta">
+            <input matInput #nt pattern="^[0-9]*$" formControlName="numeroTarjeta" maxlength="16" placeholder="Número de tarjeta">
+            <mat-hint align="end">{{nt.value.length}} / 16</mat-hint>
+            <mat-error *ngIf="submitted && errorHandling('numeroTarjeta', 'required')">
+              El numero de tarjeta es requerido
+            </mat-error>
+            <mat-error *ngIf="submitted && errorHandling('numeroTarjeta', 'pattern')">
+              Solo número.
+            </mat-error>
+            <mat-error *ngIf="submitted && errorHandling('numeroTarjeta', 'minlength')">
+              Son 16 números.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        </form>
       </div>
+
     </div>
   </div>
 </section>

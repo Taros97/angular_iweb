@@ -1,29 +1,69 @@
-.profile{
+.formulario{
   /*background-image: url("assets/img/profile_image.jpg");*/
   height: 1000px;
   display: flex;
 }
 
-.profileCenter{
+.Center{
   width: 70%;
   margin-top: 5%;
   margin-bottom: 15%;
   margin-left: 15%;
   margin-right: 15%;
   height: 80%;
-  border: 3px solid red;
-  background-color:rgba(0, 0, 0, 0.5);
+  background-color:rgba(0, 0, 0, 0.2);
 }
 
-.profile-info{
+.reserva{
   margin: 2%;
   height: 45%;
-  border: 3px solid blue;
+}
+
+.item{
+  margin-left: 5%;
+}
+
+table{
+  table-layout: fixed;
+}
+
+.tablaIdentificador{
+  width: 4%;
+}
+
+.tablaDescripcion{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+td{
+  overflow: hidden;
+}
+
+.tabla{
+  float: right;
+  top: 2%;
+  right: 2%;
+  width: 76%;
+  height: 100%;
+  color:rgba(255, 255, 255, 0.85);
 }
 
 
-.profile-bookings{
-  margin: 2%;
+.pago{
   height: 45%;
   border: 3px solid yellow;
+}
+
+.fechaInicio{
+  margin-right: 5%;
+}
+
+.tipo{
+  margin-right: 5%;
+}
+
+.boton{
+  margin-left: 5%;
 }

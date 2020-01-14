@@ -23,6 +23,7 @@ export class RecepcionistaReservaComponent implements OnInit {
   regimenes: lista[];
   reservaRecepcionista: FormGroup; 
   submitted = false;
+  minDate : Date;
 
   constructor(private serviceHabitacion: HabitacionService,
               private serviceSala: SalaService,
@@ -33,7 +34,9 @@ export class RecepcionistaReservaComponent implements OnInit {
   get f() { return this.reservaRecepcionista.controls; }
 
   ngOnInit() {
+    
     this.alertService.clear();
+    this.minDate = new Date();
     this.reservaRecepcionista = this.formBuilder.group({
       habitacion: [''],
       sala: [''],

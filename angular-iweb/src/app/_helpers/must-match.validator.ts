@@ -28,3 +28,21 @@ export function MustMatch(controlName: string, matchingControlName: string) {
         }
     }
 }
+
+// custom validator to check that two fields match
+export function MustSelector(controlName: string) {
+    return (formGroup: FormGroup) => {
+        const control = formGroup.controls[controlName];
+
+        if(control.value === 'Habitación o sala'){
+            console.log("habitacion o sala")
+            control.setErrors({ mustSelector: true });
+        }else if(control.value.startsWith('Habitación') || control.value.startsWith('Sala')){
+            console.log("empieza por habitacion o empieza por sala")
+            control.setErrors(null);
+        }else{
+            console.log("otro tipo de error")
+            control.setErrors({ mustSelector: true });
+        }
+    }
+}

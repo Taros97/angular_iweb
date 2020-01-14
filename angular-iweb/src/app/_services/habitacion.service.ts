@@ -114,6 +114,7 @@ export class HabitacionService {
       delay(200),
       tap(() => this._loading$.next(false))
     ).subscribe(result => {
+      
       this._habitaciones$.next(result.habitaciones);
       this._total$.next(result.total);
     });
