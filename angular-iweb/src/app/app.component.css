@@ -1,8 +1,7 @@
-.ui{
-    padding-top: 50px;
+.wrapper{
+  padding-top: 50px;
+  overflow: overlay;
+  min-height: 100%;
+  position: relative;
 }
 
-.wrap{
-  margin: 0px;
-  /*padding-bottom: 60px;*/
-}

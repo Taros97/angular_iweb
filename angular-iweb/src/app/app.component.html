@@ -17,8 +17,8 @@
   </ul>
   <ul class="app-bar-menu ml-auto">
     <li>
-      <a *ngIf="currentUser" (click)="logout()">LogOut</a>
-      <a *ngIf="!currentUser" routerLink="/login">Login</a>
+      <a *ngIf="currentUser" (click)="logout()">Cerrar Sesión</a>
+      <a *ngIf="!currentUser" routerLink="/login">Iniciar Sesión</a>
     </li>
   </ul>
 </nav>
@@ -35,11 +35,9 @@
 </nav>-->
 
 <!-- main app container -->
-<div class="ui">
-  <div class="wrap">
-    <alert></alert>
-    <router-outlet></router-outlet>
-  </div>
-  <app-footer></app-footer>
+<div class="wrapper">
+  <alert></alert>
+  <router-outlet></router-outlet>
   <app-scroll-to-top></app-scroll-to-top>
+  <app-footer></app-footer>
 </div>

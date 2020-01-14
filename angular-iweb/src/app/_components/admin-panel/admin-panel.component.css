@@ -3,6 +3,7 @@ mat-sidenav{
     padding: 10px;
     background-color:rgba(29, 29, 29, 0.9);
 }
+
 button{
     margin-bottom: 10px;
 }
@@ -10,6 +11,7 @@ button{
 .contenido{
     margin: 15px;
 }
+
 
 h3{
     color: white;

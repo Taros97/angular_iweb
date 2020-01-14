@@ -23,9 +23,9 @@
 
 
 .habitaciones{
+  float: left;
+  width: 100%;
   padding-top: 50px;
-  margin-left: 20%;
-  margin-right: 20%;
   background-color: firebrick;
   opacity: 60%;
   height: 100%;
