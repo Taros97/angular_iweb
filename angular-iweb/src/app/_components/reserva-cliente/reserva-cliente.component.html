@@ -1,52 +1,54 @@
 <section>
+  <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <div class="formulario">
     <div class="Center">
       <div class="reserva">
-        <form [formGroup]="reservaCliente" (ngSubmit)="onSubmit()">
+        <mat-step [stepControl]="reservaForm">
+          <ng-template matStepLabel>Reserva</ng-template>
+        <form [formGroup]="reservaForm" (ngSubmit)="onSubmit()">
         <div id="formulario">
-
+          <div class="titulo">
+            <h3>Reserva</h3>
+          </div>
           <mat-form-field class="tipo">
             <mat-label>Selección</mat-label>
             <mat-select formControlName="tipo" [(ngModel)]="service.tipo" [(value)]="selected"
-              [ngClass]="{ 'is-invalid': submitted && f.tipo.errors }">
+              [ngClass]="{ 'is-invalid': submitted && rf.tipo.errors }">
               <mat-option value="habitacion">Habitación</mat-option>
               <mat-option value="sala">Sala</mat-option>
             </mat-select>
-            <mat-error *ngIf="submitted && errorHandling('tipo', 'required')">
+            <mat-error *ngIf="submitted && errorHandlingReserva('tipo', 'required')">
               Debes seleccionar una habitación o una sala
             </mat-error>
           </mat-form-field>
-          <!--[matDatepickerFilter]="dateFilter"-->
           <mat-form-field class="fechaInicio">
-            <input matInput [min]="minDate" [matDatepicker]="picker" ngDefaultControl formControlName="fechaInicio"
-              [ngClass]="{ 'is-invalid': submitted && f.fechaInicio.errors }" placeholder="Fecha inicio">
+            <input matInput #fechaEntrada [min]="minDate" [matDatepicker]="picker" ngDefaultControl formControlName="fechaInicio"
+              [ngClass]="{ 'is-invalid': submitted && rf.fechaInicio.errors }" placeholder="Fecha inicio">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
-            <mat-error *ngIf="submitted && errorHandling('fechaInicio', 'required')">
+            <mat-error *ngIf="submitted && errorHandlingReserva('fechaInicio', 'required')">
               Debes seleccionar una fecha inicio
             </mat-error>
           </mat-form-field>
           <mat-form-field>
-            <input matInput [min]="minDate" [ngClass]="{ 'is-invalid': submitted && f.fechaFinal.errors }"
+            <input matInput #fechaSalida [min]="minDate" [ngClass]="{ 'is-invalid': submitted && rf.fechaFinal.errors }"
               formControlName="fechaFinal" [matDatepicker]="picker2" placeholder="Fecha final">
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2></mat-datepicker>
-            <mat-error *ngIf="submitted && errorHandling('fechaFinal', 'required')">
+            <mat-error *ngIf="submitted && errorHandlingReserva('fechaFinal', 'required')">
               Debes seleccionar una fecha final
             </mat-error>
-            <mat-error *ngIf="submitted && errorHandling('fechaFinal', 'mustMatch')">
+            <mat-error *ngIf="submitted && errorHandlingReserva('fechaFinal', 'mustMatch')">
               Fecha final antes que fecha inicio
             </mat-error>
           </mat-form-field>
           <mat-form-field class="item">
             <input matInput formControlName="seleccion" [(ngModel)]="seleccion" readonly placeholder="Selección"
               value="{{ seleccion }}">
-            <mat-error *ngIf="submitted && errorHandling('seleccion', 'mustSelector')">
+            <mat-error *ngIf="submitted && errorHandlingReserva('seleccion', 'mustSelector')">
               Debes seleccionar una habitación o una sala
             </mat-error>
           </mat-form-field>
-          <button type="submit" class="boton btn btn-primary">Reservar</button>
-
         </div>
         <div id="tabla">
           <table class=" table table-striped">
@@ -70,24 +72,91 @@
             </ngb-pagination>
           </div>
         </div>
+        <button matStepperNext type="submit" class="btn btn-primary">Siguiente</button>
+       </form>
+      </mat-step>
+      <mat-step [stepControl]="pago">
+        <ng-template matStepLabel>Pago</ng-template>
+        <form [formGroup]="pago">
         <div class="pago">
+          <div class="titulo">
+            <h3>Tarjeta de crédito</h3>
+          </div>
           <mat-form-field class="numeroTarjeta">
             <input matInput #nt pattern="^[0-9]*$" formControlName="numeroTarjeta" maxlength="16" placeholder="Número de tarjeta">
-            <mat-hint align="end">{{nt.value.length}} / 16</mat-hint>
-            <mat-error *ngIf="submitted && errorHandling('numeroTarjeta', 'required')">
+            <mat-hint>{{nt.value.length}} / 16</mat-hint>
+            <mat-error *ngIf="submitted && errorHandlingPago('numeroTarjeta', 'required')">
               El numero de tarjeta es requerido
             </mat-error>
-            <mat-error *ngIf="submitted && errorHandling('numeroTarjeta', 'pattern')">
-              Solo número.
+            <mat-error *ngIf="submitted && errorHandlingPago('numeroTarjeta', 'pattern')">
+              Solo números.
             </mat-error>
-            <mat-error *ngIf="submitted && errorHandling('numeroTarjeta', 'minlength')">
+            <mat-error *ngIf="submitted && errorHandlingPago('numeroTarjeta', 'minlength')">
               Son 16 números.
             </mat-error>
           </mat-form-field>
+          <mat-form-field class="caducidad">
+            <input matInput #c formControlName="caducidad" maxlength="5" placeholder="Caducidad">
+            <mat-hint>{{c.value.length}} / 5</mat-hint>
+            <mat-error *ngIf="submitted && errorHandlingPago('caducidad', 'required')">
+              La caducidad es requerida
+            </mat-error>
+            <mat-error *ngIf="submitted && (errorHandlingPago('caducidad', 'pattern') || errorHandlingPago('caducidad', 'minlength'))">
+              Debe de ser mm/aa.
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="cvs">
+            <input matInput #cvs formControlName="cvs" maxlength="3" placeholder="CVS">
+            <mat-hint>{{cvs.value.length}} / 3</mat-hint>
+            <mat-error *ngIf="submitted && errorHandlingPago('cvs', 'required')">
+              La caducidad es requerida.
+            </mat-error>
+            <mat-error *ngIf="submitted && (errorHandlingPago('cvs', 'pattern') || errorHandlingPago('cvs', 'minlength'))">
+              Debe de ser 3 números.
+            </mat-error>
+          </mat-form-field>
         </div>
-        </form>
+        <div class="botones">
+          <button class="atras btn btn-primary" mat-button matStepperPrevious>Atrás</button>
+          <button matStepperNext type="submit" class="btn btn-primary">Siguiente</button>
+        </div>
+      </form>
+      </mat-step>
+      <mat-step [stepControl]="resumen">
+        <ng-template matStepLabel>Resumen</ng-template>
+        <form [formGroup]="resumen">
+        <div id="resumen">
+          <div class="titulo">
+            <h3>Resumen</h3>
+          </div>
+          <div *ngIf="precioFinal!=0" class="detalles">
+            <mat-card class="datosReserva">
+              <mat-card-title>Datos de la reserva</mat-card-title>
+              <mat-card-content>
+                <p>{{ seleccion }}</p>
+                <p>precio: {{ precioFinal }}</p>
+                <p>Estará en nuestro hotel desde {{fechaEntrada.value}} hasta {{fechaSalida.value}}</p>
+              </mat-card-content>
+            </mat-card>
+            <mat-card class="datosPago">
+              <mat-card-title>Datos del pago</mat-card-title>
+              <mat-card-content>
+                <p>El número de la tarjeta: {{nt.value}}</p>
+                <p>El CVS: {{cvs.value}}</p>
+                <p>La fecha de la caducidad: {{c.value}}</p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+        <div class="botones">
+          <button mat-button class="atras btn btn-primary" matStepperPrevious>Atrás</button>
+          <button type="submit" class="btn btn-primary">Reservar</button>
+        </div>
+      </form>
+    </mat-step>
       </div>
-
+    
     </div>
   </div>
+</mat-horizontal-stepper>
 </section>
