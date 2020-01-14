@@ -5,7 +5,7 @@ import { AlertService } from '@/_services';
 import { ReservaClienteService } from '@/_services/reserva-cliente.service';
 import { NgbdSortableHeader, SortEvent } from '@/_directives/sortable.directive';
 import { Observable } from 'rxjs';
-import { DecimalPipe } from '@angular/common';
+import { HABITACIONES, SALAS } from '@/_mockups';
 
 @Component({
   selector: 'app-reserva-cliente',
@@ -14,47 +14,57 @@ import { DecimalPipe } from '@angular/common';
   providers: [ReservaClienteService]
 })
 export class ReservaClienteComponent implements OnInit {
+  reservaForm: FormGroup;
+  pago: FormGroup;
+  resumen: FormGroup;
   minDate: Date;
-  reservaCliente: FormGroup;
   submitted: boolean;
   lista$: Observable<any[]>;
   total$: Observable<number>;
   seleccion: string;
+  temporada: number;
+  precioFinal: number;
+  isLinear = true;
 
   constructor(private formBuilder: FormBuilder,
     private alertService: AlertService,
     public service: ReservaClienteService) {
-      this.lista$ = service.disponible$;
-      this.total$ = service.total$;
+    this.lista$ = service.disponible$;
+    this.total$ = service.total$;
   }
 
   ngOnInit() {
     this.seleccion = 'Habitación o sala'
+    this.precioFinal = 0;
+    this.temporada = 0.6;
     this.alertService.clear();
     this.submitted = false;
     this.minDate = new Date();
-    this.reservaCliente = this.formBuilder.group({
+    this.reservaForm = this.formBuilder.group({
       tipo: ['', Validators.required],
       fechaInicio: ['', Validators.required],
       fechaFinal: ['', Validators.required],
       seleccion: [this.seleccion],
-      numeroTarjeta: ['', [Validators.required,
-                            Validators.pattern("^[0-9]*$"),
-                            Validators.minLength(16),]]
-      /*sala: [''],
-      reserva: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      bloquear: [''],
-      regimen: ['', Validators.required]*/
     }, {
       validators: [MustMatch('fechaInicio', 'fechaFinal'), MustSelector('seleccion')]
-    });
-    //this.reservaCliente.get('seleccion').disable();
+    })
+    this.pago = this.formBuilder.group({
+      numeroTarjeta: ['', [Validators.required,
+      Validators.pattern("^[0-9]*$"),
+      Validators.minLength(16)]],
+      caducidad: ['', [Validators.required,
+      Validators.pattern("[0-9][0-9]/[0-9][0-9]"),
+      Validators.minLength(5)]],
+      cvs: ['', [Validators.required,
+      Validators.pattern("[0-9][0-9][0-9]"),
+      Validators.minLength(3)]],
+    })
+    this.resumen = this.formBuilder.group({});
   }
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
-  onSort({column, direction}: SortEvent) {
+  onSort({ column, direction }: SortEvent) {
     // resetting other headers
     this.headers.forEach(header => {
       if (header.sortable !== column) {
@@ -66,33 +76,40 @@ export class ReservaClienteComponent implements OnInit {
     this.service.sortDirection = direction;
   }
 
-  cambiarSeleccion(id: number){
-    if(this.reservaCliente.get('tipo').value === 'habitacion'){
+  cambiarSeleccion(id: number) {
+    if (this.reservaForm.get('tipo').value === 'habitacion') {
+      console.log('habitacion')
       this.seleccion = 'Habitación ' + id;
-    }else{
+      this.precioFinal = (HABITACIONES[id].precio * this.temporada) + HABITACIONES[id].precio;
+    } else {
+      console.log('sala')
       this.seleccion = 'Sala ' + id;
+      this.precioFinal = (SALAS[id].precio * this.temporada) + SALAS[id].precio;
     }
   }
 
-  get f() { return this.reservaCliente.controls; }
+  get rf() { return this.reservaForm.controls; }
+  get pf() { return this.pago.controls; }
 
-  public errorHandling = (control: string, error: string) => {
-    return this.reservaCliente.controls[control].hasError(error);
+
+  public errorHandlingReserva = (control: string, error: string) => {
+    return this.reservaForm.controls[control].hasError(error);
+  }
+
+  public errorHandlingPago = (control: string, error: string) => {
+    return this.pago.controls[control].hasError(error);
   }
 
   onSubmit() { // Cuando haces botón de realizar reserva
-    /**this.reservaCliente.get('seleccion').enable();
-    this.reservaCliente.get('seleccion').value = this.seleccion;*/
     this.submitted = true;
+
     // reset alerts on submit
     this.alertService.clear();
-    console.log(this.reservaCliente)
     // stop here if form is invalid
-    if (this.reservaCliente.invalid) {
-      //this.reservaCliente.get('seleccion').disable();
+    if (this.pago.invalid || this.reservaForm.invalid) {
       return;
     }
-    
+
     // Aqui sigue con el servicio
   }
 
