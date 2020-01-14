@@ -32,6 +32,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             switch (true) {
                 case url.endsWith('/users/authenticate') && method === 'POST':
                     return authenticate();
+                case url.endsWith('/users/register') && method === 'POST':
+                    return register();
                 case url.endsWith('/users') && method === 'GET':
                     return getUsers();
                 case url.match(/\/users\/\d+$/) && method === 'GET':
@@ -62,6 +64,19 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                 nacionalidad: user.nacionalidad,
             });
         }
+
+        function register() {
+            const user = body
+
+            if (users.find(x => x.email === user.email)) {
+                return error('Email "' + user.email + '" is already taken')
+            }
+            users.push(user);
+            localStorage.setItem('users', JSON.stringify(users));
+
+            return ok("ok");
+        }
+
 
         function getUsers() {
             if (!isAdmin()) return unauthorized();

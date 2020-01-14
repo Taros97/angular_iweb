@@ -1,16 +1,15 @@
-<section>
-    <mat-sidenav-container>
-        <mat-sidenav #sidenav mode="side" opened>
-            <h3>Panel de Administrador</h3>
-            <span><button class="btn-block btn-info btn-lg" [routerLink]="['salas']">Salas</button></span>
-            <span><button class="btn-block btn-info btn-lg" [routerLink]="['habitaciones']">Habitaciones</button></span>
-            <span><button class="btn-block btn-info btn-lg" [routerLink]="['reservas']">Lista de Reservas</button></span>
-            <span><button class="btn-block btn-info btn-lg" [routerLink]="['reservar']">Reservar</button></span>
-        </mat-sidenav>
-        <mat-sidenav-content>
-            <div class="contenido">
-                <router-outlet></router-outlet>
-            </div>
-        </mat-sidenav-content>
-    </mat-sidenav-container>
-</section>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened>
+        <h3>Panel de Administrador</h3>
+        <span><button class="btn-block btn-info btn-lg" [routerLink]="['salas']">Salas</button></span>
+        <span><button class="btn-block btn-info btn-lg" [routerLink]="['habitaciones']">Habitaciones</button></span>
+        <span><button class="btn-block btn-info btn-lg" [routerLink]="['reservas']">Lista de
+                Reservas</button></span>
+        <span><button class="btn-block btn-info btn-lg" [routerLink]="['reservar']">Reservar</button></span>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <div class="contenido">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-sidenav-content>
+</mat-sidenav-container>

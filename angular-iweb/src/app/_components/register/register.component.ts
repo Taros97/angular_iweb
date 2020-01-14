@@ -5,7 +5,11 @@ import { first } from 'rxjs/operators';
 
 import { AlertService, UserService, AuthenticationService } from '@/_services';
 
-@Component({ templateUrl: 'register.component.html' })
+@Component({
+    selector: 'app-register',
+    templateUrl: './register.component.html',
+    styleUrls: ['./register.component.css'],
+  })
 export class RegisterComponent implements OnInit {
     registerForm: FormGroup;
     loading = false;
@@ -26,10 +30,14 @@ export class RegisterComponent implements OnInit {
 
     ngOnInit() {
         this.registerForm = this.formBuilder.group({
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
-            username: ['', Validators.required],
-            password: ['', [Validators.required, Validators.minLength(6)]]
+            email: ['', Validators.required],
+            nombre: ['', Validators.required],
+            apellidos: ['', Validators.required],
+            telefono: ['', Validators.required],
+            password: ['', [Validators.required, Validators.minLength(6)]],
+            dni: ['', Validators.required],
+            nacionalidad: ['', Validators.required],
+            direccion: ['', Validators.required],
         });
     }
 
@@ -41,6 +49,8 @@ export class RegisterComponent implements OnInit {
 
         // reset alerts on submit
         this.alertService.clear();
+
+        console.log(this.registerForm.value)
 
         // stop here if form is invalid
         if (this.registerForm.invalid) {

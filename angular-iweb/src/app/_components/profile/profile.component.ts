@@ -4,8 +4,9 @@ import { USUARIO , RESERVAS} from '@/_mockups';
 
 import {DecimalPipe} from '@angular/common';
 import {Observable} from 'rxjs';
-import { ProfileService } from '@/_services';
+import { ProfileService, AlertService } from '@/_services';
 import { NgbdSortableHeader, SortEvent } from '@/_directives/sortable.directive';
+import { FormBuilder,FormGroup, Validators} from '@angular/forms';
 
 
 @Component({
@@ -22,10 +23,12 @@ export class ProfileComponent implements OnInit {
   user = USUARIO;
   //reservas = RESERVAS;
   edit = false;
+  profileForm: FormGroup;
+  submitted = false;
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
-  constructor(public service: ProfileService) {
+  constructor(private formBuilder: FormBuilder,public service: ProfileService,  private alertService: AlertService) {
     this.reservas$ = service.reservas$;
     this.total$ = service.total$;
   }
@@ -42,7 +45,34 @@ export class ProfileComponent implements OnInit {
     this.service.sortDirection = direction;
   }
 
+  get f() { return this.profileForm.controls; }
+
   ngOnInit() {
+    this.profileForm = this.formBuilder.group({
+      nombre: [this.user.nombre, Validators.required],
+      apellidos: [this.user.apellidos, Validators.required],
+      email: [this.user.apellidos, Validators.required],
+      password: [this.user.password, Validators.required],
+      dni: [this.user.dni, Validators.required],
+      telefono: [this.user.telefono, Validators.required],
+      nacionalidad: [this.user.nacionalidad, Validators.required],
+      direccion: [this.user.direccion, Validators.required],
+    });
+  }
+
+  onSubmit() {
+
+    this.submitted = true;
+
+    // reset alerts on submit
+    this.alertService.clear();
+
+    // stop here if form is invalid
+    if (this.profileForm.invalid) {
+      return;
+    }
+
+    console.log(this.profileForm.value)
   }
 }
 
