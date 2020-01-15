@@ -39,10 +39,6 @@ table{
     width: 80%;
 }
 
-.atras{
-    margin-left: 10%;
-}
-
 .subrayado{
     text-decoration-line: underline;
 }
@@ -60,7 +56,7 @@ table{
 .fila{
     margin-top: 3%;
     float: left;
-    width: 94%;
+    width: 100%;
     height: 1%;
 }
   

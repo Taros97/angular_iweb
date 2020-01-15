@@ -86,13 +86,10 @@
             <input matInput #nt pattern="^[0-9]*$" formControlName="numeroTarjeta" maxlength="16" placeholder="Número de tarjeta">
             <mat-hint>{{nt.value.length}} / 16</mat-hint>
             <mat-error *ngIf="submitted && errorHandlingPago('numeroTarjeta', 'required')">
-              El numero de tarjeta es requerido
+              El numero de tarjeta es requerido.
             </mat-error>
-            <mat-error *ngIf="submitted && errorHandlingPago('numeroTarjeta', 'pattern')">
-              Solo números.
-            </mat-error>
-            <mat-error *ngIf="submitted && errorHandlingPago('numeroTarjeta', 'minlength')">
-              Son 16 números.
+            <mat-error *ngIf="submitted && (errorHandlingPago('numeroTarjeta', 'pattern') || errorHandlingPago('numeroTarjeta', 'minlength'))">
+              Introduzca una tarjeta válida.
             </mat-error>
           </mat-form-field>
           <mat-form-field class="caducidad">
@@ -102,7 +99,7 @@
               La caducidad es requerida
             </mat-error>
             <mat-error *ngIf="submitted && (errorHandlingPago('caducidad', 'pattern') || errorHandlingPago('caducidad', 'minlength'))">
-              Debe de ser mm/aa.
+              Formato mm/aa.
             </mat-error>
           </mat-form-field>
           <mat-form-field class="cvs">
@@ -112,7 +109,7 @@
               La caducidad es requerida.
             </mat-error>
             <mat-error *ngIf="submitted && (errorHandlingPago('cvs', 'pattern') || errorHandlingPago('cvs', 'minlength'))">
-              Debe de ser 3 números.
+              Introduzca un CVS válido.
             </mat-error>
           </mat-form-field>
         </div>
