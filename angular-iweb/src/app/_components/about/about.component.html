@@ -41,7 +41,7 @@
                         <br>
                         <br>
                         <label class="telefonoLabel" for="telefono">Teléfono: </label>
-                        <input class="telefono form-control" name="telefono" formControlName="telefono" type="number" placeholder="123456789">
+                        <input matInput [min]="9" [max]="9" class="telefono form-control" name="telefono" formControlName="telefono" type="number" placeholder="123456789">
                     </div>
                     <label class="mensajeLabel" for="mensaje">Mensaje: </label>
                     <textarea class="mensaje form-control" name="mensaje" formControlName="mensaje" type="text" placeholder="Añade el mensaje."></textarea>
