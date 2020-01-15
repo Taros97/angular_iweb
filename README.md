@@ -76,3 +76,5 @@ La sesión 4 se ha realizado la finalización de about, a falta de unos retoques
  
  Error en cueva en teoria bajar la version de node
  https://www.bountysource.com/issues/74946136-cannot-read-property-resolve-of-undefined
+ Esto es para desplegar en un servidor tomcat
+ https://www.liquidweb.com/kb/install-apache-tomcat-8-ubuntu-16-04/
