@@ -72,3 +72,7 @@ La sesión 4 se ha realizado la finalización de about, a falta de unos retoques
 - Formulario angular:
  https://angular.io/api/forms/FormGroup
  https://angular.io/guide/reactive-forms
+ 
+ 
+ Error en cueva en teoria bajar la version de node
+ https://www.bountysource.com/issues/74946136-cannot-read-property-resolve-of-undefined
