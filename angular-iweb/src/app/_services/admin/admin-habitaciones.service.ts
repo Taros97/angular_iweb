@@ -67,7 +67,7 @@ export class AdminHabitacionesService {
   private _search$ = new Subject<void>();
   private _habitaciones$ = new BehaviorSubject<Habitacion[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
-  private httpHabitaciones: Habitacion[];
+  public httpHabitaciones: Habitacion[];
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization: `Bearer ${localStorage.token}`})
   };
@@ -100,6 +100,15 @@ export class AdminHabitacionesService {
     this._search$.next();
   }
 
+  getHabitacion(id: number) : Observable<Habitacion>{
+
+    return this.http.get<Habitacion>(environment.apiUrl+'/habitaciones/' + id)
+    .pipe(
+      catchError(this.handleError<Habitacion>('habitaciones', ))
+    );
+  }
+
+
   public getHabitaciones(){
     // API CUANDO ESTE
     this.http.get<Habitacion[]>(environment.apiUrl+'habitaciones').subscribe(data =>{
@@ -128,6 +137,9 @@ export class AdminHabitacionesService {
     );
   }
 
+  updateHabitacion(id: number, data: Habitacion){
+    return this.http.put<Habitacion>(environment.apiUrl + 'habitaciones/' + id, data, this.httpOptions);
+  }
 
   
   get habitaciones$() { return this._habitaciones$.asObservable(); }

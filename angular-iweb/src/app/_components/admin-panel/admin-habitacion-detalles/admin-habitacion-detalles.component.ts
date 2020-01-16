@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChildren } from '@angular/core';
 import { Habitacion } from '@/_models';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { HabitacionService } from '@/_services';
+import { HabitacionService, AdminHabitacionesService } from '@/_services';
 import { NgbCarouselConfig, NgbSlideEvent, NgbCarousel, NgbSlideEventSource } from '@ng-bootstrap/ng-bootstrap';
 import { DecimalPipe, Location } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertService } from '@/_services';
-import { HABITACIONES } from '@/_mockups';
 
 
 function ObtenerVistas(habitaciones: Habitacion[]){
@@ -37,7 +36,7 @@ interface Vista {
   providers: [HabitacionService, DecimalPipe, NgbCarouselConfig]
 })
 export class AdminHabitacionDetallesComponent implements OnInit {
-  habitacion: Habitacion
+  habitacion: Habitacion = new Habitacion()
   images = [700, 533, 807, 124].map((n) => `https://picsum.photos/id/${n}/900/500`);
 
   paused = false;
@@ -46,8 +45,7 @@ export class AdminHabitacionDetallesComponent implements OnInit {
   pauseOnHover = true;
   submitted = false;
   habitacionForm: FormGroup;
-  habitaciones: Habitacion[] = HABITACIONES;
-  vistas: Vista[];
+  vistas: Vista[] = [];
   selected;
   @ViewChildren('carousel') carousel: NgbCarousel;
 
@@ -56,7 +54,7 @@ export class AdminHabitacionDetallesComponent implements OnInit {
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private service: HabitacionService,
+    private service: AdminHabitacionesService,
     config: NgbCarouselConfig,
     private alertService: AlertService,
     private locate: Location) {
@@ -69,16 +67,32 @@ export class AdminHabitacionDetallesComponent implements OnInit {
       id = params['id'];
     });
     //this.habitacion = this.service.getHabitacion(parseInt(id));
-    this.habitacionForm = this.formBuilder.group({
-      descripcion: [this.habitacion.descripcion, Validators.required],
-      plazas: [this.habitacion.plazas, Validators.required],
-      vistas: [this.habitacion.vistas, Validators.required],
-      superficie: [this.habitacion.superficie, Validators.required],
-      precio: [this.habitacion.precio, Validators.required],
-      categoria: [this.habitacion.categoria, Validators.required],
-      wifi: [this.habitacion.wifi, Validators.required],
+
+    this.service.getHabitacion(id).subscribe(data => {
+      this.habitacion = data;
+      this.habitacionForm = this.formBuilder.group({
+        descripcion: [this.habitacion.descripcion, Validators.required],
+        plazas: [this.habitacion.plazas, Validators.required],
+        vistas: [this.habitacion.vistas, Validators.required],
+        superficie: [this.habitacion.superficie, Validators.required],
+        precio: [this.habitacion.precio, Validators.required],
+        categoria: [this.habitacion.categoria, Validators.required],
+        wifi: [this.habitacion.wifi, Validators.required],    
+      });
+      this.vistas = ObtenerVistas(this.service.httpHabitaciones);
     });
-    this.vistas = ObtenerVistas(this.habitaciones);
+    this.habitacionForm = this.formBuilder.group({
+      descripcion: ['', Validators.required],
+      plazas: ['', Validators.required],
+      vistas: ['', Validators.required],
+      superficie: ['', Validators.required],
+      precio: ['', Validators.required],
+      categoria: ['', Validators.required],
+      wifi: ['', Validators.required],    
+    });
+
+
+    
   }
 
   get f() { return this.habitacionForm.controls; }
@@ -121,7 +135,10 @@ export class AdminHabitacionDetallesComponent implements OnInit {
     if (this.habitacionForm.invalid) {
       return;
     }
-
-    console.log(this.habitacionForm.value)
+    var habitacionUpdate : Habitacion = this.habitacionForm.value;
+    habitacionUpdate.codigo = this.habitacion.codigo;
+    this.service.updateHabitacion(this.habitacion.codigo, habitacionUpdate).subscribe(data => {
+      this.locate.back();
+    });
   }
 }
