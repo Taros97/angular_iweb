@@ -109,7 +109,7 @@ export class HabitacionService{
   };
 
   constructor(private pipe: DecimalPipe,private http: HttpClient) {
-    this.http.get<Habitacion[]>(environment.apiUrl+'/api/habitaciones').subscribe(data =>{
+    this.http.get<Habitacion[]>(environment.apiUrl+'habitaciones').subscribe(data =>{
       this.httpHabitaciones = data;
       this._search$.pipe(
         switchMap(() => this._search()),

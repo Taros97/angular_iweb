@@ -6,6 +6,8 @@ import { SortDirection } from '@/_directives/sortable.directive';
 import {DecimalPipe} from '@angular/common';
 import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
 import { SALAS } from '@/_mockups/mock-salas';
+import { environment } from 'environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 
 interface SearchResult {
@@ -107,6 +109,7 @@ export class SalaService {
   private _search$ = new Subject<void>();
   private _salas$ = new BehaviorSubject<Sala[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
+  private httpSala: Sala[];
 
   private _state: State = {
     page: 1,
@@ -123,18 +126,22 @@ export class SalaService {
     filterProyector: false
   };
 
-  constructor(private pipe: DecimalPipe) {
-    this._search$.pipe(
-      tap(() => this._loading$.next(true)),
-      debounceTime(200),
-      switchMap(() => this._search()),
-      delay(200),
-      tap(() => this._loading$.next(false))
-    ).subscribe(result => {
-      this._salas$.next(result.salas);
-      this._total$.next(result.total);
+  constructor(private pipe: DecimalPipe, private http: HttpClient) {
+    this.http.get<Sala[]>(environment.apiUrl + 'salas').subscribe(data =>{
+      this.httpSala = data;
+      this._search$.pipe(
+        tap(() => this._loading$.next(true)),
+        debounceTime(200),
+        switchMap(() => this._search()),
+        delay(200),
+        tap(() => this._loading$.next(false))
+      ).subscribe(result => {
+        this._salas$.next(result.salas);
+        this._total$.next(result.total);
+      });
+      this._set({searchTerm: ''})
     });
-
+    
     this._search$.next();
   }
 
@@ -188,7 +195,7 @@ export class SalaService {
       filterPuntuacion, filterPrecio, filterProyector, filterMicrofono, filterPizarra} = this._state;
 
     // 1. sort
-    let salas = sort(SALAS, sortColumn, sortDirection);
+    let salas = sort(this.httpSala, sortColumn, sortDirection);
     
     // 2. filter
     salas = salas.filter(sala => matches(sala, searchTerm, this.pipe));

@@ -8,6 +8,7 @@ import { Reserva, Habitacion, Sala } from '@/_models';
 import { RESERVAS, HABITACIONES, SALAS } from '@/_mockups';
 import { HttpClient } from '@angular/common/http';
 import { spinnerButtonPositionDictionary } from 'ng-metro4';
+import { environment } from 'environments/environment';
 
 interface SearchResult {
   habitaciones?: Habitacion[];
@@ -67,6 +68,8 @@ export class ReservaClienteService {
   private _search$ = new Subject<void>();
   private _disponible$ = new BehaviorSubject<any[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
+  private habitaciones : Habitacion[];
+  private salas : Sala[];
 
   
 
@@ -117,6 +120,22 @@ export class ReservaClienteService {
 
     this._search$.next();
   }
+
+  public getHabitaciones(){
+    this.http.get<Habitacion[]>(environment.apiUrl + 'habitacionesReserva').subscribe(data =>{
+      this.habitaciones = data;
+      this._set({pageSize: 4});
+    });
+  }
+
+  public getSalas(){
+    this.http.get<Sala[]>(environment.apiUrl + 'salasReserva').subscribe(data =>{
+      this.salas = data;
+      this._set({pageSize: 4});
+    });
+  }
+
+
   get disponible$() { return this._disponible$.asObservable(); }
   get total$() { return this._total$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
@@ -134,15 +153,17 @@ export class ReservaClienteService {
     this._search$.next();
   }
 
+
+
   private _search(): Observable<SearchResult> {
     const {sortColumn, sortDirection, pageSize, page, tipo} = this._state;
-    if(tipo === 'habitacion'){
-      let habitaciones = sortHabitacion(HABITACIONES, sortColumn, sortDirection);
+    if(tipo === 'habitacion' && this.habitaciones){
+      let habitaciones = sortHabitacion(this.habitaciones, sortColumn, sortDirection);
       const total = habitaciones.length;
       habitaciones = habitaciones.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
       return of({habitaciones, total});
-    }else if(tipo === 'sala'){
-      let salas = sortSala(SALAS, sortColumn, sortDirection);
+    }else if(tipo === 'sala' && this.salas){
+      let salas = sortSala(this.salas, sortColumn, sortDirection);
       const total = salas.length;
       salas = salas.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
       return of({salas, total});

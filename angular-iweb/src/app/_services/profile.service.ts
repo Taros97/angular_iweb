@@ -56,14 +56,12 @@ function matchesDate(reserva: Reserva, date: fecha, pipe: PipeTransform) {
   if(date == null)
     return true;
   const a = new Date (date.year, date.month-1, date.day );
-  console.log("a" + a)
   var Difference_In_Time_early = a.getTime() - reserva.fechaInicio.getTime();
   var Difference_In_Time_late =  reserva.fechaFin.getTime() - a.getTime() ; 
-  // asi deberia de funcionar xd
+
   var Difference_In_Days_early  = Math.trunc(Difference_In_Time_early / (1000 * 3600 * 24));
   var Difference_In_Days_late = Math.trunc(Difference_In_Time_late / (1000 * 3600 * 24));
-  console.log("Difference_In_Days_early" + Difference_In_Days_early)
-  console.log("Difference_In_Days_late" +Difference_In_Days_late)
+  
   return Difference_In_Days_early >= 0 &&  Difference_In_Days_late >= 0; 
 
 }

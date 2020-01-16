@@ -16,6 +16,7 @@ import { HABITACIONES, SALAS } from '@/_mockups';
 export class ReservaClienteComponent implements OnInit {
   reservaForm: FormGroup;
   pago: FormGroup;
+  seleccionForm: FormGroup;
   resumen: FormGroup;
   minDate: Date;
   submitted: boolean;
@@ -25,7 +26,6 @@ export class ReservaClienteComponent implements OnInit {
   temporada: number;
   precioFinal: number;
   isLinear = true;
-  selected;
 
   constructor(private formBuilder: FormBuilder,
     private alertService: AlertService,
@@ -45,9 +45,13 @@ export class ReservaClienteComponent implements OnInit {
       tipo: ['', Validators.required],
       fechaInicio: ['', Validators.required],
       fechaFinal: ['', Validators.required],
-      seleccion: [this.seleccion],
     }, {
-      validators: [MustMatch('fechaInicio', 'fechaFinal'), MustSelector('seleccion')]
+      validators: MustMatch('fechaInicio', 'fechaFinal')
+    })
+    this.seleccionForm = this.formBuilder.group({
+      seleccion: [this.seleccion]
+    },{
+      validators: MustSelector('seleccion')
     })
     this.pago = this.formBuilder.group({
       numeroTarjeta: ['', [Validators.required,
@@ -77,6 +81,14 @@ export class ReservaClienteComponent implements OnInit {
     this.service.sortDirection = direction;
   }
 
+  escogerTablaReservas(){
+    if(this.reservaForm.get('tipo').value === 'habitacion'){
+      this.service.getHabitaciones();
+    }else{
+      this.service.getSalas();
+    }
+  }
+
   cambiarSeleccion(id: number) {
     if (this.reservaForm.get('tipo').value === 'habitacion') {
       this.seleccion = 'Habitación ' + id;
@@ -93,6 +105,10 @@ export class ReservaClienteComponent implements OnInit {
 
   public errorHandlingReserva = (control: string, error: string) => {
     return this.reservaForm.controls[control].hasError(error);
+  }
+
+  public errorHandlingSeleccion = (control: string, error: string) => {
+    return this.seleccionForm.controls[control].hasError(error);
   }
 
   public errorHandlingPago = (control: string, error: string) => {
