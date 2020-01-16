@@ -4,7 +4,7 @@ import { Habitacion } from '@/_models';
 import { SortDirection } from '@/_directives/sortable.directive';
 
 import {DecimalPipe} from '@angular/common';
-import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
+import {debounceTime, delay, switchMap, tap , catchError} from 'rxjs/operators';
 import { HABITACIONES } from '@/_mockups/mock-habitaciones';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'environments/environment';
@@ -74,6 +74,7 @@ function matchesPuntuacion(habitacion: Habitacion, puntuacion: number, pipe: Pip
 }
 
 function getHabitacion(id: number): Habitacion {
+  
   var i = 0, terminado = false;
   while(!terminado){
     if(this.habitaciones$[i]){
@@ -136,20 +137,25 @@ export class HabitacionService{
     */
     this._search$.next();
   }
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      return of(result as T);
+    };
+  }
 
-  getHabitacion(id: number){
-    for(let habitacion of this.habitaciones){
-      if(habitacion.codigo == id){
-        return habitacion;
-      }
-    }
+  getHabitacion(id: number) : Observable<Habitacion>{
+
+    return this.http.get<Habitacion>(environment.apiUrl+'/habitaciones/' + id)
+    .pipe(
+      catchError(this.handleError<Habitacion>('habitaciones', ))
+    );
   }
 
   get regimenes() { return [{value: 0, viewValue: 'Solo Alojamiento'},
                             {value: 1, viewValue: 'Alojamiento y Desayuno'},
                             {value: 2, viewValue: 'Media Pensión'},
                             {value: 3, viewValue: 'Pensión Completa'}]}
-  get habitaciones() { return HABITACIONES; }
+
   get habitaciones$() { return this._habitaciones$.asObservable(); }
   get total$() { return this._total$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }

@@ -68,7 +68,7 @@ export class AdminHabitacionDetallesComponent implements OnInit {
     this.route.params.subscribe(params => {
       id = params['id'];
     });
-    this.habitacion = this.service.getHabitacion(parseInt(id));
+    //this.habitacion = this.service.getHabitacion(parseInt(id));
     this.habitacionForm = this.formBuilder.group({
       descripcion: [this.habitacion.descripcion, Validators.required],
       plazas: [this.habitacion.plazas, Validators.required],

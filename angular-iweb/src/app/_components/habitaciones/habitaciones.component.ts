@@ -67,7 +67,6 @@ export class HabitacionesComponent implements OnInit {
   }
 
   onSort({column, direction}: SortEvent) {
-    console.log(column, direction)
     // resetting other headers
     this.headers.forEach(header => {
       if (header.sortable !== column) {

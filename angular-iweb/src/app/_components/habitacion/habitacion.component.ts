@@ -12,7 +12,7 @@ import { DecimalPipe, Location } from '@angular/common';
   providers: [HabitacionService, DecimalPipe, NgbCarouselConfig]
 })
 export class HabitacionComponent implements OnInit {
-  habitacion : Habitacion
+  habitacion : Habitacion = new Habitacion();
   images = [700, 533, 807, 124].map((n) => `https://picsum.photos/id/${n}/900/500`);
 
   paused = false;
@@ -36,7 +36,9 @@ export class HabitacionComponent implements OnInit {
     this.route.params.subscribe(params => {
       id = params['id']; 
    });
-    this.habitacion = this.service.getHabitacion(parseInt(id));
+   this.service.getHabitacion(parseInt(id)).subscribe(h =>{
+    this.habitacion=h;
+  });
   }
 
   arrayOne(n: number): any[] {
