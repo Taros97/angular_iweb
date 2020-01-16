@@ -1,14 +1,10 @@
-import { Habitacion } from './habitacion'
-import { Sala } from './sala'
-import { User } from './user'
-
 export class ReservaFinal {
   codigo: number;
-  fechaInicio: Date;
-  fechaFin: Date;
+  fecha_inicio: string;
+  fecha_fin: string;
   descripcion: string;
-  tipo: string;
-  habitacion: Habitacion;
-  sala: Sala;
-  usuario: User;
+  tipo_reserva: number;
+  habitacion: number;
+  sala: number;
+  usuario: string;
 }

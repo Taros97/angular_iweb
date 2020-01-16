@@ -4,4 +4,5 @@ export * from './habitacion';
 export * from './sala';
 export * from './role';
 export * from './reservaFinal';
+export * from './regimen';
 export * from './usuarioReserva';

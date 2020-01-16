@@ -6,7 +6,7 @@ import { SortDirection } from '@/_directives/sortable.directive';
 
 import { Reserva, Habitacion, Sala } from '@/_models';
 import { RESERVAS, HABITACIONES, SALAS } from '@/_mockups';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { spinnerButtonPositionDictionary } from 'ng-metro4';
 import { environment } from 'environments/environment';
 
@@ -23,6 +23,7 @@ interface State {
   sortColumn: string;
   sortDirection: SortDirection;
   tipo: string;
+  regimen: any[];
 }
 
 
@@ -62,7 +63,9 @@ export class ReservaClienteService {
   // API CUANDO ESTE RELLENAR URL
   private apiURL = '';
   private httpReserva: Reserva[];
-
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvcmVnaXN0cm8iLCJpYXQiOjE1NzkyMTU4OTEsImV4cCI6MTU3OTIxOTQ5MSwibmJmIjoxNTc5MjE1ODkxLCJqdGkiOiJXa0VsYW51cGpxd0s3T1BJIiwic3ViIjo1LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.XmSaweBQjxJGS-NWO2JkmYpD2N60nOmecDyXlU_UxYo`})
+  };
 
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
@@ -78,7 +81,8 @@ export class ReservaClienteService {
     pageSize: 4,
     sortColumn: '',
     sortDirection: '',
-    tipo: ''
+    tipo: '',
+    regimen: ['']
   };
 
   constructor(private pipe: DecimalPipe, private http: HttpClient) {
@@ -100,7 +104,7 @@ export class ReservaClienteService {
     });
     */
 
-   this.http.get<Reserva[]>(environment.apiUrl + 'reservas').subscribe(data =>{
+   this.http.get<Reserva[]>(environment.apiUrl + 'reservas', this.httpOptions).subscribe(data =>{
     this.httpReserva = data;
     this._search$.pipe(
       tap(() => this._loading$.next(true)),
@@ -121,39 +125,22 @@ export class ReservaClienteService {
       }
     });
   });
-  /*
-  this._search$.next();
-    this._search$.pipe(
-      tap(() => this._loading$.next(true)),
-      debounceTime(200),
-      switchMap(() => this._search()),
-      delay(200),
-      tap(() => this._loading$.next(false))
-    ).subscribe(result => {
-      if(result.habitaciones){
-        this._disponible$.next(result.habitaciones);
-        this._total$.next(result.total);
-      }else if(result.salas){
-        this._disponible$.next(result.salas);
-        this._total$.next(result.total);
-      }else{
-        this._disponible$.next([]);
-        this._total$.next(0);
-      }
-    });
-*/
     this._search$.next();
   }
 
+  getRegimenes(){
+    return this.http.get<any[]>(environment.apiUrl + 'regimen');
+  }
+
   public getHabitaciones(){
-    this.http.get<Habitacion[]>(environment.apiUrl + 'habitacionesReserva').subscribe(data =>{
+    this.http.get<Habitacion[]>(environment.apiUrl + 'habitaciones').subscribe(data =>{
       this.habitaciones = data;
       this._set({pageSize: 4});
     });
   }
 
   public getSalas(){
-    this.http.get<Sala[]>(environment.apiUrl + 'salasReserva').subscribe(data =>{
+    this.http.get<Sala[]>(environment.apiUrl + 'salas').subscribe(data =>{
       this.salas = data;
       this._set({pageSize: 4});
     });
