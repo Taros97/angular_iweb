@@ -108,10 +108,16 @@ export class AdminHabitacionesService {
     );
   }
 
+  getHabitacionesVistas() : Observable<Habitacion[]>{
+    return this.http.get<Habitacion[]>(environment.apiUrl+'habitaciones')
+      .pipe(
+        catchError(this.handleError<Habitacion[]>('getHabitacionesVistas',[]))
+      );
+  }
 
   public getHabitaciones(){
     // API CUANDO ESTE
-    this.http.get<Habitacion[]>(environment.apiUrl+'habitaciones').subscribe(data =>{
+    return this.http.get<Habitacion[]>(environment.apiUrl+'habitaciones').subscribe(data =>{
       this.httpHabitaciones = data;
       this._search$.pipe(
         switchMap(() => this._search()),
@@ -136,6 +142,15 @@ export class AdminHabitacionesService {
       catchError(this.handleError<Habitacion>('deleteHabitacion'))
     );
   }
+
+  createHabitacion(h: Habitacion): Observable<Habitacion> {
+    const url = `${environment.apiUrl}habitaciones`;
+
+    return this.http.post<Habitacion>(url, h, this.httpOptions).pipe(
+      catchError(this.handleError<Habitacion>('deleteHabitacion'))
+    );
+  }
+
 
   updateHabitacion(id: number, data: Habitacion){
     return this.http.put<Habitacion>(environment.apiUrl + 'habitaciones/' + id, data, this.httpOptions);
