@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { User } from '@/_models';
+import { User, UsuarioReserva } from '@/_models';
 
 import { environment } from 'environments/environment';
 
@@ -17,8 +17,8 @@ export class UserService {
         return this.http.get<User[]>(`${environment.apiUrl}/users`);
     }
 
-    register(user: User) {
-        return this.http.post(`${environment.apiUrl}/users/register`, user);
+    register(user: UsuarioReserva) {
+        return this.http.post(`${environment.apiUrl}/registro`, user);
     }
 
     delete(id: number) {
