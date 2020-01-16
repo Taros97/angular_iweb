@@ -83,17 +83,7 @@ export class AdminHabitacionesService {
 
   constructor(private pipe: DecimalPipe, private http: HttpClient) {
 
-    // API CUANDO ESTE
-    this.http.get<Habitacion[]>(environment.apiUrl+'habitaciones').subscribe(data =>{
-      this.httpHabitaciones = data;
-      this._search$.pipe(
-        switchMap(() => this._search()),
-      ).subscribe(result => {
-        this._habitaciones$.next(result.habitaciones);
-        this._total$.next(result.total);
-      });
-      this._set({searchTerm:''});
-    });
+    this.getHabitaciones();
 
 /*
     this._search$.pipe(
@@ -108,6 +98,20 @@ export class AdminHabitacionesService {
     });
 */
     this._search$.next();
+  }
+
+  public getHabitaciones(){
+    // API CUANDO ESTE
+    this.http.get<Habitacion[]>(environment.apiUrl+'habitaciones').subscribe(data =>{
+      this.httpHabitaciones = data;
+      this._search$.pipe(
+        switchMap(() => this._search()),
+      ).subscribe(result => {
+        this._habitaciones$.next(result.habitaciones);
+        this._total$.next(result.total);
+      });
+      this._set({searchTerm:''});
+    });
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -140,7 +144,7 @@ export class AdminHabitacionesService {
   get filterDate() { return this._state.filterDate; } 
   set filterDate(filterDate: fecha) { this._set({filterDate}); } 
   
-  private _set(patch: Partial<State>) {
+  public  _set(patch: Partial<State>) {
     Object.assign(this._state, patch);
     this._search$.next();
   }

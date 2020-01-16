@@ -40,7 +40,9 @@ export class AdminHabitacionesComponent implements OnInit {
   }
 
   delete(id : number){
-    this.service.deleteHabitacion(id).subscribe();
+    this.service.deleteHabitacion(id).subscribe(() => {
+      this.service.getHabitaciones();
+    });
   }
 
   ngOnInit() {
