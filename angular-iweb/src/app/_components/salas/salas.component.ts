@@ -28,6 +28,7 @@ export class SalasComponent implements OnInit {
   salas: Sala[] = SALAS;
   salas$: Observable<Sala[]>;
   total$: Observable<number>;
+  currentRate;
 
   ngOnInit() {}
   

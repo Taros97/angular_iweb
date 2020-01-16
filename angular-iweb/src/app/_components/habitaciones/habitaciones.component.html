@@ -64,7 +64,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let habitacion of habitaciones$ | async" routerLink="/habitaciones/{{habitacion.codigo}}">
+          <tr *ngFor="let habitacion of (habitaciones$ | async)" routerLink="/habitaciones/{{habitacion.codigo}}">
             <th class="tablaCodigo" scope="row">{{ habitacion.codigo }}</th>
             <td class="tablaDescripcion">
               <ngb-highlight [result]="habitacion.descripcion" [term]="service.searchTerm"></ngb-highlight>
@@ -85,6 +85,7 @@
         </ngb-pagination>
 
         <select class="custom-select" style="width: auto" name="pageSize" [(ngModel)]="service.pageSize">
+
           <option [ngValue]="6">6 items per page</option>
           <option [ngValue]="8">8 items per page</option>
           <option [ngValue]="10">10 items per page</option>

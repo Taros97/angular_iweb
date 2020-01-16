@@ -48,6 +48,7 @@ export class AdminHabitacionDetallesComponent implements OnInit {
   habitacionForm: FormGroup;
   habitaciones: Habitacion[] = HABITACIONES;
   vistas: Vista[];
+  selected;
   @ViewChildren('carousel') carousel: NgbCarousel;
 
 

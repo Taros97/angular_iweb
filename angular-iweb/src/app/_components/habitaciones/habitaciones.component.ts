@@ -50,6 +50,8 @@ export class HabitacionesComponent implements OnInit {
   habitaciones$: Observable<Habitacion[]>;
   total$: Observable<number>;
   vistas: Vista[];
+  currentRate;
+  
 
   model: NgbDateStruct;
 
@@ -65,6 +67,7 @@ export class HabitacionesComponent implements OnInit {
   }
 
   onSort({column, direction}: SortEvent) {
+    console.log(column, direction)
     // resetting other headers
     this.headers.forEach(header => {
       if (header.sortable !== column) {

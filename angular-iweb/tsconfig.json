@@ -12,7 +12,8 @@
         ]
     },
 
-
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     // Esto es lo viejo
     "moduleResolution": "node",
     "outDir": "./dist/out-tsc",

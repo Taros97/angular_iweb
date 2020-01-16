@@ -25,6 +25,7 @@ export class ReservaClienteComponent implements OnInit {
   temporada: number;
   precioFinal: number;
   isLinear = true;
+  selected;
 
   constructor(private formBuilder: FormBuilder,
     private alertService: AlertService,

@@ -1,4 +1,4 @@
-import {Injectable, PipeTransform} from '@angular/core';
+import {Injectable, PipeTransform, OnInit} from '@angular/core';
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import { Habitacion } from '@/_models';
 import { SortDirection } from '@/_directives/sortable.directive';
@@ -6,7 +6,8 @@ import { SortDirection } from '@/_directives/sortable.directive';
 import {DecimalPipe} from '@angular/common';
 import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
 import { HABITACIONES } from '@/_mockups/mock-habitaciones';
-
+import { HttpClient } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 interface SearchResult {
   habitaciones: Habitacion[];
@@ -87,15 +88,16 @@ function getHabitacion(id: number): Habitacion {
 }
 
 @Injectable({providedIn: 'root'})
-export class HabitacionService { 
+export class HabitacionService{ 
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
   private _habitaciones$ = new BehaviorSubject<Habitacion[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
-
+  private httpHabitaciones: Habitacion[];
+  private inicio : boolean = true;
   private _state: State = {
     page: 1,
-    pageSize: 8,
+    pageSize: 6,
     searchTerm: '',
     sortColumn: '',
     sortDirection: '',
@@ -106,7 +108,20 @@ export class HabitacionService {
     filterPuntuacion: 0
   };
 
-  constructor(private pipe: DecimalPipe) {
+  constructor(private pipe: DecimalPipe,private http: HttpClient) {
+    this.http.get<Habitacion[]>(environment.apiUrl+'/api/habitaciones').subscribe(data =>{
+      this.httpHabitaciones = data;
+      this._search$.pipe(
+        switchMap(() => this._search()),
+      ).subscribe(result => {
+        this._habitaciones$.next(result.habitaciones);
+        this._total$.next(result.total);
+      });
+      this._set({searchTerm:''});
+    });
+
+
+    /*
     this._search$.pipe(
       tap(() => this._loading$.next(true)),
       debounceTime(200),
@@ -118,7 +133,7 @@ export class HabitacionService {
       this._habitaciones$.next(result.habitaciones);
       this._total$.next(result.total);
     });
-
+    */
     this._search$.next();
   }
 
@@ -158,7 +173,7 @@ export class HabitacionService {
   set filterWifi(filterWifi: boolean) { this._set({filterWifi}); }
   set filterPuntuacion(filterPuntuacion: number) { this._set({filterPuntuacion}); }
 
-  private _set(patch: Partial<State>) {
+  public _set(patch: Partial<State>) {
     Object.assign(this._state, patch);
     this._search$.next();
   }
@@ -167,10 +182,13 @@ export class HabitacionService {
 
   private _search(): Observable<SearchResult> {
     
+    this.inicio = false;
+    
     const {sortColumn, sortDirection, pageSize, page, searchTerm, filterPlazas, filterVista, filterPrecio, filterWifi, filterPuntuacion} = this._state;
     // 1. sort
-    let habitaciones = sort(HABITACIONES, sortColumn, sortDirection);
-    
+
+    let habitaciones = sort(this.httpHabitaciones, sortColumn, sortDirection);
+    //let habitaciones = sort(HABITACIONES, sortColumn, sortDirection);
 
     // 2. filter
     habitaciones = habitaciones.filter(habitacion => matches(habitacion, searchTerm, this.pipe));
