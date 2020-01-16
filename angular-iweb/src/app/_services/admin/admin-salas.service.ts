@@ -6,7 +6,7 @@ import { SortDirection } from '@/_directives/sortable.directive';
 
 import { Sala } from '@/_models';
 import { SALAS } from '@/_mockups';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { spinnerButtonPositionDictionary } from 'ng-metro4';
 import { environment } from 'environments/environment';
 
@@ -61,6 +61,9 @@ function matches(sala: Sala, term: string, pipe: PipeTransform) {
 export class AdminSalasService {
 
   // API CUANDO ESTE RELLENAR URL
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
   private apiURL = '';
   private httpSala: Sala[];
 
@@ -99,19 +102,16 @@ export class AdminSalasService {
     });
     this._set({searchTerm: ''})
     });
-    
-    /*this._search$.pipe(
-      tap(() => this._loading$.next(true)),
-      debounceTime(200),
-      switchMap(() => this._search()),
-      delay(200),
-      tap(() => this._loading$.next(false))
-    ).subscribe(result => {
-      this._salas$.next(result.salas);
-      this._total$.next(result.total);
-    });*/
 
     this._search$.next();
+  }
+
+  getSala(id: number){
+    return this.http.get<Sala>(environment.apiUrl + 'salas/' + id);
+  }
+
+  updateSala(id: number, data: Sala){
+    return this.http.put<Sala>(environment.apiUrl + 'salas/' + id, data, this.httpOptions);
   }
 
   get salas$() { return this._salas$.asObservable(); }
