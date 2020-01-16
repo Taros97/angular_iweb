@@ -37,7 +37,7 @@
                       <ngb-highlight [result]="habitacion.descripcion" [term]="service.searchTerm"></ngb-highlight>
                     </td>
                     <td class="acciones">
-                      <button class="btn btn-info" >Eliminar</button>
+                      <button class="btn btn-info" (click)="delete(habitacion.codigo)">Eliminar</button>
                       <button class="btn btn-info" routerLink="/admin/habitaciones/{{habitacion.codigo}}">Modificar</button>
                     </td>
                   </tr>
