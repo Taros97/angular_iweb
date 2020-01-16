@@ -45,7 +45,7 @@ export class AdminSalaDetallesComponent implements OnInit {
       console.log(params)
       id = params['id'];
     });
-    this.sala = this.service.getSala(parseInt(id));
+    //this.sala = this.service.getSala(parseInt(id));
     this.salaForm = this.formBuilder.group({
       descripcion: [this.sala.descripcion, Validators.required],
       proyector: [this.sala.proyector, Validators.required],

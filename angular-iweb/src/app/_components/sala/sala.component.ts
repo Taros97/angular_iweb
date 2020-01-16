@@ -12,7 +12,7 @@ import { DecimalPipe, Location } from '@angular/common';
   providers: [SalaService, DecimalPipe, NgbCarouselConfig]
 })
 export class SalaComponent implements OnInit {
-  sala : Sala
+  sala : Sala = new Sala()
   images = [700, 533, 807, 124].map((n) => `https://picsum.photos/id/${n}/900/500`);
 
   paused = false;
@@ -36,7 +36,9 @@ export class SalaComponent implements OnInit {
     this.route.params.subscribe(params => {
       id = params['id']; 
    });
-    this.sala = this.service.getSala(parseInt(id));
+  this.service.getSala(parseInt(id)).subscribe(s =>{
+    this.sala=s;
+  });
   }
 
   arrayOne(n: number): any[] {

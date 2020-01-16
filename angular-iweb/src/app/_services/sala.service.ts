@@ -4,8 +4,7 @@ import { Sala } from '@/_models';
 import { SortDirection } from '@/_directives/sortable.directive';
 
 import {DecimalPipe} from '@angular/common';
-import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
-import { SALAS } from '@/_mockups/mock-salas';
+import {debounceTime, delay, switchMap, tap, catchError} from 'rxjs/operators';
 import { environment } from 'environments/environment';
 import { HttpClient } from '@angular/common/http';
 
@@ -145,18 +144,23 @@ export class SalaService {
     this._search$.next();
   }
 
-  getSala(id: number){
-    for(let sala of this.salas){
-      if(sala.codigo == id){
-        return sala;
-      }
-    }
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      return of(result as T);
+    };
+  }
+
+  getSala(id: number) : Observable<Sala>{
+
+    return this.http.get<Sala>(environment.apiUrl+'/salas/' + id)
+    .pipe(
+      catchError(this.handleError<Sala>('habitaciones', ))
+    );
   }
 
   get regimenes() { return [{value: 0, viewValue: 'Solo sala'},
                             {value: 1, viewValue: 'Cátering'},
                             {value: 2, viewValue: 'Asistentes'}]}
-  get salas() { return SALAS; }
   get salas$() { return this._salas$.asObservable(); }
   get total$() { return this._total$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
