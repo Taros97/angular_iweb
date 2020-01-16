@@ -77,9 +77,10 @@ export class RecepcionistaReservaComponent implements OnInit {
       this.regimenes = [];
       this.tipo = 'habitaciones';
       // Habría que hacer la llamada al servicio y del servicio a la API...
+      /*
       for(var habitacion of this.serviceHabitacion.habitaciones){
         this.lista.push({value: habitacion.codigo, viewValue: habitacion.codigo.toString()});
-      }
+      }*/
       for(var regimen of this.serviceHabitacion.regimenes){
         this.regimenes.push({value: regimen.value, viewValue: regimen.viewValue});
       }
