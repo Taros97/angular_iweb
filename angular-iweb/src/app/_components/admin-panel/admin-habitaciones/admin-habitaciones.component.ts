@@ -39,6 +39,10 @@ export class AdminHabitacionesComponent implements OnInit {
     this.service.sortDirection = direction;
   }
 
+  delete(id : number){
+    this.service.deleteHabitacion(id).subscribe();
+  }
+
   ngOnInit() {
   }
 }

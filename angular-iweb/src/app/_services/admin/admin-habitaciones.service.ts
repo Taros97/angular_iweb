@@ -1,12 +1,14 @@
 import {Injectable, PipeTransform} from '@angular/core';
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {DecimalPipe} from '@angular/common';
-import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
+import {debounceTime, delay, switchMap, tap,catchError} from 'rxjs/operators';
 import { SortDirection } from '@/_directives/sortable.directive';
 
 import { Habitacion } from '@/_models';
 import { HABITACIONES } from '@/_mockups';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+
+import { environment } from 'environments/environment';
 
 interface SearchResult {
   habitaciones: Habitacion[];
@@ -65,8 +67,10 @@ export class AdminHabitacionesService {
   private _search$ = new Subject<void>();
   private _habitaciones$ = new BehaviorSubject<Habitacion[]>([]);
   private _total$ = new BehaviorSubject<number>(0);
-
-  
+  private httpHabitaciones: Habitacion[];
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization: `Bearer ${localStorage.token}`})
+  };
 
   private _state: State = {
     page: 1,
@@ -80,21 +84,18 @@ export class AdminHabitacionesService {
   constructor(private pipe: DecimalPipe, private http: HttpClient) {
 
     // API CUANDO ESTE
-    /*
-    this.http.get<Habitacion[]>(this.apiURL).subscribe(data =>{
-      this.httpHabitacion = data;
+    this.http.get<Habitacion[]>(environment.apiUrl+'habitaciones').subscribe(data =>{
+      this.httpHabitaciones = data;
       this._search$.pipe(
-        tap(() => this._loading$.next(true)),
-        debounceTime(200),
         switchMap(() => this._search()),
-        delay(200),
-        tap(() => this._loading$.next(false))
       ).subscribe(result => {
         this._habitaciones$.next(result.habitaciones);
         this._total$.next(result.total);
       });
+      this._set({searchTerm:''});
     });
-    */
+
+/*
     this._search$.pipe(
       tap(() => this._loading$.next(true)),
       debounceTime(200),
@@ -105,9 +106,24 @@ export class AdminHabitacionesService {
       this._habitaciones$.next(result.habitaciones);
       this._total$.next(result.total);
     });
-
+*/
     this._search$.next();
   }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      return of(result as T);
+    };
+  }
+
+  deleteHabitacion(codigo: number): Observable<Habitacion> {
+    const url = `${environment.apiUrl}habitaciones/${codigo}`;
+
+    return this.http.delete<Habitacion>(url, this.httpOptions).pipe(
+      catchError(this.handleError<Habitacion>('deleteHabitacion'))
+    );
+  }
+
 
   
   get habitaciones$() { return this._habitaciones$.asObservable(); }
@@ -136,7 +152,7 @@ export class AdminHabitacionesService {
     // API CUANDO ESTE
     // let habitaciones = sort(httpHabitacion, sortColumn, sortDirection);
     // Sustituir la siguiente por esta
-    let habitaciones = sort(HABITACIONES, sortColumn, sortDirection);
+    let habitaciones = sort(this.httpHabitaciones, sortColumn, sortDirection);
     // 2. filter
     habitaciones = habitaciones.filter(habitacion => matches(habitacion, searchTerm, this.pipe));
     const total = habitaciones.length;
