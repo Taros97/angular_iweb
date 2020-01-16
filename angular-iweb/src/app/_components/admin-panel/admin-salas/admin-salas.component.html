@@ -4,6 +4,7 @@
     <div class="profileCenter">
       <!-- Tabla de Reservas del usuario-->
         <br>
+        <div><button class="btn btn-info" routerLink="/admin/crear-sala">Crear Sala</button></div>
         <form>
           <div class="form-row">
             <div class="col ">
@@ -37,7 +38,7 @@
                     <ngb-highlight [result]="sala.descripcion" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td class="acciones">
-                    <button class="btn btn-info" (click)="delete(sala.id)">Eliminar</button>
+                    <button class="btn btn-info" (click)="delete(sala.codigo)">Eliminar</button>
                     <button class="btn btn-info" routerLink="/admin/salas/{{sala.codigo}}">Modificar</button>
                   </td>
                 </tr>

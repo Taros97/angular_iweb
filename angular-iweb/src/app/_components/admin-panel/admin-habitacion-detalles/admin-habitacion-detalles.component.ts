@@ -135,6 +135,7 @@ export class AdminHabitacionDetallesComponent implements OnInit {
     if (this.habitacionForm.invalid) {
       return;
     }
+    
     var habitacionUpdate : Habitacion = this.habitacionForm.value;
     habitacionUpdate.codigo = this.habitacion.codigo;
     this.service.updateHabitacion(this.habitacion.codigo, habitacionUpdate).subscribe(data => {

@@ -1,0 +1,105 @@
+<div class="todo">
+    <mat-card>
+        <mat-card-header>
+            <h1>Crear Habitación</h1>
+        </mat-card-header>
+        <mat-card-content>
+            <form [formGroup]="habitacionForm" (ngSubmit)="onSubmit()">
+                <div class="detalles">
+                    <div class="form-group">
+                        <textarea rows="5" type="text-box" formControlName="descripcion" class="form-control"
+                            [ngClass]="{ 'is-invalid': submitted && f.descripcion.errors }"></textarea>
+                        <div *ngIf="submitted && f.descripcion.errors" class="invalid-feedback">
+                            <div *ngIf="f.descripcion.errors.required">Descripción Requerida</div>
+                        </div>
+                    </div>
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th class="w-25" scope="col"><label>Plazas</label></th>
+                                <th class="w-25" scope="col"><label>Vistas</label></th>
+                                <th class="w-25" scope="col"><label>Superficie</label></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>
+                                    <div class="form-group">
+                                        <input type="number" formControlName="plazas" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.plazas.errors }" />
+                                        <div *ngIf="submitted && f.plazas.errors" class="invalid-feedback">
+                                            <div *ngIf="f.plazas.errors.required">Plazas Requerida o no es un Numero
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th>
+                                    <mat-form-field>
+                                        <mat-label>Vistas</mat-label>
+                                        <mat-select formControlName="vistas">
+                                            <mat-option *ngFor="let vista of vistas" [value]="vista.value">
+                                                {{vista.viewValue}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <input type="number" formControlName="superficie" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.plazas.errors }" />
+                                        <div *ngIf="submitted && f.superficie.errors" class="invalid-feedback">
+                                            <div *ngIf="f.superficie.errors.required">Superficie Requerida o no es un
+                                                Numero</div>
+                                        </div>
+                                    </div>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th class="w-25" scope="col"><label>Precio</label></th>
+                                <th class="w-25" scope="col"><label>Wi-Fi</label></th>
+                                <th class="w-25" scope="col"><label>Categoria</label></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>
+                                    <div class="form-group">
+                                        <input type="number" formControlName="precio" class="form-control"
+                                            [ngClass]="{ 'is-invalid': submitted && f.plazas.errors }" />
+                                        <div *ngIf="submitted && f.precio.errors" class="invalid-feedback">
+                                            <div *ngIf="f.precio.errors.required">Preico Requerida o no es un Numero
+                                            </div>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th>
+                                    <div class="form-group">
+                                        <input type="checkbox" formControlName="wifi" />
+                                    </div>
+                                </th>
+                                <th>
+                                    <mat-form-field>
+                                        <mat-label>Selección</mat-label>
+                                        <mat-select [(value)]="selected" formControlName="categoria" required>
+                                          <mat-option value="Doble">Doble</mat-option>
+                                          <mat-option value="Individual">Individual</mat-option>
+                                          <mat-option value="Familiar">Familiar</mat-option>
+                                        </mat-select>
+                                      </mat-form-field>
+                                </th>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="fila">
+                        <button type="button" class="btn btn-primary" (click)="onSubmit()">Crear</button>
+                        <button type="button" class="atras btn btn-secondary" (click)="goBack()">Volver atrás</button>
+                    </div>
+                </div>
+            </form>
+        </mat-card-content>
+    </mat-card>
+</div>
