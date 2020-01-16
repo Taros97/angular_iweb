@@ -44,6 +44,8 @@ import { RecepcionistaPanelComponent } from './_components/recepcionista/recepci
 import { AdminSalaDetallesComponent } from './_components/admin-panel/admin-sala-detalles/admin-sala-detalles.component';
 import { AdminHabitacionDetallesComponent } from './_components/admin-panel/admin-habitacion-detalles/admin-habitacion-detalles.component';
 import {MatStepperModule} from '@angular/material/stepper';
+import { AdminHabitacionCrearComponent } from './_components/admin-panel/admin-habitacion-crear/admin-habitacion-crear.component';
+import { AdminSalaCrearComponent } from './_components/admin-panel/admin-sala-crear/admin-sala-crear.component';
 
 registerLocaleData(localeEs, 'es');
 
@@ -91,6 +93,8 @@ registerLocaleData(localeEs, 'es');
     RecepcionistaPanelComponent,
     AdminSalaDetallesComponent,
     AdminHabitacionDetallesComponent,
+    AdminHabitacionCrearComponent,
+    AdminSalaCrearComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

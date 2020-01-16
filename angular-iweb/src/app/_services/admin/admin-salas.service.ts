@@ -110,10 +110,6 @@ export class AdminSalasService {
     return this.http.get<Sala>(environment.apiUrl + 'salas/' + id);
   }
 
-  updateSala(id: number, data: Sala){
-    return this.http.put<Sala>(environment.apiUrl + 'salas/' + id, data, this.httpOptions);
-  }
-
   public getSalas(){
     // API CUANDO ESTE
     this.http.get<Sala[]>(environment.apiUrl+'salas').subscribe(data =>{
@@ -132,14 +128,6 @@ export class AdminSalasService {
     return (error: any): Observable<T> => {
       return of(result as T);
     };
-  }
-
-  public deleteSala(codigo: number): Observable<Sala> {
-    const url = `${environment.apiUrl}salas/${codigo}`;
-
-    return this.http.delete<Sala>(url, this.httpOptions).pipe(
-      catchError(this.handleError<Sala>('deleteHabitacion'))
-    );
   }
 
   get salas$() { return this._salas$.asObservable(); }
@@ -176,4 +164,25 @@ export class AdminSalasService {
     salas = salas.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
     return of({salas, total});
   }
+
+  deleteSala(codigo: number): Observable<Sala> {
+    const url = `${environment.apiUrl}salas/${codigo}`;
+    console.log(codigo)
+    return this.http.delete<Sala>(url, this.httpOptions).pipe(
+      catchError(this.handleError<Sala>('deleteSala'))
+    );
+  }
+
+  createSala(h: Sala): Observable<Sala> {
+    const url = `${environment.apiUrl}salas`;
+    return this.http.post<Sala>(url, h, this.httpOptions).pipe(
+      catchError(this.handleError<Sala>('deleteSala'))
+    );
+  }
+
+
+  updateSala(id: number, data: Sala){
+    return this.http.put<Sala>(environment.apiUrl + 'salas/' + id, data, this.httpOptions);
+  }
+
 }

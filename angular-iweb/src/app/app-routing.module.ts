@@ -13,6 +13,8 @@ import { RecepcionistaReservaComponent } from './_components/recepcionista/recep
 import { ListaReservasComponent } from './_components/recepcionista/lista-reservas/lista-reservas.component';
 import { RecepcionistaPanelComponent } from './_components/recepcionista/recepcionista-panel/recepcionista-panel.component';
 import { AdminSalaDetallesComponent } from './_components/admin-panel/admin-sala-detalles/admin-sala-detalles.component';
+import { AdminHabitacionCrearComponent } from './_components/admin-panel/admin-habitacion-crear/admin-habitacion-crear.component';
+import { AdminSalaCrearComponent } from './_components/admin-panel/admin-sala-crear/admin-sala-crear.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
@@ -38,7 +40,8 @@ const routes: Routes = [
       { path: 'habitaciones/:id', component: AdminHabitacionDetallesComponent },
       { path: 'reservas', component: ListaReservasComponent },
       { path: 'reservar', component: RecepcionistaReservaComponent },
-
+      { path: 'crear-habitacion', component: AdminHabitacionCrearComponent },
+      { path: 'crear-sala', component: AdminSalaCrearComponent },
   ]},
   { path: 'salas', component: SalasComponent },
   { path: 'salas/:id', component: SalaComponent },

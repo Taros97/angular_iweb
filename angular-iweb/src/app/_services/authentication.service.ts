@@ -21,6 +21,23 @@ export class AuthenticationService {
     }
 
     login(email: string, password: string) {
+        return this.http.post<any>(`${environment.apiUrl}/login`, { email, password })
+            .pipe(map(data => {
+                // login successful if there's a jwt token in the response
+                if (data.user && data.access_token) {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    let usuario : User;
+                    usuario = data.user;
+                    usuario.token = data.access_token;
+                    console.log(usuario)
+                    localStorage.setItem('currentUser', JSON.stringify(usuario));
+                    this.currentUserSubject.next(data.user);
+                }
+                return data.user;
+            }));
+    }
+/*
+    login(email: string, password: string) {
         return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { email, password })
             .pipe(map(user => {
                 console.log(user)
@@ -33,7 +50,7 @@ export class AuthenticationService {
                 return user;
             }));
     }
-
+*/
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
