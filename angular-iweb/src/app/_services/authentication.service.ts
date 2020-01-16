@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { User } from '@/_models';
+import { User , Role} from '@/_models';
 import { environment } from 'environments/environment';
 
 @Injectable({ providedIn: 'root' })
@@ -29,6 +29,9 @@ export class AuthenticationService {
                     let usuario : User;
                     usuario = data.user;
                     usuario.token = data.access_token;
+                    if(data.user.tipo_usuario == 0){usuario.role = Role.Admin}
+                    else if(data.user.tipo_usuario == 1){usuario.role = Role.Recepcionista}
+                    else if(data.user.tipo_usuario == 2){usuario.role = Role.User}
                     console.log(usuario)
                     localStorage.setItem('currentUser', JSON.stringify(usuario));
                     this.currentUserSubject.next(data.user);
