@@ -101,7 +101,7 @@ export class AdminSalaDetallesComponent implements OnInit {
     this.locate.back();
   }
 
-  editar() {
+  editar() { 
 
     this.submitted = true;
 
