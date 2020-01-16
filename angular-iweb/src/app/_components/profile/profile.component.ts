@@ -20,7 +20,7 @@ export class ProfileComponent implements OnInit {
   reservas$: Observable<Reserva[]>;
   total$: Observable<number>;
 
-  user = USUARIO;
+  user: User = new User();
   //reservas = RESERVAS;
   edit = false;
   profileForm: FormGroup;
@@ -48,16 +48,55 @@ export class ProfileComponent implements OnInit {
   get f() { return this.profileForm.controls; }
 
   ngOnInit() {
+    this.service.getProfile().subscribe(data => {
+      this.user = data;
+      this.profileForm = this.formBuilder.group({
+        nombre: [this.user.nombre, Validators.required],
+        apellidos: [this.user.apellidos, Validators.required],
+        email: [this.user.email, Validators.required],
+        password: [this.user.password, Validators.required],
+        dni: [this.user.dni, Validators.required],
+        telefono: [this.user.telefono, Validators.required],
+        nacionalidad: [this.user.nacionalidad, Validators.required],
+        direccion: [this.user.direccion, Validators.required],
+      });
+    })
     this.profileForm = this.formBuilder.group({
-      nombre: [this.user.nombre, Validators.required],
-      apellidos: [this.user.apellidos, Validators.required],
-      email: [this.user.apellidos, Validators.required],
-      password: [this.user.password, Validators.required],
-      dni: [this.user.dni, Validators.required],
-      telefono: [this.user.telefono, Validators.required],
-      nacionalidad: [this.user.nacionalidad, Validators.required],
-      direccion: [this.user.direccion, Validators.required],
+      nombre: ['', Validators.required],
+      apellidos: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      dni: ['', Validators.required],
+      telefono: ['', Validators.required],
+      nacionalidad: ['', Validators.required],
+      direccion: ['', Validators.required],
     });
+    /**this.service.getProfile().subscribe(data => {
+      this.user = data;
+      this.profileForm = this.formBuilder.group({
+        nombre: [this.user.nombre, Validators.required],
+        apellidos: [this.user.apellidos, Validators.required],
+        email: [this.user.apellidos, Validators.required],
+        password: [this.user.password, Validators.required],
+        dni: [this.user.dni, Validators.required],
+        telefono: [this.user.telefono, Validators.required],
+        nacionalidad: [this.user.nacionalidad, Validators.required],
+        direccion: [this.user.direccion, Validators.required],
+      });
+    }
+    
+    this.profileForm = this.formBuilder.group({
+      nombre: ['', Validators.required],
+      apellidos: ['', Validators.required],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
+      dni: ['', Validators.required],
+      telefono: ['', Validators.required],
+      nacionalidad: ['', Validators.required],
+      direccion: ['', Validators.required],
+    });
+      
+      });*/
   }
 
   onSubmit() {
