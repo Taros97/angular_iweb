@@ -99,6 +99,9 @@ export class ReservaClienteService {
       });
     });
     */
+
+   this.http.get<Reserva[]>(environment.apiUrl + 'reservas').subscribe(data =>{
+    this.httpReserva = data;
     this._search$.pipe(
       tap(() => this._loading$.next(true)),
       debounceTime(200),
@@ -117,7 +120,28 @@ export class ReservaClienteService {
         this._total$.next(0);
       }
     });
-
+  });
+  /*
+  this._search$.next();
+    this._search$.pipe(
+      tap(() => this._loading$.next(true)),
+      debounceTime(200),
+      switchMap(() => this._search()),
+      delay(200),
+      tap(() => this._loading$.next(false))
+    ).subscribe(result => {
+      if(result.habitaciones){
+        this._disponible$.next(result.habitaciones);
+        this._total$.next(result.total);
+      }else if(result.salas){
+        this._disponible$.next(result.salas);
+        this._total$.next(result.total);
+      }else{
+        this._disponible$.next([]);
+        this._total$.next(0);
+      }
+    });
+*/
     this._search$.next();
   }
 

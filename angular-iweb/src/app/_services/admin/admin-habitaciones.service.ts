@@ -108,6 +108,8 @@ export class AdminHabitacionesService {
 
     this._search$.next();
   }
+
+  
   get habitaciones$() { return this._habitaciones$.asObservable(); }
   get total$() { return this._total$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
