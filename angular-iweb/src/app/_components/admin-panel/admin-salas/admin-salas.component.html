@@ -37,7 +37,7 @@
                     <ngb-highlight [result]="sala.descripcion" [term]="service.searchTerm"></ngb-highlight>
                   </td>
                   <td class="acciones">
-                    <button class="btn btn-info" >Eliminar</button>
+                    <button class="btn btn-info" (click)="delete(sala.id)">Eliminar</button>
                     <button class="btn btn-info" routerLink="/admin/salas/{{sala.codigo}}">Modificar</button>
                   </td>
                 </tr>

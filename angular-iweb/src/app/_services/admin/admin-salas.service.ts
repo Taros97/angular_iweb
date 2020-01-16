@@ -1,7 +1,7 @@
 import {Injectable, PipeTransform} from '@angular/core';
 import {BehaviorSubject, Observable, of, Subject} from 'rxjs';
 import {DecimalPipe} from '@angular/common';
-import {debounceTime, delay, switchMap, tap} from 'rxjs/operators';
+import {debounceTime, delay, switchMap, tap, catchError} from 'rxjs/operators';
 import { SortDirection } from '@/_directives/sortable.directive';
 
 import { Sala } from '@/_models';
@@ -112,6 +112,34 @@ export class AdminSalasService {
 
   updateSala(id: number, data: Sala){
     return this.http.put<Sala>(environment.apiUrl + 'salas/' + id, data, this.httpOptions);
+  }
+
+  public getSalas(){
+    // API CUANDO ESTE
+    this.http.get<Sala[]>(environment.apiUrl+'salas').subscribe(data =>{
+      this.httpSala = data;
+      this._search$.pipe(
+        switchMap(() => this._search()),
+      ).subscribe(result => {
+        this._salas$.next(result.salas);
+        this._total$.next(result.total);
+      });
+      this._set({searchTerm:''});
+    });
+  }
+
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      return of(result as T);
+    };
+  }
+
+  public deleteSala(codigo: number): Observable<Sala> {
+    const url = `${environment.apiUrl}salas/${codigo}`;
+
+    return this.http.delete<Sala>(url, this.httpOptions).pipe(
+      catchError(this.handleError<Sala>('deleteHabitacion'))
+    );
   }
 
   get salas$() { return this._salas$.asObservable(); }

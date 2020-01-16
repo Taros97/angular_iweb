@@ -19,7 +19,7 @@ export class AdminSalasComponent implements OnInit {
   salas$: Observable<Sala[]>;
   total$: Observable<number>;
 
-  user = USUARIO;
+  
   //salas = SALAS;
   edit = false;
 
@@ -40,6 +40,12 @@ export class AdminSalasComponent implements OnInit {
 
     this.service.sortColumn = column;
     this.service.sortDirection = direction;
+  }
+
+  delete(id : number){
+    this.service.deleteSala(id).subscribe(() => {
+      this.service.getSalas();
+    });
   }
 
   ngOnInit() {
