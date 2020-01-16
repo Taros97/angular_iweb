@@ -8,6 +8,7 @@ import { Sala } from '@/_models';
 import { SALAS } from '@/_mockups';
 import { HttpClient } from '@angular/common/http';
 import { spinnerButtonPositionDictionary } from 'ng-metro4';
+import { environment } from 'environments/environment';
 
 interface SearchResult {
   salas: Sala[];
@@ -47,6 +48,8 @@ function sort(salas: Sala[], column: string, direction: string): Sala[] {
 }
 
 
+
+
 function matches(sala: Sala, term: string, pipe: PipeTransform) {
   return sala.descripcion.toLowerCase().includes(term.toLowerCase())
     || pipe.transform(sala.codigo).includes(term);
@@ -81,22 +84,10 @@ export class AdminSalasService {
   constructor(private pipe: DecimalPipe, private http: HttpClient) {
 
     // API CUANDO ESTE
-    /*
-    this.http.get<Sala[]>(this.apiURL).subscribe(data =>{
+    
+    this.http.get<Sala[]>(environment.apiUrl + 'salas').subscribe(data =>{
       this.httpSala = data;
-      this._search$.pipe(
-        tap(() => this._loading$.next(true)),
-        debounceTime(200),
-        switchMap(() => this._search()),
-        delay(200),
-        tap(() => this._loading$.next(false))
-      ).subscribe(result => {
-        this._salas$.next(result.salas);
-        this._total$.next(result.total);
-      });
-    });
-    */
-    this._search$.pipe(
+     this._search$.pipe(
       tap(() => this._loading$.next(true)),
       debounceTime(200),
       switchMap(() => this._search()),
@@ -106,9 +97,23 @@ export class AdminSalasService {
       this._salas$.next(result.salas);
       this._total$.next(result.total);
     });
+    this._set({searchTerm: ''})
+    });
+    
+    /*this._search$.pipe(
+      tap(() => this._loading$.next(true)),
+      debounceTime(200),
+      switchMap(() => this._search()),
+      delay(200),
+      tap(() => this._loading$.next(false))
+    ).subscribe(result => {
+      this._salas$.next(result.salas);
+      this._total$.next(result.total);
+    });*/
 
     this._search$.next();
   }
+
   get salas$() { return this._salas$.asObservable(); }
   get total$() { return this._total$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
@@ -135,7 +140,7 @@ export class AdminSalasService {
     // API CUANDO ESTE
     // let salas = sort(httpSala, sortColumn, sortDirection);
     // Sustituir la siguiente por esta
-    let salas = sort(SALAS, sortColumn, sortDirection);
+    let salas = sort(this.httpSala, sortColumn, sortDirection);
     // 2. filter
     salas = salas.filter(sala => matches(sala, searchTerm, this.pipe));
     const total = salas.length;
