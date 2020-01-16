@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
 
 import { AlertService, UserService, AuthenticationService } from '@/_services';
+import { UsuarioReserva } from '@/_models';
 
 @Component({
     selector: 'app-register',
@@ -50,15 +51,17 @@ export class RegisterComponent implements OnInit {
         // reset alerts on submit
         this.alertService.clear();
 
-        console.log(this.registerForm.value)
 
         // stop here if form is invalid
         if (this.registerForm.invalid) {
             return;
         }
-
         this.loading = true;
-        this.userService.register(this.registerForm.value)
+        let user : UsuarioReserva
+        user = this.registerForm.value;
+        user.name = this.registerForm.value.nombre;
+        user.tipo_usuario = 0;
+        this.userService.register(user)
             .pipe(first())
             .subscribe(
                 data => {
@@ -69,5 +72,6 @@ export class RegisterComponent implements OnInit {
                     this.alertService.error(error);
                     this.loading = false;
                 });
+        
     }
 }
