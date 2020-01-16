@@ -14,7 +14,6 @@ import { DecimalPipe, Location } from '@angular/common';
 export class HabitacionComponent implements OnInit {
   habitacion : Habitacion = new Habitacion();
   images = [700, 533, 807, 124].map((n) => `https://picsum.photos/id/${n}/900/500`);
-
   paused = false;
   unpauseOnArrow = false;
   pauseOnIndicator = false;

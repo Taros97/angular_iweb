@@ -6,6 +6,9 @@ import { ReservaClienteService } from '@/_services/reserva-cliente.service';
 import { NgbdSortableHeader, SortEvent } from '@/_directives/sortable.directive';
 import { Observable } from 'rxjs';
 import { HABITACIONES, SALAS } from '@/_mockups';
+import { Regimen } from '@/_models';
+import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y';
+
 
 @Component({
   selector: 'app-reserva-cliente',
@@ -21,10 +24,12 @@ export class ReservaClienteComponent implements OnInit {
   minDate: Date;
   submitted: boolean;
   lista$: Observable<any[]>;
+  regimenes: Regimen[];
   total$: Observable<number>;
   seleccion: string;
   temporada: number;
   precioFinal: number;
+  regimen: Regimen;
   isLinear = true;
 
   constructor(private formBuilder: FormBuilder,
@@ -38,6 +43,8 @@ export class ReservaClienteComponent implements OnInit {
     this.seleccion = 'Habitación o sala'
     this.precioFinal = 0;
     this.temporada = 0.6;
+    this.regimenes = [{codigo: -1, regimen: 'Selecciona un régimen', porcentaje: 1, es_sala : false}];
+    this.regimen = {codigo: -1, regimen: 'Selecciona un régimen', porcentaje: 1, es_sala : false};
     this.alertService.clear();
     this.submitted = false;
     this.minDate = new Date();
@@ -49,7 +56,8 @@ export class ReservaClienteComponent implements OnInit {
       validators: MustMatch('fechaInicio', 'fechaFinal')
     })
     this.seleccionForm = this.formBuilder.group({
-      seleccion: [this.seleccion]
+      regimen: [this.regimen, Validators.required],
+      seleccion: [this.seleccion, Validators.required]
     },{
       validators: MustSelector('seleccion')
     })
@@ -84,8 +92,24 @@ export class ReservaClienteComponent implements OnInit {
   escogerTablaReservas(){
     if(this.reservaForm.get('tipo').value === 'habitacion'){
       this.service.getHabitaciones();
+      this.service.getRegimenes().subscribe(data => {
+        this.regimenes = [];
+        for(var regimen of data){
+          if(regimen.es_sala === 0){
+            this.regimenes.push(regimen);
+          }
+        }
+      })
     }else{
       this.service.getSalas();
+      this.service.getRegimenes().subscribe(data => {
+        this.regimenes = [];
+        for(var regimen of data){
+          if(regimen.es_sala === 1){
+            this.regimenes.push(regimen);
+          }
+        }
+      })
     }
   }
 
@@ -99,6 +123,7 @@ export class ReservaClienteComponent implements OnInit {
     }
   }
 
+  get sf() { return this.seleccionForm.controls; }
   get rf() { return this.reservaForm.controls; }
   get pf() { return this.pago.controls; }
 
@@ -121,9 +146,10 @@ export class ReservaClienteComponent implements OnInit {
     // reset alerts on submit
     this.alertService.clear();
     // stop here if form is invalid
-    if (this.pago.invalid || this.reservaForm.invalid) {
+    if ( this.seleccionForm.invalid || this.pago.invalid || this.reservaForm.invalid) {
       return;
     }
+    console.log("hola")
 
     // Aqui sigue con el servicio
   }

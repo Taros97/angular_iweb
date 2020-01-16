@@ -140,7 +140,6 @@ export class ProfileService {
     .pipe(
       catchError(this.handleError<User>('perfil', ))
     );
-    return this.http.get<User>(environment.apiUrl + 'perfil');
   }
 
   public _set(patch: Partial<State>) {

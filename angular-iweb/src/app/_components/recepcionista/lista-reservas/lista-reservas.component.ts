@@ -1,5 +1,5 @@
 import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
-import { Reserva } from '@/_models';
+import { Reserva, ReservaFinal } from '@/_models';
 
 import {DecimalPipe} from '@angular/common';
 import {Observable} from 'rxjs';
@@ -14,10 +14,9 @@ import { NgbdSortableHeader, SortEvent } from '@/_directives/sortable.directive'
 })
 export class ListaReservasComponent implements OnInit {
 
-  reservas$: Observable<Reserva[]>;
+  reservas$: Observable<ReservaFinal[]>;
   total$: Observable<number>;
   selected = 'Sala';
-  //reservas = RESERVAS;
 
   @ViewChildren(NgbdSortableHeader) headers: QueryList<NgbdSortableHeader>;
 
@@ -42,7 +41,9 @@ export class ListaReservasComponent implements OnInit {
   }
 
   borrarReserva(id){
-    console.log(id)
+    this.service.deleteReserva(id).subscribe(() => {
+      this.service.getReservas();
+    });
   }
 
 }

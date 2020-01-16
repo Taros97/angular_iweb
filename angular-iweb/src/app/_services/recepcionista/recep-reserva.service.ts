@@ -1,12 +1,12 @@
 import { Injectable, PipeTransform } from '@angular/core';
 import { BehaviorSubject, Observable, of, Subject } from 'rxjs';
 import { DecimalPipe } from '@angular/common';
-import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, delay, switchMap, tap, catchError } from 'rxjs/operators';
 import { SortDirection } from '@/_directives/sortable.directive';
 
 import { ReservaFinal } from '@/_models';
-import { HttpClient } from '@angular/common/http';
-import { RESERVASFINAL } from '@/_mockups/mock-reservasFinal';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'environments/environment';
 
 interface SearchResult {
   reservas: ReservaFinal[];
@@ -57,7 +57,7 @@ function matchesCodigo(reserva: ReservaFinal, term: string, pipe: PipeTransform)
           return true;
         return false;
       } else {
-        if (reserva.tipo === 'Bloqueada')
+        if (reserva.tipo_reserva === 3)
           return true;
         return false;
       }
@@ -67,15 +67,16 @@ function matchesCodigo(reserva: ReservaFinal, term: string, pipe: PipeTransform)
 }
 
 function matchesEmail(reserva: ReservaFinal, term: string, pipe: PipeTransform) {
-  return reserva.usuario.email.toLowerCase().includes(term.toLowerCase());
+  return reserva.usuario.toLowerCase().includes(term.toLowerCase());
 }
 
 function matchesDate(reserva: ReservaFinal, date: Date, pipe: PipeTransform) {
-  console.log(date)
+  var cadenaSeparar = reserva.fecha_inicio.split('-')
+  var fechaComparar = new Date(parseInt(cadenaSeparar[0]), parseInt(cadenaSeparar[1]) - 1, parseInt(cadenaSeparar[2]));
   if (date) {
-    if (reserva.fechaInicio.getFullYear() === date.getFullYear()) {
-      if (reserva.fechaInicio.getMonth() === date.getMonth()) {
-        if (reserva.fechaInicio.getDay() === date.getDay()) {
+    if (fechaComparar.getFullYear() === date.getFullYear()) {
+      if (fechaComparar.getMonth() === date.getMonth()) {
+        if (fechaComparar.getDay() === date.getDay()) {
           return true;
         }
       }
@@ -90,6 +91,9 @@ function matchesDate(reserva: ReservaFinal, date: Date, pipe: PipeTransform) {
 })
 export class RecepReservaService {
   // API CUANDO ESTE RELLENAR URL
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+  };
   private apiURL = '';
   private httpReserva: ReservaFinal[];
 
@@ -114,8 +118,7 @@ export class RecepReservaService {
 
   constructor(private pipe: DecimalPipe, private http: HttpClient) {
     // API CUANDO ESTE
-    /*
-    this.http.get<ReservaFinal[]>(this.apiURL).subscribe(data =>{
+    this.http.get<ReservaFinal[]>(environment.apiUrl+'reservas').subscribe(data => {
       this.httpReserva = data;
       this._search$.pipe(
         tap(() => this._loading$.next(true)),
@@ -126,22 +129,30 @@ export class RecepReservaService {
       ).subscribe(result => {
         this._reservas$.next(result.reservas);
         this._total$.next(result.total);
-      });
-    });
-    */
-    this._search$.pipe(
-      tap(() => this._loading$.next(true)),
-      debounceTime(200),
-      switchMap(() => this._search()),
-      delay(200),
-      tap(() => this._loading$.next(false))
-    ).subscribe(result => {
-      this._reservas$.next(result.reservas);
-      this._total$.next(result.total);
+      })
+      this._set({searchTerm: ''})
     });
 
-    this._search$.next();
-  }
+      this._search$.next();
+    }
+
+    public getReservas(){
+      // API CUANDO ESTE
+      this.http.get<ReservaFinal[]>(environment.apiUrl+'reservas').subscribe(data =>{
+        this.httpReserva = data;
+        this._search$.pipe(
+          tap(() => this._loading$.next(true)),
+          debounceTime(200),
+          switchMap(() => this._search()),
+          delay(200),
+          tap(() => this._loading$.next(false))
+        ).subscribe(result => {
+          this._reservas$.next(result.reservas);
+          this._total$.next(result.total);
+        })
+        this._set({searchTerm:''});
+      });
+    }
 
   get reservas$() { return this._reservas$.asObservable(); }
   get total$() { return this._total$.asObservable(); }
@@ -163,28 +174,41 @@ export class RecepReservaService {
   set filterEmail(filterEmail: string) { this._set({ filterEmail }); }
 
   private _set(patch: Partial<State>) {
-    Object.assign(this._state, patch);
-    this._search$.next();
+      Object.assign(this._state, patch);
+      this._search$.next();
   }
 
-  private _search(): Observable<SearchResult> {
-    const { sortColumn, sortDirection, pageSize, page, searchTerm, filterDate
-      , filterEmail, filterCodigo } = this._state;
-    // 1. sort
-
-    // API CUANDO ESTE
-    // let reservas = sort(httpReserva, sortColumn, sortDirection);
-    // Sustituir la siguiente por esta
-    let reservas = sort(RESERVASFINAL, sortColumn, sortDirection);
-    // 2. filter
-    reservas = reservas.filter(reserva => matches(reserva, searchTerm, this.pipe));
-    reservas = reservas.filter(reserva => matchesDate(reserva, filterDate, this.pipe));
-    reservas = reservas.filter(reserva => matchesCodigo(reserva, filterCodigo, this.pipe));
-    reservas = reservas.filter(reserva => matchesEmail(reserva, filterEmail, this.pipe));
-
-    const total = reservas.length;
-    // 3. paginate
-    reservas = reservas.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
-    return of({ reservas, total });
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      return of(result as T);
+    };
   }
+
+  public deleteReserva(codigo: number): Observable<ReservaFinal> {
+    const url = `${environment.apiUrl}reservas/${codigo}`;
+
+    return this.http.delete<ReservaFinal>(url, this.httpOptions).pipe(
+      catchError(this.handleError<ReservaFinal>('deleteReserva'))
+    );
+  }
+
+  private _search(): Observable < SearchResult > {
+      const {
+        sortColumn, sortDirection, pageSize, page, searchTerm, filterDate
+        , filterEmail, filterCodigo
+      } = this._state;
+      // 1. sort
+      
+      let reservas = sort(this.httpReserva, sortColumn, sortDirection);
+      // 2. filter
+      reservas = reservas.filter(reserva => matches(reserva, searchTerm, this.pipe));
+      reservas = reservas.filter(reserva => matchesDate(reserva, filterDate, this.pipe));
+      reservas = reservas.filter(reserva => matchesCodigo(reserva, filterCodigo, this.pipe));
+      reservas = reservas.filter(reserva => matchesEmail(reserva, filterEmail, this.pipe));
+
+      const total = reservas.length;
+      // 3. paginate
+      reservas = reservas.slice((page - 1) * pageSize, (page - 1) * pageSize + pageSize);
+      return of({ reservas, total });
+    }
 }

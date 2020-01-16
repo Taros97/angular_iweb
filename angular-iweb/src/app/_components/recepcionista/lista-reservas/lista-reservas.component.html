@@ -67,24 +67,30 @@
             <ngb-highlight [result]="reserva.descripcion"></ngb-highlight>
           </td>
           <td class="tablaFechaInicio">
-            <ngb-highlight [result]="reserva.fechaInicio | date:'dd-MM-yyyy'"></ngb-highlight>
+            <ngb-highlight [result]="reserva.fecha_inicio | date:'dd-MM-yyyy'"></ngb-highlight>
           </td>
           <td class="tablaFechaFin">
-            <ngb-highlight [result]="reserva.fechaFin | date:'dd-MM-yyyy'"></ngb-highlight>
+            <ngb-highlight [result]="reserva.fecha_fin | date:'dd-MM-yyyy'"></ngb-highlight>
           </td>
           <td class="tablaUsuario">
-            <ngb-highlight [result]="reserva.usuario.email" [term]="service.searchTerm"></ngb-highlight>
+            <ngb-highlight [result]="reserva.usuario" [term]="service.filterEmail"></ngb-highlight>
           </td>
-          <td class="tablaTipo">
-            <ngb-highlight [result]="reserva.tipo" [term]="service.searchTerm"></ngb-highlight>
+          <td class="tablaTipo" *ngIf="reserva.tipo_reserva == 0">
+            <mat-label>Administrador</mat-label>
           </td>
-          <td class="tablaCodigo" *ngIf="reserva.habitacion">
+          <td class="tablaTipo" *ngIf="reserva.tipo_reserva == 1">
+            <mat-label>Recepcionista</mat-label>
+          </td>
+          <td class="tablaTipo" *ngIf="reserva.tipo_reserva == 2">
+            <mat-label>Cliente</mat-label>
+          </td>
+          <td class="tablaCodigo" *ngIf="reserva.habitacion != null">
             <mat-label>Habitación: </mat-label>
-            <ngb-highlight [result]="reserva.habitacion.codigo" [term]="service.searchTerm"></ngb-highlight>
+            <ngb-highlight [result]="reserva.habitacion" [term]="service.searchTerm"></ngb-highlight>
           </td>
-          <td class="tablaCodigo" *ngIf="reserva.sala">
+          <td class="tablaCodigo" *ngIf="reserva.sala != null">
             <mat-label>Sala: </mat-label>
-            <ngb-highlight [result]="reserva.sala.codigo" [term]="service.searchTerm"></ngb-highlight>
+            <ngb-highlight [result]="reserva.sala" [term]="service.searchTerm"></ngb-highlight>
           </td>
           <td class="tablaBorrar">
             <button class="btn btn-danger" type="submit" (click)="borrarReserva(reserva.codigo)"><i
