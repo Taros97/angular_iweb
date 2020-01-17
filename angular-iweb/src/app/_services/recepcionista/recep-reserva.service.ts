@@ -4,7 +4,7 @@ import { DecimalPipe } from '@angular/common';
 import { debounceTime, delay, switchMap, tap, catchError } from 'rxjs/operators';
 import { SortDirection } from '@/_directives/sortable.directive';
 
-import { ReservaFinal } from '@/_models';
+import { ReservaFinal, Habitacion, Sala } from '@/_models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'environments/environment';
 
@@ -116,6 +116,18 @@ export class RecepReservaService {
     filterEmail: ''
   };
 
+  getHabitaciones(){
+    return this.http.get<Habitacion[]>(environment.apiUrl+'habitaciones', this.httpOptions);
+  }
+
+  getSalas(){
+    return this.http.get<Sala[]>(environment.apiUrl+'salas', this.httpOptions);
+  }
+
+  createReserva(json){
+    return this.http.post<any>(environment.apiUrl + 'reservas', json, this.httpOptions);
+  }
+
   constructor(private pipe: DecimalPipe, private http: HttpClient) {
     // API CUANDO ESTE
     this.http.get<ReservaFinal[]>(environment.apiUrl+'reservas', this.httpOptions).subscribe(data => {
@@ -137,7 +149,6 @@ export class RecepReservaService {
     }
 
     public getReservas(){
-      // API CUANDO ESTE
       this.http.get<ReservaFinal[]>(environment.apiUrl+'reservas', this.httpOptions).subscribe(data =>{
         this.httpReserva = data;
         this._search$.pipe(

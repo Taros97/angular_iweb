@@ -64,7 +64,7 @@ export class ReservaClienteService {
   private apiURL = '';
   private httpReserva: Reserva[];
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvcmVnaXN0cm8iLCJpYXQiOjE1NzkyMTU4OTEsImV4cCI6MTU3OTIxOTQ5MSwibmJmIjoxNTc5MjE1ODkxLCJqdGkiOiJXa0VsYW51cGpxd0s3T1BJIiwic3ViIjo1LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.XmSaweBQjxJGS-NWO2JkmYpD2N60nOmecDyXlU_UxYo`})
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization: `Bearer ${JSON.parse(localStorage.getItem('currentUser')).token}`})
   };
 
   private _loading$ = new BehaviorSubject<boolean>(true);
@@ -138,7 +138,6 @@ export class ReservaClienteService {
   }
 
   public getHabitaciones(fechaInicio: string, fechaFinal: string){
-    console.log(fechaInicio)
     var json = {"tipo":this.tipo,
                 "fecha_inicio": fechaInicio,
                 "fecha_fin": fechaFinal}
@@ -153,6 +152,14 @@ export class ReservaClienteService {
       this.salas = data;
       this.refresh();
     });
+  }
+
+  public crearReserva(json){
+    return this.http.post<any>(environment.apiUrl + 'reservas', json, this.httpOptions);
+  }
+
+  public obtenerPrecioFinal(json){
+    return this.http.post<any>(environment.apiUrl + 'precioReserva', json, this.httpOptions);
   }
 
 

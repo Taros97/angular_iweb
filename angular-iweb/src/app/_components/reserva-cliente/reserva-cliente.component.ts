@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
 import { HABITACIONES, SALAS } from '@/_mockups';
 import { Regimen } from '@/_models';
 import { TOUCH_BUFFER_MS } from '@angular/cdk/a11y';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -31,10 +32,12 @@ export class ReservaClienteComponent implements OnInit {
   precioFinal: number;
   regimen: Regimen;
   isLinear = true;
+  id: number;
 
   constructor(private formBuilder: FormBuilder,
     private alertService: AlertService,
-    public service: ReservaClienteService) {
+    public service: ReservaClienteService,
+    private router: Router) {
     this.lista$ = service.disponible$;
     this.total$ = service.total$;
   }
@@ -43,8 +46,8 @@ export class ReservaClienteComponent implements OnInit {
     this.seleccion = 'Habitación o sala'
     this.precioFinal = 0;
     this.temporada = 0.6;
-    this.regimenes = [{codigo: -1, regimen: 'Selecciona un régimen', porcentaje: 1, es_sala : false}];
-    this.regimen = {codigo: -1, regimen: 'Selecciona un régimen', porcentaje: 1, es_sala : false};
+    this.regimenes = [{ codigo: -1, regimen: 'Selecciona un régimen', porcentaje: 1, es_sala: false }];
+    this.regimen = { codigo: -1, regimen: 'Selecciona un régimen', porcentaje: 1, es_sala: false };
     this.alertService.clear();
     this.submitted = false;
     this.minDate = new Date();
@@ -87,30 +90,30 @@ export class ReservaClienteComponent implements OnInit {
     this.service.sortDirection = direction;
   }
 
-  fechaReservaString(control: string){
+  fechaReservaString(control: string) {
     var dia = this.reservaForm.controls[control].value.getDate();
-      var mes = this.reservaForm.controls[control].value.getMonth()+1;
-      var anyo = this.reservaForm.controls[control].value.getFullYear();
-      return anyo + '-' + mes + '-' + dia;
+    var mes = this.reservaForm.controls[control].value.getMonth() + 1;
+    var anyo = this.reservaForm.controls[control].value.getFullYear();
+    return anyo + '-' + mes + '-' + dia;
   }
 
-  escogerTablaReservas(){
-    if(this.reservaForm.get('tipo').value === 'habitacion'){
+  escogerTablaReservas() {
+    if (this.reservaForm.get('tipo').value === 'habitacion') {
       this.service.getHabitaciones(this.fechaReservaString('fechaInicio'), this.fechaReservaString('fechaFinal'));
       this.service.getRegimenes().subscribe(data => {
         this.regimenes = [];
-        for(var regimen of data){
-          if(regimen.es_sala === 0){
+        for (var regimen of data) {
+          if (regimen.es_sala === 0) {
             this.regimenes.push(regimen);
           }
         }
       })
-    }else{
+    } else {
       this.service.getSalas();
       this.service.getRegimenes().subscribe(data => {
         this.regimenes = [];
-        for(var regimen of data){
-          if(regimen.es_sala === 1){
+        for (var regimen of data) {
+          if (regimen.es_sala === 1) {
             this.regimenes.push(regimen);
           }
         }
@@ -121,11 +124,10 @@ export class ReservaClienteComponent implements OnInit {
   cambiarSeleccion(id: number) {
     if (this.reservaForm.get('tipo').value === 'habitacion') {
       this.seleccion = 'Habitación ' + id;
-      this.precioFinal = (HABITACIONES[id].precio * this.temporada) + HABITACIONES[id].precio;
     } else {
       this.seleccion = 'Sala ' + id;
-      this.precioFinal = (SALAS[id].precio * this.temporada) + SALAS[id].precio;
     }
+    this.id = id;
   }
 
   get sf() { return this.seleccionForm.controls; }
@@ -178,6 +180,28 @@ export class ReservaClienteComponent implements OnInit {
     if (this.pago.invalid) {
       return;
     }
+
+    var json;
+    if (this.reservaForm.get('tipo').value === 'habitacion') {
+      json = {
+        "tipo": 'habitacion',
+        "fecha_inicio": this.fechaReservaString('fechaInicio'),
+        "fecha_fin": this.fechaReservaString('fechaFinal'),
+        "regimen": parseInt(this.seleccionForm.get('regimen').value),
+        "codigo": this.id,
+      }
+    }else{
+        json = {
+          "tipo": 'sala_conferencia',
+          "fecha_inicio": this.fechaReservaString('fechaInicio'),
+          "fecha_fin": this.fechaReservaString('fechaFinal'),
+          "regimen": parseInt(this.seleccionForm.get('regimen').value),
+          "codigo": this.id,
+        }
+    }
+    this.service.obtenerPrecioFinal(json).subscribe(precio => {
+      this.precioFinal = precio;
+    })
     this.submitted = false;
 
     // Aqui sigue con el servicio
@@ -192,10 +216,37 @@ export class ReservaClienteComponent implements OnInit {
     if (this.pago.invalid || this.seleccionForm.invalid || this.reservaForm.invalid) {
       return;
     }
-    
-    
+    var json;
+    if (this.reservaForm.get('tipo').value === 'habitacion') {
+      json = {
+        "fecha_inicio": this.fechaReservaString('fechaInicio'),
+        "fecha_fin": this.fechaReservaString('fechaFinal'),
+        "descripcion": "Reserva realizada con éxito",
+        "usuario": JSON.parse(localStorage.getItem('currentUser')).email,
+        "habitacion": this.id,
+        "sala_conferencia": null,
+        "regimen": parseInt(this.seleccionForm.get('regimen').value),
+        "tipo_reserva": 2
+      }
+    } else {
+      json = {
+        "fecha_inicio": this.fechaReservaString('fechaInicio'),
+        "fecha_fin": this.fechaReservaString('fechaFinal'),
+        "descripcion": "Reserva realizada con éxito",
+        "usuario": JSON.parse(localStorage.getItem('currentUser')).email,
+        "habitacion": null,
+        "sala_conferencia": this.id,
+        "regimen": parseInt(this.seleccionForm.get('regimen').value),
+        "tipo_reserva": 2
+      }
 
-    // Aqui sigue con el servicio
+    }
+
+    this.service.crearReserva(json).subscribe(() => {
+      this.alertService.success('Reserva realizada con exito', true);
+      this.router.navigate(['/perfil']);
+    });
+
   }
 
 

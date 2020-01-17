@@ -62,7 +62,7 @@
               <mat-form-field class="regimen">
                 <mat-label>Régimen</mat-label>
                 <mat-select formControlName="regimen" [(ngModel)]="service.regimen" value="{{regimen}}">
-                  <mat-option *ngFor="let reg of regimenes" value="reg.codigo">{{reg.regimen}}</mat-option>
+                  <mat-option *ngFor="let reg of regimenes" value="{{reg.codigo}}">{{reg.regimen}}</mat-option>
                 </mat-select>
                 <mat-error *ngIf="submitted && errorHandlingSeleccion('regimen', 'required')">
                   Debes seleccionar una habitación o una sala
@@ -174,7 +174,7 @@
               </div>
               <div class="botones">
                 <button mat-button class="atras btn btn-primary" matStepperPrevious>Atrás</button>
-                <button type="submit" class="btn btn-primary">Reservar</button>
+                <button type="submit" class="btn btn-primary" (click)="onSubmitResumen()">Reservar</button>
               </div>
             </form>
           </mat-step>

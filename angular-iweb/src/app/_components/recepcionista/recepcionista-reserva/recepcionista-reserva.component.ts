@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { HabitacionService, SalaService, AlertService } from '@/_services'
+import { HabitacionService, SalaService, AlertService, RecepReservaService } from '@/_services'
 import { DecimalPipe } from '@angular/common';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MustMatch } from '@/_helpers/must-match.validator';
+import { Router } from '@angular/router';
 
 export interface lista {
   value: number;
@@ -28,7 +29,9 @@ export class RecepcionistaReservaComponent implements OnInit {
   constructor(private serviceHabitacion: HabitacionService,
               private serviceSala: SalaService,
               private formBuilder: FormBuilder,
-              private alertService: AlertService) {
+              private alertService: AlertService,
+              private service: RecepReservaService,
+              private router: Router) {
   }
 
   get f() { return this.reservaRecepcionista.controls; }
@@ -58,6 +61,13 @@ export class RecepcionistaReservaComponent implements OnInit {
     return this.reservaRecepcionista.controls[control].hasError(error);
   }
 
+  fechaReservaString(control: string) {
+    var dia = this.reservaRecepcionista.controls[control].value.getDate();
+    var mes = this.reservaRecepcionista.controls[control].value.getMonth() + 1;
+    var anyo = this.reservaRecepcionista.controls[control].value.getFullYear();
+    return anyo + '-' + mes + '-' + dia;
+  }
+
   onSubmit(){ // Cuando haces botón de realizar reserva
     this.submitted = true;
             // reset alerts on submit
@@ -67,8 +77,34 @@ export class RecepcionistaReservaComponent implements OnInit {
             if (this.reservaRecepcionista.invalid) {
                 return;
             }
-
-            // Aqui sigue con el servicio
+            var json;
+            if (!this.disabledHabitacion) {
+              json = {
+                "fecha_inicio": this.fechaReservaString('fechaInicio'),
+                "fecha_fin": this.fechaReservaString('fechaFinal'),
+                "descripcion": "Reserva realizada con éxito",
+                "usuario": JSON.parse(localStorage.getItem('currentUser')).email,
+                "habitacion": this.reservaRecepcionista.controls['habitacion'].value,
+                "sala_conferencia": null,
+                "regimen": parseInt(this.reservaRecepcionista.get('regimen').value),
+                "tipo_reserva": 2
+              }
+            } else {
+              json = {
+                "fecha_inicio": this.fechaReservaString('fechaInicio'),
+                "fecha_fin": this.fechaReservaString('fechaFinal'),
+                "descripcion": "Reserva realizada con éxito",
+                "usuario": JSON.parse(localStorage.getItem('currentUser')).email,
+                "habitacion": null,
+                "sala_conferencia": this.reservaRecepcionista.controls['sala'].value,
+                "regimen": parseInt(this.reservaRecepcionista.get('regimen').value),
+                "tipo_reserva": 2
+              }
+            }
+            this.service.createReserva(json).subscribe(() => {
+              this.alertService.success('Reserva realizada con exito', true);
+              this.router.navigate(['/admin/reservas']);
+            });
   }
 
   habitaciones() {
@@ -76,11 +112,12 @@ export class RecepcionistaReservaComponent implements OnInit {
       this.lista = [];
       this.regimenes = [];
       this.tipo = 'habitaciones';
-      // Habría que hacer la llamada al servicio y del servicio a la API...
-      /*
-      for(var habitacion of this.serviceHabitacion.habitaciones){
-        this.lista.push({value: habitacion.codigo, viewValue: habitacion.codigo.toString()});
-      }*/
+      this.service.getHabitaciones().subscribe(data => {
+        for(var d of data){
+          this.lista.push({value: d.codigo, viewValue: d.codigo.toString()})
+        }
+      })
+      
       for(var regimen of this.serviceHabitacion.regimenes){
         this.regimenes.push({value: regimen.value, viewValue: regimen.viewValue});
       }
@@ -92,12 +129,11 @@ export class RecepcionistaReservaComponent implements OnInit {
       this.lista = [];
       this.regimenes = [];
       this.tipo = 'salas';
-      // Habría que hacer la llamada al servicio y del servicio a la API...
-      /*
-      for(var sala of this.serviceSala.salas){
-        this.lista.push({value: sala.codigo, viewValue: sala.codigo.toString()});
-      }
-      */
+      this.service.getSalas().subscribe(data => {
+        for(var d of data){
+          this.lista.push({value: d.codigo, viewValue: d.codigo.toString()})
+        }
+      })
       for(var regimen of this.serviceSala.regimenes){
         this.regimenes.push({value: regimen.value, viewValue: regimen.viewValue});
       }
