@@ -13,7 +13,7 @@ import { DecimalPipe, Location } from '@angular/common';
 })
 export class HabitacionComponent implements OnInit {
   habitacion : Habitacion = new Habitacion();
-  images = [700, 533, 807, 124].map((n) => `https://picsum.photos/id/${n}/900/500`);
+  images = [];
   paused = false;
   unpauseOnArrow = false;
   pauseOnIndicator = false;
@@ -37,6 +37,11 @@ export class HabitacionComponent implements OnInit {
    });
    this.service.getHabitacion(parseInt(id)).subscribe(h =>{
     this.habitacion=h;
+  });
+  this.service.getImagenes(parseInt(id)).subscribe(h =>{
+    for(var i of h){
+      this.images.push(i.url);
+    }
   });
   }
 

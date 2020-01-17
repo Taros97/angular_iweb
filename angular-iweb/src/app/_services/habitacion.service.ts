@@ -109,6 +109,10 @@ export class HabitacionService{
     filterPuntuacion: 0
   };
 
+  getImagenes(id){
+    return this.http.get<any>(environment.apiUrl+'habitaciones/'+id+'/fotos');
+  }
+
   constructor(private pipe: DecimalPipe,private http: HttpClient) {
     this.http.get<Habitacion[]>(environment.apiUrl+'habitaciones').subscribe(data =>{
       this.httpHabitaciones = data;
