@@ -4,6 +4,7 @@ import { DecimalPipe } from '@angular/common';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { MustMatch } from '@/_helpers/must-match.validator';
 import { Router } from '@angular/router';
+import { Role } from '@/_models';
 
 export interface lista {
   value: number;
@@ -102,8 +103,10 @@ export class RecepcionistaReservaComponent implements OnInit {
               }
             }
             this.service.createReserva(json).subscribe(() => {
+              var usuarioActualRol = JSON.parse(localStorage.getItem('currentUser')).role
               this.alertService.success('Reserva realizada con exito', true);
-              this.router.navigate(['/admin/reservas']);
+              if(usuarioActualRol === Role.Admin){this.router.navigate(['/admin/reservas']);}
+              else {this.router.navigate(['/recepcionista/lista']);}
             });
   }
 
