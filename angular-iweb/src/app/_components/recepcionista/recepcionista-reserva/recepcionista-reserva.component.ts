@@ -108,8 +108,10 @@ export class RecepcionistaReservaComponent implements OnInit {
   }
 
   habitaciones() {
+    console.log(this.lista)
+    this.lista = [];
     if(!this.disabledHabitacion){
-      this.lista = [];
+      
       this.regimenes = [];
       this.tipo = 'habitaciones';
       this.service.getHabitaciones().subscribe(data => {
@@ -125,6 +127,8 @@ export class RecepcionistaReservaComponent implements OnInit {
   }
 
   salas() {
+    
+    
     if(!this.disabledSala){
       this.lista = [];
       this.regimenes = [];

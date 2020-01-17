@@ -144,6 +144,10 @@ export class SalaService {
     this._search$.next();
   }
 
+  getImagenes(id){
+    return this.http.get<any>(environment.apiUrl+'salas/'+id+'/fotos');
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       return of(result as T);

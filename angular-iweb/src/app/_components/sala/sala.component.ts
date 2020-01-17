@@ -13,8 +13,8 @@ import { DecimalPipe, Location } from '@angular/common';
 })
 export class SalaComponent implements OnInit {
   sala : Sala = new Sala()
-  images = [700, 533, 807, 124].map((n) => `https://picsum.photos/id/${n}/900/500`);
-
+  //images = [700, 533, 807, 124].map((n) => `https://picsum.photos/id/${n}/900/500`);
+  images = [];
   paused = false;
   unpauseOnArrow = false;
   pauseOnIndicator = false;
@@ -39,6 +39,11 @@ export class SalaComponent implements OnInit {
   this.service.getSala(parseInt(id)).subscribe(s =>{
     this.sala=s;
     //console.log(s)
+  });
+  this.service.getImagenes(parseInt(id)).subscribe(h =>{
+    for(var i of h){
+      this.images.push(i.url);
+    }
   });
   }
 
