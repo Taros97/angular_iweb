@@ -88,9 +88,9 @@
             <mat-label>Habitación: </mat-label>
             <ngb-highlight [result]="reserva.habitacion" [term]="service.searchTerm"></ngb-highlight>
           </td>
-          <td class="tablaCodigo" *ngIf="reserva.sala != null">
+          <td class="tablaCodigo" *ngIf="reserva.sala_conferencia != null">
             <mat-label>Sala: </mat-label>
-            <ngb-highlight [result]="reserva.sala" [term]="service.searchTerm"></ngb-highlight>
+            <ngb-highlight [result]="reserva.sala_conferencia" [term]="service.searchTerm"></ngb-highlight>
           </td>
           <td class="tablaBorrar">
             <button class="btn btn-danger" type="submit" (click)="borrarReserva(reserva.codigo)"><i
