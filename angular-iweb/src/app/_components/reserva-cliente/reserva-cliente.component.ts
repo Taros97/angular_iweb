@@ -140,16 +140,40 @@ export class ReservaClienteComponent implements OnInit {
     return this.pago.controls[control].hasError(error);
   }
 
-  onSubmit() { // Cuando haces botón de realizar reserva
+  onSubmitReserva() { // Cuando haces botón de realizar reserva
     this.submitted = true;
 
     // reset alerts on submit
     this.alertService.clear();
     // stop here if form is invalid
-    if ( this.seleccionForm.invalid || this.pago.invalid || this.reservaForm.invalid) {
+    if (this.reservaForm.invalid) {
       return;
     }
-    console.log("hola")
+    this.submitted = false;
+  }
+
+  onSubmitSeleccion() { // Cuando haces botón de realizar reserva
+    this.submitted = true;
+
+    // reset alerts on submit
+    this.alertService.clear();
+    // stop here if form is invalid
+    if (this.seleccionForm.invalid) {
+      return;
+    }
+    this.submitted = false;
+  }
+
+  onSubmitPago() { // Cuando haces botón de realizar reserva
+    this.submitted = true;
+
+    // reset alerts on submit
+    this.alertService.clear();
+    // stop here if form is invalid
+    if (this.pago.invalid) {
+      return;
+    }
+    this.submitted = false;
 
     // Aqui sigue con el servicio
   }

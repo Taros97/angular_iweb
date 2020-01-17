@@ -33,7 +33,7 @@ export function MustMatch(controlName: string, matchingControlName: string) {
 export function MustSelector(controlName: string) {
     return (formGroup: FormGroup) => {
         const control = formGroup.controls[controlName];
-
+        
         if(control.value === 'Habitación o sala'){
             control.setErrors({ mustSelector: true });
         }else if(control.value.startsWith('Habitación') || control.value.startsWith('Sala')){
