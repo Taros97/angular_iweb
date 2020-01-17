@@ -38,7 +38,7 @@ export class SalaComponent implements OnInit {
    });
   this.service.getSala(parseInt(id)).subscribe(s =>{
     this.sala=s;
-    console.log(s)
+    //console.log(s)
   });
   }
 

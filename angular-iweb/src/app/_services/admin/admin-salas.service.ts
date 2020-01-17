@@ -167,7 +167,7 @@ export class AdminSalasService {
 
   deleteSala(codigo: number): Observable<Sala> {
     const url = `${environment.apiUrl}salas/${codigo}`;
-    console.log(codigo)
+    //console.log(codigo)
     return this.http.delete<Sala>(url, this.httpOptions).pipe(
       catchError(this.handleError<Sala>('deleteSala'))
     );

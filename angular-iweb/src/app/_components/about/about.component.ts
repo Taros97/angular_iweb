@@ -22,7 +22,7 @@ export class AboutComponent implements OnInit {
   }
 
   onSubmit(){
-    console.log(this.formContactaConNosotros);
+    //console.log(this.formContactaConNosotros);
   }
 
 }

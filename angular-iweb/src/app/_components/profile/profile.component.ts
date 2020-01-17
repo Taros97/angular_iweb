@@ -74,6 +74,8 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  prueba(){this.service.getReservas()}
+
   onSubmit() {
 
     this.submitted = true;

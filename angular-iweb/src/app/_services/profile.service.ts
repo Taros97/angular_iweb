@@ -103,6 +103,13 @@ export class ProfileService {
   };
 
   constructor(private pipe: DecimalPipe, private http: HttpClient) {
+
+    this.getReservas();
+    
+    this._search$.next();
+  }
+
+  public getReservas(){
     this.http.get<Reserva[]>(environment.apiUrl + 'perfil/reservas', this.httpOptions).subscribe(data => {
       this.httpReserva = data;
       this._search$.pipe(
@@ -117,8 +124,6 @@ export class ProfileService {
       });
       this._set({searchTerm: ''})
     });
-
-    this._search$.next();
   }
 
   get user$() { return this._user$; }

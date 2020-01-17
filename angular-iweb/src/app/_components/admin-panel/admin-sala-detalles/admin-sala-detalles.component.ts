@@ -43,7 +43,7 @@ export class AdminSalaDetallesComponent implements OnInit {
   ngOnInit() {
     var id;
     this.route.params.subscribe(params => {
-      console.log(params)
+      //console.log(params)
       id = params['id'];
     });
     this.service.getSala(id).subscribe(data => {
@@ -118,6 +118,6 @@ export class AdminSalaDetallesComponent implements OnInit {
       this.locate.back();
     });
 
-    console.log(this.salaForm.value)
+    //console.log(this.salaForm.value)
   }
 }

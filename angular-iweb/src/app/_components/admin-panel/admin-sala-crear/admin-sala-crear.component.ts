@@ -35,7 +35,7 @@ export class AdminSalaCrearComponent implements OnInit {
 
   get f() { return this.salaForm.controls; }
 
-  pene() {
+  crear() {
 
     this.submitted = true;
 

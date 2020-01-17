@@ -2,7 +2,7 @@ import {Reserva} from '@/_models';
 
 export const RESERVAS: Reserva[] =[
   /*{codigo: 1, fechaInicio: new Date('2017-05-01'), fechaFin: new Date('2017-11-11'), descripcion: 'abcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyzabcdefghijklmnñopqrstuvwxyz', tipo: 'Habitacion'},
-  {codigo: 2, fechaInicio: new Date('2017-05-03'), fechaFin: new Date('2017-05-03'), descripcion: 'pene', tipo: 'Sala'},
-  {codigo: 3, fechaInicio: new Date('2017-05-03'), fechaFin: new Date('2017-05-03'), descripcion: 'pene', tipo: 'Habitacion'},
-  {codigo: 4, fechaInicio: new Date('2017-05-03'), fechaFin: new Date('2017-05-03'), descripcion: 'pene', tipo: 'Sala'}*/
+  {codigo: 2, fechaInicio: new Date('2017-05-03'), fechaFin: new Date('2017-05-03'), descripcion: 'hola1', tipo: 'Sala'},
+  {codigo: 3, fechaInicio: new Date('2017-05-03'), fechaFin: new Date('2017-05-03'), descripcion: 'hola2', tipo: 'Habitacion'},
+  {codigo: 4, fechaInicio: new Date('2017-05-03'), fechaFin: new Date('2017-05-03'), descripcion: 'hola3', tipo: 'Sala'}*/
 ]
