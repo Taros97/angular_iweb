@@ -40,7 +40,7 @@ export class ReservaClienteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.seleccion = ''
+    this.seleccion = 'Habitación o sala'
     this.precioFinal = 0;
     this.temporada = 0.6;
     this.regimenes = [{codigo: -1, regimen: 'Selecciona un régimen', porcentaje: 1, es_sala : false}];
@@ -57,7 +57,7 @@ export class ReservaClienteComponent implements OnInit {
     })
     this.seleccionForm = this.formBuilder.group({
       regimen: [this.regimen, Validators.required],
-      seleccion: [this.seleccion, Validators.required]
+      seleccion: [this.seleccion]
     })
     this.pago = this.formBuilder.group({
       numeroTarjeta: ['', [Validators.required,
@@ -87,9 +87,16 @@ export class ReservaClienteComponent implements OnInit {
     this.service.sortDirection = direction;
   }
 
+  fechaReservaString(control: string){
+    var dia = this.reservaForm.controls[control].value.getDate();
+      var mes = this.reservaForm.controls[control].value.getMonth()+1;
+      var anyo = this.reservaForm.controls[control].value.getFullYear();
+      return anyo + '-' + mes + '-' + dia;
+  }
+
   escogerTablaReservas(){
     if(this.reservaForm.get('tipo').value === 'habitacion'){
-      this.service.getHabitaciones();
+      this.service.getHabitaciones(this.fechaReservaString('fechaInicio'), this.fechaReservaString('fechaFinal'));
       this.service.getRegimenes().subscribe(data => {
         this.regimenes = [];
         for(var regimen of data){
@@ -152,6 +159,7 @@ export class ReservaClienteComponent implements OnInit {
 
   onSubmitSeleccion() { // Cuando haces botón de realizar reserva
     this.submitted = true;
+
     // reset alerts on submit
     this.alertService.clear();
     // stop here if form is invalid
@@ -171,6 +179,21 @@ export class ReservaClienteComponent implements OnInit {
       return;
     }
     this.submitted = false;
+
+    // Aqui sigue con el servicio
+  }
+
+  onSubmitResumen() { // Cuando haces botón de realizar reserva
+    this.submitted = true;
+
+    // reset alerts on submit
+    this.alertService.clear();
+    // stop here if form is invalid
+    if (this.pago.invalid || this.seleccionForm.invalid || this.reservaForm.invalid) {
+      return;
+    }
+    
+    
 
     // Aqui sigue con el servicio
   }

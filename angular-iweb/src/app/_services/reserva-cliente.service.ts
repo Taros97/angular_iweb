@@ -24,7 +24,6 @@ interface State {
   sortDirection: SortDirection;
   tipo: string;
   regimen: any[];
-  seleccion: string;
 }
 
 
@@ -65,8 +64,9 @@ export class ReservaClienteService {
   private apiURL = '';
   private httpReserva: Reserva[];
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization: `Bearer ${JSON.parse(localStorage.getItem('currentUser')).token}`})
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvcmVnaXN0cm8iLCJpYXQiOjE1NzkyMTU4OTEsImV4cCI6MTU3OTIxOTQ5MSwibmJmIjoxNTc5MjE1ODkxLCJqdGkiOiJXa0VsYW51cGpxd0s3T1BJIiwic3ViIjo1LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.XmSaweBQjxJGS-NWO2JkmYpD2N60nOmecDyXlU_UxYo`})
   };
+
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
   private _disponible$ = new BehaviorSubject<any[]>([]);
@@ -82,29 +82,10 @@ export class ReservaClienteService {
     sortColumn: '',
     sortDirection: '',
     tipo: '',
-    regimen: [''],
-    seleccion: 'Habitacion o sala'
+    regimen: ['']
   };
 
   constructor(private pipe: DecimalPipe, private http: HttpClient) {
-
-    // API CUANDO ESTE
-    /*
-    this.http.get<Reserva[]>(this.apiURL).subscribe(data =>{
-      this.httpReserva = data;
-      this._search$.pipe(
-        tap(() => this._loading$.next(true)),
-        debounceTime(200),
-        switchMap(() => this._search()),
-        delay(200),
-        tap(() => this._loading$.next(false))
-      ).subscribe(result => {
-        this._reservas$.next(result.reservas);
-        this._total$.next(result.total);
-      });
-    });
-    */
-
    this.http.get<Reserva[]>(environment.apiUrl + 'reservas', this.httpOptions).subscribe(data =>{
     this.httpReserva = data;
     this._search$.pipe(
@@ -133,17 +114,44 @@ export class ReservaClienteService {
     return this.http.get<any[]>(environment.apiUrl + 'regimen');
   }
 
-  public getHabitaciones(){
-    this.http.get<Habitacion[]>(environment.apiUrl + 'habitaciones').subscribe(data =>{
+  refresh(){
+    this._search$.pipe(
+      tap(() => this._loading$.next(true)),
+      debounceTime(200),
+      switchMap(() => this._search()),
+      delay(200),
+      tap(() => this._loading$.next(false))
+    ).subscribe(result => {
+      if(result.habitaciones){
+        this._disponible$.next(result.habitaciones);
+        this._total$.next(result.total);
+      }else if(result.salas){
+        this._disponible$.next(result.salas);
+        this._total$.next(result.total);
+      }else{
+        this._disponible$.next([]);
+        this._total$.next(0);
+      }
+      this._set({pageSize: 4})
+    });
+    this._search$.next();
+  }
+
+  public getHabitaciones(fechaInicio: string, fechaFinal: string){
+    console.log(fechaInicio)
+    var json = {"tipo":this.tipo,
+                "fecha_inicio": fechaInicio,
+                "fecha_fin": fechaFinal}
+    this.http.post<Habitacion[]>(environment.apiUrl + 'reservasDisponibles', json, this.httpOptions).subscribe(data =>{
       this.habitaciones = data;
-      this._set({pageSize: 4});
+      this.refresh();
     });
   }
 
   public getSalas(){
     this.http.get<Sala[]>(environment.apiUrl + 'salas').subscribe(data =>{
       this.salas = data;
-      this._set({pageSize: 4});
+      this.refresh();
     });
   }
 
@@ -152,7 +160,6 @@ export class ReservaClienteService {
   get total$() { return this._total$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
   get page() { return this._state.page; }
-  get seleccion() { return this._state.seleccion; }
   set page(page: number) { this._set({page}); }
   get pageSize() { return this._state.pageSize; }
   set pageSize(pageSize: number) { this._set({pageSize}); }
@@ -160,8 +167,7 @@ export class ReservaClienteService {
   set sortDirection(sortDirection: SortDirection) { this._set({sortDirection}); }
   get tipo() { return this._state.tipo; }
   set tipo(tipo: string) { this._set({tipo}); }
-  set seleccion(seleccion: string) { this._set({seleccion}); }
-
+  
   private _set(patch: Partial<State>) {
     Object.assign(this._state, patch);
     this._search$.next();

@@ -54,7 +54,7 @@
             <ng-template matStepLabel>Selección item</ng-template>
             <form [formGroup]="seleccionForm" (ngSubmit)="onSubmitSeleccion()">
               <mat-form-field>
-                <input matInput formControlName="seleccion" [(ngModel)]="service.seleccion" readonly placeholder="Selección" value="{{ seleccion }}">
+                <input matInput formControlName="seleccion"  readonly placeholder="Selección" value="{{ seleccion }}">
                 <mat-error *ngIf="submitted && errorHandlingSeleccion('seleccion', 'mustSelector')">
                   Debes seleccionar una habitación o una sala
                 </mat-error>
