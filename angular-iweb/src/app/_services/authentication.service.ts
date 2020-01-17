@@ -32,8 +32,11 @@ export class AuthenticationService {
                     if(data.user.tipo_usuario == 0){usuario.role = Role.Admin}
                     else if(data.user.tipo_usuario == 1){usuario.role = Role.Recepcionista}
                     else if(data.user.tipo_usuario == 2){usuario.role = Role.User}
+
                     console.log(usuario)
                     localStorage.setItem('currentUser', JSON.stringify(usuario));
+                    localStorage.setItem('token', data.user.access_token);
+                    
                     this.currentUserSubject.next(data.user);
                 }
                 return data.user;

@@ -69,7 +69,7 @@ export class AdminHabitacionesService {
   private _total$ = new BehaviorSubject<number>(0);
   public httpHabitaciones: Habitacion[];
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization: `Bearer ${localStorage.token}`})
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization: `Bearer ${JSON.parse(localStorage.getItem('currentUser')).token}`})
   };
 
   private _state: State = {
@@ -84,19 +84,6 @@ export class AdminHabitacionesService {
   constructor(private pipe: DecimalPipe, private http: HttpClient) {
 
     this.getHabitaciones();
-
-/*
-    this._search$.pipe(
-      tap(() => this._loading$.next(true)),
-      debounceTime(200),
-      switchMap(() => this._search()),
-      delay(200),
-      tap(() => this._loading$.next(false))
-    ).subscribe(result => {
-      this._habitaciones$.next(result.habitaciones);
-      this._total$.next(result.total);
-    });
-*/
     this._search$.next();
   }
 

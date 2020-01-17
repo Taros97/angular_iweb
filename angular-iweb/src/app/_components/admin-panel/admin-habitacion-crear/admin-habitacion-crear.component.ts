@@ -29,6 +29,7 @@ function ObtenerVistas(habitaciones: Habitacion[]){
   styleUrls: ['./admin-habitacion-crear.component.css']
 })
 export class AdminHabitacionCrearComponent implements OnInit {
+  
   habitacionForm: FormGroup;
   vistas: Vista[] = [];
   submitted = false;
@@ -67,7 +68,7 @@ export class AdminHabitacionCrearComponent implements OnInit {
     /// LAMADA AL SERVICIO PARA CREAR LA HABITACION
     var habitacionCrear : Habitacion = this.habitacionForm.value;
     // CODIGO??????
-    //habitacionCrear.codigo = 60;
+    habitacionCrear.codigo = 60;
     habitacionCrear.puntuacion = 5;
     this.service.createHabitacion(habitacionCrear).subscribe(data => {
       this.locate.back();

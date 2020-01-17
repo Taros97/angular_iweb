@@ -35,10 +35,13 @@ export function MustSelector(controlName: string) {
         const control = formGroup.controls[controlName];
         
         if(control.value === 'Habitación o sala'){
+            console.log('Habitacion o sala')
             control.setErrors({ mustSelector: true });
         }else if(control.value.startsWith('Habitación') || control.value.startsWith('Sala')){
+            console.log('startsWith Habitación o startsWith Sala')
             control.setErrors(null);
         }else{
+            console.log('error inesperado')
             control.setErrors({ mustSelector: true });
         }
     }

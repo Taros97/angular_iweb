@@ -24,6 +24,7 @@ interface State {
   sortDirection: SortDirection;
   tipo: string;
   regimen: any[];
+  seleccion: string;
 }
 
 
@@ -64,9 +65,8 @@ export class ReservaClienteService {
   private apiURL = '';
   private httpReserva: Reserva[];
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization: `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvcmVnaXN0cm8iLCJpYXQiOjE1NzkyMTU4OTEsImV4cCI6MTU3OTIxOTQ5MSwibmJmIjoxNTc5MjE1ODkxLCJqdGkiOiJXa0VsYW51cGpxd0s3T1BJIiwic3ViIjo1LCJwcnYiOiI4N2UwYWYxZWY5ZmQxNTgxMmZkZWM5NzE1M2ExNGUwYjA0NzU0NmFhIn0.XmSaweBQjxJGS-NWO2JkmYpD2N60nOmecDyXlU_UxYo`})
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization: `Bearer ${JSON.parse(localStorage.getItem('currentUser')).token}`})
   };
-
   private _loading$ = new BehaviorSubject<boolean>(true);
   private _search$ = new Subject<void>();
   private _disponible$ = new BehaviorSubject<any[]>([]);
@@ -82,7 +82,8 @@ export class ReservaClienteService {
     sortColumn: '',
     sortDirection: '',
     tipo: '',
-    regimen: ['']
+    regimen: [''],
+    seleccion: 'Habitacion o sala'
   };
 
   constructor(private pipe: DecimalPipe, private http: HttpClient) {
@@ -151,6 +152,7 @@ export class ReservaClienteService {
   get total$() { return this._total$.asObservable(); }
   get loading$() { return this._loading$.asObservable(); }
   get page() { return this._state.page; }
+  get seleccion() { return this._state.seleccion; }
   set page(page: number) { this._set({page}); }
   get pageSize() { return this._state.pageSize; }
   set pageSize(pageSize: number) { this._set({pageSize}); }
@@ -158,7 +160,8 @@ export class ReservaClienteService {
   set sortDirection(sortDirection: SortDirection) { this._set({sortDirection}); }
   get tipo() { return this._state.tipo; }
   set tipo(tipo: string) { this._set({tipo}); }
-  
+  set seleccion(seleccion: string) { this._set({seleccion}); }
+
   private _set(patch: Partial<State>) {
     Object.assign(this._state, patch);
     this._search$.next();

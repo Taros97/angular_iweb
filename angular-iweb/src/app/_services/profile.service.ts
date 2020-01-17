@@ -6,7 +6,7 @@ import { SortDirection } from '@/_directives/sortable.directive';
 
 import { Reserva, User } from '@/_models';
 import { RESERVAS } from '@/_mockups';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { spinnerButtonPositionDictionary } from 'ng-metro4';
 import { environment } from 'environments/environment';
 
@@ -56,9 +56,14 @@ function matches(reserva: Reserva, term: string, pipe: PipeTransform) {
 function matchesDate(reserva: Reserva, date: fecha, pipe: PipeTransform) {
   if (date == null)
     return true;
+
+  var cadenaSeparar = reserva.fecha_inicio.split('-')
+  var fechaInicio = new Date(parseInt(cadenaSeparar[0]), parseInt(cadenaSeparar[1]) - 1, parseInt(cadenaSeparar[2]));
+  cadenaSeparar = reserva.fecha_fin.split('-')
+  var fechaFin = new Date(parseInt(cadenaSeparar[0]), parseInt(cadenaSeparar[1]) - 1, parseInt(cadenaSeparar[2]));
   const a = new Date(date.year, date.month - 1, date.day);
-  var Difference_In_Time_early = a.getTime() - reserva.fechaInicio.getTime();
-  var Difference_In_Time_late = reserva.fechaFin.getTime() - a.getTime();
+  var Difference_In_Time_early = a.getTime() - fechaInicio.getTime();
+  var Difference_In_Time_late = fechaFin.getTime() - a.getTime();
 
   var Difference_In_Days_early = Math.trunc(Difference_In_Time_early / (1000 * 3600 * 24));
   var Difference_In_Days_late = Math.trunc(Difference_In_Time_late / (1000 * 3600 * 24));
@@ -73,6 +78,9 @@ function matchesDate(reserva: Reserva, date: fecha, pipe: PipeTransform) {
 export class ProfileService {
 
   // API CUANDO ESTE RELLENAR URL
+  httpOptions = {
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization: `Bearer ${JSON.parse(localStorage.getItem('currentUser')).token}`})
+  };
   private apiURL = '';
   private httpReserva: Reserva[];
 
@@ -95,7 +103,7 @@ export class ProfileService {
   };
 
   constructor(private pipe: DecimalPipe, private http: HttpClient) {
-    this.http.get<Reserva[]>(environment.apiUrl + 'perfil/reservas').subscribe(data => {
+    this.http.get<Reserva[]>(environment.apiUrl + 'perfil/reservas', this.httpOptions).subscribe(data => {
       this.httpReserva = data;
       this._search$.pipe(
         tap(() => this._loading$.next(true)),
@@ -135,8 +143,15 @@ export class ProfileService {
     };
   }
 
+  updateProfile(usuarioUpdated){
+    return this.http.put<any>(environment.apiUrl + 'editarPerfil',usuarioUpdated, this.httpOptions)
+    .pipe(
+      catchError(this.handleError<User>('perfil', ))
+    );
+  }
+
   getProfile() {
-    return this.http.get<User>(environment.apiUrl + 'perfil')
+    return this.http.get<any>(environment.apiUrl + 'perfil', this.httpOptions)
     .pipe(
       catchError(this.handleError<User>('perfil', ))
     );
@@ -154,7 +169,7 @@ export class ProfileService {
     // API CUANDO ESTE
     // let reservas = sort(httpReserva, sortColumn, sortDirection);
     // Sustituir la siguiente por esta
-    let reservas = sort(RESERVAS, sortColumn, sortDirection);
+    let reservas = sort(this.httpReserva, sortColumn, sortDirection);
     // 2. filter
     reservas = reservas.filter(reserva => matches(reserva, searchTerm, this.pipe));
     reservas = reservas.filter(reserva => matchesDate(reserva, filterDate, this.pipe));

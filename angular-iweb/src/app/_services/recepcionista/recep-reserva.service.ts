@@ -92,7 +92,7 @@ function matchesDate(reserva: ReservaFinal, date: Date, pipe: PipeTransform) {
 export class RecepReservaService {
   // API CUANDO ESTE RELLENAR URL
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization: `Bearer ${JSON.parse(localStorage.getItem('currentUser')).token}`})
   };
   private apiURL = '';
   private httpReserva: ReservaFinal[];
@@ -118,7 +118,7 @@ export class RecepReservaService {
 
   constructor(private pipe: DecimalPipe, private http: HttpClient) {
     // API CUANDO ESTE
-    this.http.get<ReservaFinal[]>(environment.apiUrl+'reservas').subscribe(data => {
+    this.http.get<ReservaFinal[]>(environment.apiUrl+'reservas', this.httpOptions).subscribe(data => {
       this.httpReserva = data;
       this._search$.pipe(
         tap(() => this._loading$.next(true)),
@@ -138,7 +138,7 @@ export class RecepReservaService {
 
     public getReservas(){
       // API CUANDO ESTE
-      this.http.get<ReservaFinal[]>(environment.apiUrl+'reservas').subscribe(data =>{
+      this.http.get<ReservaFinal[]>(environment.apiUrl+'reservas', this.httpOptions).subscribe(data =>{
         this.httpReserva = data;
         this._search$.pipe(
           tap(() => this._loading$.next(true)),

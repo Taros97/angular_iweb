@@ -62,7 +62,7 @@ export class AdminSalasService {
 
   // API CUANDO ESTE RELLENAR URL
   httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' , Authorization: `Bearer ${JSON.parse(localStorage.getItem('currentUser')).token}`})
   };
   private apiURL = '';
   private httpSala: Sala[];

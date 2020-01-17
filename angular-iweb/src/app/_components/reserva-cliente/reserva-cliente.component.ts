@@ -40,7 +40,7 @@ export class ReservaClienteComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.seleccion = 'Habitación o sala'
+    this.seleccion = ''
     this.precioFinal = 0;
     this.temporada = 0.6;
     this.regimenes = [{codigo: -1, regimen: 'Selecciona un régimen', porcentaje: 1, es_sala : false}];
@@ -58,8 +58,6 @@ export class ReservaClienteComponent implements OnInit {
     this.seleccionForm = this.formBuilder.group({
       regimen: [this.regimen, Validators.required],
       seleccion: [this.seleccion, Validators.required]
-    },{
-      validators: MustSelector('seleccion')
     })
     this.pago = this.formBuilder.group({
       numeroTarjeta: ['', [Validators.required,
@@ -154,7 +152,6 @@ export class ReservaClienteComponent implements OnInit {
 
   onSubmitSeleccion() { // Cuando haces botón de realizar reserva
     this.submitted = true;
-
     // reset alerts on submit
     this.alertService.clear();
     // stop here if form is invalid
